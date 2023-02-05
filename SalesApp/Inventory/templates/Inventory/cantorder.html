@@ -1,0 +1,22 @@
+{% extends 'Inventory/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Order Error </title>
+</head>
+<body>
+    {% block content %}
+    <br>
+        <div class="container">
+        <h1> You can't order! </h1>
+        <p> You have no login/user credentials in the site </p>
+        <p> Signup or Login through the menu above! </p>
+    </div>
+    {% endblock %}
+</body>
+</html>

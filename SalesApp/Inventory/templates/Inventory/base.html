@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> DecoreManufacturing </title>
+    <link rel="stylesheet" type="text/css" href="{%  static '/css/home.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/form.css' %}">
+
+</head>
+<body>
+    {% block header %}
+    <div class="header">
+        {% if C == True %}
+        <a class="Home" href="{% url 'home' %}"> Home </a>
+        <a class="Products" href="{% url 'Products' %}"> Products </a>
+        <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
+        <a class="User" href="{% url 'User' %}"> User Page </a>
+
+        {% elif C == False %}
+        <a class="Home" href="{% url 'home' %}"> Home </a>
+        <a class="Products" href="{% url 'Products' %}"> Products </a>
+        <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
+        <a class="User" href="{% url 'Signup' %}"> Signup/Login </a>
+        {% endif %}
+    </div>
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+    
+
+</body>
+</html>
