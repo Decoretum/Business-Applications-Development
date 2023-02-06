@@ -11,6 +11,29 @@
 </head>
 <body>
     {% block content %}
+    <br><br>
+        
+    <div class="Largetext"> Confirm Order </div> 
+        {% if User in list %}
+
+            {% for c in CurrentProd %}
+            <div class="container">
+                <div class="bodytext">
+                <div class="Largetext"> Order {{c.pk}} </div> 
+                <b> {{c.Order.Name}} </b> <br>
+                Order Remarks : {{c.remarks}} <br>
+                Total Cost : {{c.totalcost}}
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        {% elif User not in list %}
+        <div class="container">
+            <div class="largetext"> You have not ordered yet! </div>
+        </div>
+        {% endif %}
+
+
 
     {% endblock %}
 </body>

@@ -196,11 +196,15 @@ def Cart(request):
     if request.user.is_authenticated:
         Current = get_object_or_404(Userperson,username = request.session['user'])
         UserProducts = OrderedProduct.objects.all().filter(Client = Current)
+        for userp in UserProducts:
+            arraylist.append(userp.Client)
         condition = True
         if UserProducts != None:
-            print(UserProducts)
             return render(request,'Inventory/cart.html',{ 
-                    'C' : condition
+                    'C' : condition,
+                    'User' : Current,
+                    'list' : arraylist,
+                    'CurrentProd' : UserProducts
                 })
     else:
         condition = False
