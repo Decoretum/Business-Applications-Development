@@ -108,27 +108,45 @@ def Login(request):
         return render(request,'Inventory/Login.html')
 
 def Users(request):
-    currentuser = get_object_or_404(Userperson, username = request.session['user'])
-    OProducts = OrderedProduct.objects.filter(Client = currentuser)
-    array = []
-    for x in OProducts:
-        array.append(x.Client)
-    for x in array:
-        print(x)
-   
+    condition = ""
+    if request.user.is_authenticated:
+        condition = True
+        currentuser = get_object_or_404(Userperson, username = request.session['user'])
+        OProducts = OrderedProduct.objects.filter(Client = currentuser)
+        array = []
+        for x in OProducts:
+            array.append(x.Client)
+        for x in array:
+            print(x)
     
-    print(currentuser)
-    return render(request,'Inventory/users.html',
-    {'username' : request.session['user'],
-    'userid' : request.session['userid'],
-    'password' : request.session['password'],
-    'firstname' : request.session['firstname'],
-    'lastname' : request.session['lastname'],
-    'birthday' : request.session['birthday'],
-    'sex' : request.session['sex'],
-    'userobj' : currentuser,
-    'OProducts' : OProducts,
-    'array' : array})
+        
+        print(currentuser)
+        return render(request,'Inventory/users.html',
+        {'username' : request.session['user'],
+        'userid' : request.session['userid'],
+        'password' : request.session['password'],
+        'firstname' : request.session['firstname'],
+        'lastname' : request.session['lastname'],
+        'birthday' : request.session['birthday'],
+        'sex' : request.session['sex'],
+        'userobj' : currentuser,
+        'OProducts' : OProducts,
+        'C' : condition,
+        'array' : array})
+    else:
+        condition = False
+        return render(request,'Inventory/users.html',
+        {'username' : request.session['user'],
+        'userid' : request.session['userid'],
+        'password' : request.session['password'],
+        'firstname' : request.session['firstname'],
+        'lastname' : request.session['lastname'],
+        'birthday' : request.session['birthday'],
+        'sex' : request.session['sex'],
+        'userobj' : currentuser,
+        'OProducts' : OProducts,
+        'C' : condition,
+        'array' : array})
 
 def logout(request):
     print('logout')
@@ -169,6 +187,24 @@ def Order(request,pk):
         condition = False
         print("No user, cant order!")
         return render(request,'Inventory/cantorder.html',{ 
+                'C' : condition
+            })
+
+def Cart(request):
+    condition = ""
+    arraylist = []
+    if request.user.is_authenticated:
+        Current = get_object_or_404(Userperson,username = request.session['user'])
+        UserProducts = OrderedProduct.objects.all().filter(Client = Current)
+        condition = True
+        if UserProducts != None:
+            print(UserProducts)
+            return render(request,'Inventory/cart.html',{ 
+                    'C' : condition
+                })
+    else:
+        condition = False
+        return render(request,'Inventory/cart.html',{ 
                 'C' : condition
             })
 
