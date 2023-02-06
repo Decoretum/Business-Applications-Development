@@ -49,5 +49,7 @@ class OrderedProduct(models.Model):
     totalcost = models.IntegerField(default=0)
 
 #Create a model that is created upon "Add to Cart" button press designated for a user
-class Cart(models.Model):
+class FinalOrder(models.Model):
     Client = models.ForeignKey(Userperson, on_delete=models.CASCADE)
+    Products = models.CharField(max_length=500)
+    

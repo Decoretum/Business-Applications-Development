@@ -19,14 +19,16 @@
             {% for c in CurrentProd %}
             <div class="container">
                 <div class="bodytext">
-                <div class="Largetext"> Order {{c.pk}} </div> 
-                <b> {{c.Order.Name}} </b> <br>
+                <div class="Largetext"> Product :  <b> {{c.Order.Name}} </b> </div> 
                 Order Remarks : {{c.remarks}} <br>
+                Quantity : {{c.quantity}} <br>
                 Total Cost : {{c.totalcost}}
                 </div>
             </div>
             <br>
             {% endfor %}
+
+        <div class="Largetext"> Total Cost: {{price}}</div>
         {% elif User not in list %}
         <div class="container">
             <div class="largetext"> You have not ordered yet! </div>

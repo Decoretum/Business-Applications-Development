@@ -193,18 +193,21 @@ def Order(request,pk):
 def Cart(request):
     condition = ""
     arraylist = []
+    pricelist = 0
     if request.user.is_authenticated:
         Current = get_object_or_404(Userperson,username = request.session['user'])
         UserProducts = OrderedProduct.objects.all().filter(Client = Current)
         for userp in UserProducts:
             arraylist.append(userp.Client)
+            pricelist += userp.totalcost
         condition = True
         if UserProducts != None:
             return render(request,'Inventory/cart.html',{ 
                     'C' : condition,
                     'User' : Current,
                     'list' : arraylist,
-                    'CurrentProd' : UserProducts
+                    'CurrentProd' : UserProducts,
+                    'price' : pricelist
                 })
     else:
         condition = False
@@ -212,6 +215,12 @@ def Cart(request):
                 'C' : condition
             })
 
+def ConfirmOrder(request):
+    if request.user.is_authenticated:
+        Current = get_object_or_404(Userperson,username = request.session['user'])
+    else:
+        pass
+    
 def Developer(request):
     condition = ''
     if request.user.is_authenticated:
