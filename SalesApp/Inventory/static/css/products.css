@@ -1,0 +1,30 @@
+.Frame{
+    margin: auto;
+    border: solid;
+    margin-top: 10vh;
+}
+
+
+.Header > *{
+    margin: auto;
+    border: solid;
+    padding: 10px;
+    max-width: 100%;
+    width: 13vw;
+}
+
+#view {
+    width: 0.5vw;
+    margin: auto;
+    margin-right: 0.5vw;
+    padding: 10px;
+    
+}
+
+#order{
+    margin: auto;
+    width: 3vw;
+    float: right;
+    padding: 10px;
+
+}

@@ -10,6 +10,7 @@ path('Login', views.Login, name='Login'),
 path('User', views.Users, name='User'),
 path('logout', views.logout, name='logout'),
 path('order/<int:pk>/', views.Order, name='order'),
+path('view/<int:pk>/', views.Info, name='view'),
 path('UserProduct', views.Cart, name='Cart'),
 path('Developer', views.Developer, name='Developer')
 

@@ -9,6 +9,7 @@
     <title> DecoreManufacturing </title>
     <link rel="stylesheet" type="text/css" href="{%  static '/css/home.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/css/form.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/products.css' %}">
 
 </head>
 <body>
@@ -16,14 +17,14 @@
     <div class="header">
         {% if C == True %}
         <a class="Home" href="{% url 'home' %}"> Home </a>
-        <a class="Products" href="{% url 'Products' %}"> Products </a>
+        <a class="Products" href="{% url 'Products' %}"> View Steel Inventory </a>
         <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
         <a class="User" href="{% url 'User' %}"> User Page </a>
         <a class="User" href="{% url 'Cart' %}"> User Products </a>
 
         {% elif C == False %}
         <a class="Home" href="{% url 'home' %}"> Home </a>
-        <a class="Products" href="{% url 'Products' %}"> Products </a>
+        <a class="Products" href="{% url 'Products' %}"> View Steel Inventory </a>
         <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
         <a class="User" href="{% url 'Signup' %}"> Signup/Login </a>
         {% endif %}

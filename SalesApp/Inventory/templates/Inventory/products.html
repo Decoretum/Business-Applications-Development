@@ -10,23 +10,49 @@
     <title>Document</title>
 </head>
 <body>
-    {% block content %}     
-        <div class="Largetext"> Available Products </div>
-        {% for product in P %}
-     
-        <div class="container"> 
-            <div class="bodytext">
-                Product Name:{{product.Name}} <br>
-                Product Brand: {{product.Brand}} <Br>
-                Product Color: {{product.Color}} <br>
-                Price: {{product.Cost}}<Br>
-                Stock: {{product.Stock}}
-            <a class="Button" href="{% url 'order' pk=product.pk %}" id="order"> Order Product </a>
-            </div>
-        </div>
-        <br><Br>
-                
+
+    {% block content %}
+    <table class="Frame">
+
+        <tr class="Header"> 
+            <th> Image </th>
+            <th> Product </th>
+            <th> Length </th>
+            <th> Manufacturer Name </th>
+            <th> Quantity </th>
+            <th> Action </th>
+        </tr>
+    {% if C == True %}
+        {% for p in P %}
+        <tr class="Header"> 
+            <th> N/A as of now </th>
+            <th> {{ p.Name }} </th>
+            <th> {{ p.Length }} </th>
+            <th> {{ p.Manufacturer }} </th>
+            <th> {{ p.Stock }} </th>
+            <th> <a class="Button" href="{% url 'order' pk=p.pk %}" id="order"> Order Product </a> <a class="Button" href="{% url 'view' pk=p.pk %}" id="view"> View Information </a> </th>
+        </tr>
         {% endfor %}
+
+
+    {% elif C == False %}
+        {% for p in P %}
+        <tr class="Header"> 
+            <th> N/A as of now </th>
+            <th> {{ p.Name }} </th>
+            <th> {{ p.Length }} </th>
+            <th> {{ p.Manufacturer }} </th>
+            <th> {{ p.Stock }} </th>
+            <th> <a class="Button" href="{% url 'view' pk=p.pk %}" id="view"> View Information </a> </th>
+        </tr>
+        {% endfor %}
+    {% endif %}
+
+
+
+    </table>
+
+
     {% endblock %}
     
 </body>

@@ -101,9 +101,10 @@ a{
     margin: auto;
     margin-left: 25%;
     max-width: 100%;
-    width: 7vw;
+    width: 3vw;
     text-align: center;
     border-radius: 9px;
+    position: relative;
 }
 
 .Button > *{
@@ -134,11 +135,6 @@ a{
     background-color: rgb(84, 122, 122);
 }
 
-#order{
-    margin: auto;
-    width: 20vw;
-    float: right;
-}
 
 .LOGOUT{
     background-color: azure;

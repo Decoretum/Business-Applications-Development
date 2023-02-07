@@ -153,6 +153,20 @@ def logout(request):
     auth.logout(request)
     return redirect('Login')
 
+def Info(request,pk):
+    condition = ""
+    if request.user.is_authenticated:
+        condition = True
+        return render(request, 'Inventory/Info.html',{
+            'C' : condition
+
+        })
+    else:
+        condition = False
+        return render(request, 'Inventory/Info.html',{
+            'C' : condition
+
+        })
     
 
 def Order(request,pk):
