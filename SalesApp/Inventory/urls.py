@@ -13,6 +13,7 @@ path('order/<int:pk>/', views.Order, name='order'),
 path('view/<int:pk>/', views.Info, name='view'),
 path('edit/<int:pk>/', views.Edit, name='edit'),
 path('UserProduct', views.Cart, name='Cart'),
+path('UserAdded', views.AddOrder, name='OrderAdded'),
 path('Developer', views.Developer, name='Developer')
 
 ]

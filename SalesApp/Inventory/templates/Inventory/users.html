@@ -28,29 +28,45 @@
 
     <br><br>
         <div class="Largetext" style="margin: auto; margin-left: 23%; width: 5vw;">
-            Orders by User
+            Pending Orders
         </div> <br>
 
-        {% if userobj in array %}
-            {% for p in OProducts %}
-            <div class="container"> 
+        <div class="container">
+            {% if Order == None %}
+            
                 <div class="bodytext">
-
-            Order {{p.pk}}: {{p.Order.Name}} with a quantity of {{p.quantity}}. Total cost of P{{p.totalcost}}. <br>
-            Remarks: {{p.remarks}} 
+                You haven't ordered a product yet!
                 </div>
-            </div>
-            <Br><br>
-            {% endfor %}
-
-        {% elif userobj not in array %}
-        <div class="container"> 
-            <div class="bodytext">
-            You haven't ordered a product yet!
-            </div>
-        </div>
-        {% endif %}
         
+                <br>
+            
+            {% elif Order != None %}
+                {% for o in Order %}
+                
+                    {% for P in Products %}
+                        {% if P.Finalorder == o %}
+                        <div class="bodytext">
+                            <b>Order {{o.pk}}</b> <br>
+                            {{ P.Order.Image}} <br>
+                            {{ P.Order.Name}} <br>
+                            {{ P.Order.Manufacturer}} <br>
+                            {{ P.Order.Length}} <br>
+                            {{ P.Quantity}} <br>
+                            Total Cost: {{o.TotalCost}}
+                        </div> <br>
+                            {% else %}
+                            <div class="bodytext">
+                                <b>Order {{o.pk}}</b> <br>
+                                Order has not been initialized with transaction
+                            </div> <br>
+                            {% endif %}
+                        {% endfor %}
+
+                    {% endfor %}
+            {% endif %}
+            
+            <a class="Button" href="{% url 'OrderAdded' %}"> Add New Order now </a>
+        </div>
     {% endblock %}
 </body>
 </html>

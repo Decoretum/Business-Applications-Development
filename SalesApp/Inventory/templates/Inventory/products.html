@@ -12,7 +12,7 @@
 <body>
 
     {% block content %}
-    <table class="Frame w-[60vw] h-[50vh]">
+    <table class="Frame w-[60vw] h-[20vh]">
 
         <tr class="Header"> 
             <th> Image </th>
@@ -31,7 +31,7 @@
             <th> {{ p.Manufacturer }} </th>
             <th> {{ p.Stock }} </th>
             <th class="flex flex-row h-auto border-transparent">
-                 <a class="Button w-auto" href="{% url 'order' pk=p.pk %}"> Order </a>
+                 <a class="Button w-auto" href="{% url 'order' pk=p.pk %}"> Add Transaction </a>
                   <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
                   <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit Info </a> 
             </th> 

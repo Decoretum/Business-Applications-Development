@@ -11,6 +11,7 @@
 </head>
 <body>
     {% block header %}
+    <br>
     <div class="unfinished header">
         DecoreManufacturing Signup Site
     </div>
@@ -19,6 +20,7 @@
 
 
     {% block content %}
+    <br>
     <form method="POST" action="{% url 'Signup' %}">{% csrf_token %}
         <div class="formblock">
             <div class="Largetext" style="margin: auto; width: 50%;"> Signup </div>

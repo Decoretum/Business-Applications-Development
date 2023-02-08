@@ -16,10 +16,18 @@
         <div class="formblock">
             <div class="Largetext" style="margin: auto; width: 50%;"> Order </div>
             <div class="label"> Product: {{Current.Name}} </div>
-            <div class="label"> Brand: {{Current.Brand}} </div>
-            <div class="label"> Color: {{Current.Color}} </div>
+            <div class="label"> Manufacturer: {{Current.Manufacturer}} </div>
+            <div class="label"> Length: {{Current.Length}} </div>
             <div class="label"> Cost: {{Current.Cost}} </div>
             <div class="label"> Available Stock: {{Current.Stock}} </div>
+            <div class="label"> Order Number 
+                <select type="number" id="ordername" name="ordername" style="display:inline;">
+                    {% for x in O %}
+                        <option type="number" id="order" name="order"> {{x.pk}} </option>
+                    {% endfor %}
+                </select>  
+            </div>
+            
             <div class="container" style="border: transparent; width: inherit;">
                 <div class="label" style="display:inline; margin: auto; margin-left: 10.5vw;"> Quantity </div>
                 <select type="text" id="drop" name="drop" style="display:inline;">

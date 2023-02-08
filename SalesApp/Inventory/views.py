@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Userperson, Product, OrderedProduct
+from .models import Userperson, Product, OrderedProduct, FinalOrder
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User, auth
 from django.template import loader
@@ -113,14 +113,20 @@ def Users(request):
         condition = True
         currentuser = get_object_or_404(Userperson, username = request.session['user'])
         OProducts = OrderedProduct.objects.filter(Client = currentuser)
+        FinalOrders = FinalOrder.objects.all()
+        ProductsinOrder = OrderedProduct.objects.all()
         array = []
+        Orderarray=[]
         for x in OProducts:
             array.append(x.Client)
-        for x in array:
+        for x in FinalOrders:
             print(x)
+  
+        '''for x in ProductsinOrder:
+            for y in FinalOrders:
+                if x.Finalorder == y:
+                    print(x.Order.Name)'''
     
-        
-        print(currentuser)
         return render(request,'Inventory/users.html',
         {'username' : request.session['user'],
         'userid' : request.session['userid'],
@@ -129,10 +135,11 @@ def Users(request):
         'lastname' : request.session['lastname'],
         'birthday' : request.session['birthday'],
         'sex' : request.session['sex'],
-        'userobj' : currentuser,
         'OProducts' : OProducts,
         'C' : condition,
-        'array' : array})
+        'Order' : FinalOrders,
+        'Products' : ProductsinOrder
+        })
     else:
         condition = False
         return render(request,'Inventory/users.html',
@@ -155,9 +162,9 @@ def logout(request):
 
 def Info(request,pk):
     condition = ""
+    CurrentProd = get_object_or_404(Product, pk=pk)
     if request.user.is_authenticated:
         condition = True
-        CurrentProd = get_object_or_404(Product, pk=pk)
         return render(request, 'Inventory/Info.html',{
             'C' : condition,
             'P' : CurrentProd
@@ -166,7 +173,8 @@ def Info(request,pk):
     else:
         condition = False
         return render(request, 'Inventory/Info.html',{
-            'C' : condition
+            'C' : condition,
+            'P' : CurrentProd
 
         })
 def Edit(request,pk):
@@ -183,24 +191,30 @@ def Order(request,pk):
     if request.user.is_authenticated:
         condition = True
         CurrentProd = get_object_or_404(Product, pk=pk)
+        print(type(CurrentProd.pk))
+        Orders = FinalOrder.objects.all()
         CUser = get_object_or_404(Userperson, username = request.session['user'])
         if request.method == "POST":
             quantvalue = request.POST.get('drop')
             totalcost3 = request.POST.get('totalcost')
             remark = request.POST.get('remark')
+            ordernumber = request.POST.get('ordername')
+            ChosenOrder = get_object_or_404(FinalOrder, pk = ordernumber)
             OrderedProduct.objects.create(Client = CUser, Order = CurrentProd, 
-            remarks = remark, quantity = quantvalue, totalcost = totalcost3)
+            remarks = remark, quantity = quantvalue, totalcost = totalcost3, Finalorder = ChosenOrder)
             #Product.objects.filter(pk=pk).update(Stock -= quantvalue )
             CurrentProd.Stock -= int(quantvalue)
             CurrentProd.save()
             
             return redirect('Products')
         else:
+            ordersarray = []
             array = []
             P = Product.objects.all()
             for x in range(CurrentProd.Stock):
                 array.append(x+1)
             return render(request,'Inventory/order.html',{ 
+                'O' : Orders,
                 'P' : P,
                 'Current' : CurrentProd,
                 'A' : array,
@@ -237,6 +251,16 @@ def Cart(request):
         return render(request,'Inventory/cart.html',{ 
                 'C' : condition
             })
+
+def AddOrder(request):
+    if request.user.is_authenticated:
+        currentuser = get_object_or_404(Userperson, username = request.session['user'])
+        OProducts = OrderedProduct.objects.filter(Client = currentuser)
+        array = []
+        condition = True
+        FinalOrder.objects.create()
+        return redirect('User')
+          
 
 def ConfirmOrder(request):
     if request.user.is_authenticated:

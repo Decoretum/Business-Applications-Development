@@ -44,15 +44,20 @@ class Userperson(models.Model):
     def __str__(self):
         return 'pk' + ':' + ' ' + 'User ' + str(self.pk) + ':' + ' ' + str(self.username) + ',' + ' ' + str(self.first_name) + ' ' + str(self.last_name) + ',' + ' ' + str(self.birthday) + ',' + ' ' + str(self.sex)
 
+
+#Create a model that is created upon "Add to Cart" button press designated for a user
+class FinalOrder(models.Model):
+    TotalCost = models.CharField(max_length=20)
+    ProductInfo = models.CharField(max_length=400)
+    objects = models.Manager()
+
+
 class OrderedProduct(models.Model):
     Client = models.ForeignKey(Userperson, on_delete=models.CASCADE)
     Order = models.ForeignKey(Product, on_delete=models.CASCADE)
     remarks = models.CharField(max_length=200)
     quantity = models.IntegerField(default=0)
     totalcost = models.IntegerField(default=0)
-
-#Create a model that is created upon "Add to Cart" button press designated for a user
-class FinalOrder(models.Model):
-    Client = models.ForeignKey(Userperson, on_delete=models.CASCADE)
-    Products = models.CharField(max_length=500)
+    Finalorder = models.ForeignKey(FinalOrder, on_delete=models.CASCADE, default=None)
+    objects = models.Manager()
     
