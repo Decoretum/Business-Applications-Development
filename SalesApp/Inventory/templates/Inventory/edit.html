@@ -1,0 +1,32 @@
+{% extends 'Inventory/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <br><br>
+    <div class="container">
+        <div class="Largetext"> Image </div>
+        <input type="file" accept="image/*" />
+        <div class="Largetext"> Product Name </div> 
+        <input type="text" class="forminput" name="Name">
+        <div class="Largetext"> Length </div>
+        <input type="text" class="forminput" name="Length">
+        <div class="Largetext"> Manufacturer Name </div>
+        <input type="text" class="forminput" name="Manufacturer">
+        <div class="Largetext"> Product Description </div>
+        <textarea type="text" class="forminput" name="Description" id="desc" rows="8" placeholder="Type in new Product Description!"> </textarea>
+        <div class="Largetext"> Contact Details </div>
+        <input type="text" class="forminput" name="Contact">
+    </div>
+
+    {% endblock %}
+</body>
+</html>

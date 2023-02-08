@@ -9,6 +9,8 @@ class Product(models.Model): #Steels, not food
     Length = models.CharField(max_length=20)
     Cost = models.CharField(max_length=10)
     Stock = models.BigIntegerField()
+    Description = models.CharField(null=True, max_length=500)
+    Contact = models.CharField(null= True, max_length=500)
 
 
 class Userperson(models.Model):

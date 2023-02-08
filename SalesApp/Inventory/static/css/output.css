@@ -1,0 +1,988 @@
+/*
+! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
+*/
+
+/*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  /* 1 */
+  border-width: 0;
+  /* 2 */
+  border-style: solid;
+  /* 2 */
+  border-color: #e5e7eb;
+  /* 2 */
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+*/
+
+html {
+  line-height: 1.5;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -moz-tab-size: 4;
+  /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4;
+  /* 3 */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* 4 */
+  font-feature-settings: normal;
+  /* 5 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0;
+  /* 1 */
+  line-height: inherit;
+  /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  border-top-width: 1px;
+  /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Use the user's configured `mono` font family by default.
+2. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0;
+  /* 1 */
+  border-color: inherit;
+  /* 2 */
+  border-collapse: collapse;
+  /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  font-weight: inherit;
+  /* 1 */
+  line-height: inherit;
+  /* 1 */
+  color: inherit;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+  padding: 0;
+  /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+  /* 1 */
+  background-color: transparent;
+  /* 2 */
+  background-image: none;
+  /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1;
+  /* 1 */
+  color: #9ca3af;
+  /* 2 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1;
+  /* 1 */
+  color: #9ca3af;
+  /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  /* 1 */
+  vertical-align: middle;
+  /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+
+[hidden] {
+  display: none;
+}
+
+*, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+.static {
+  position: static;
+}
+
+.m-5 {
+  margin: 1.25rem;
+}
+
+.m-10 {
+  margin: 2.5rem;
+}
+
+.m-\[100\] {
+  margin: 100;
+}
+
+.m-\[100px\] {
+  margin: 100px;
+}
+
+.m-\[15px\] {
+  margin: 15px;
+}
+
+.m-0 {
+  margin: 0px;
+}
+
+.mx-\[15px\] {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.mr-\[1vw\] {
+  margin-right: 1vw;
+}
+
+.mr-10 {
+  margin-right: 2.5rem;
+}
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline;
+}
+
+.flex {
+  display: flex;
+}
+
+.table {
+  display: table;
+}
+
+.h-1\/2 {
+  height: 50%;
+}
+
+.h-fit {
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.h-auto {
+  height: auto;
+}
+
+.h-\[60vh\] {
+  height: 60vh;
+}
+
+.h-\[70vh\] {
+  height: 70vh;
+}
+
+.h-\[2vh\] {
+  height: 2vh;
+}
+
+.h-\[10vh\] {
+  height: 10vh;
+}
+
+.h-\[50vh\] {
+  height: 50vh;
+}
+
+.h-\[100vh\] {
+  height: 100vh;
+}
+
+.w-screen {
+  width: 100vw;
+}
+
+.w-\[40vw\] {
+  width: 40vw;
+}
+
+.w-\[90vw\] {
+  width: 90vw;
+}
+
+.w-\[50\%s\] {
+  width: 50%s;
+}
+
+.w-\[50\%\] {
+  width: 50%;
+}
+
+.w-\[0\.5vw\] {
+  width: 0.5vw;
+}
+
+.w-\[50vw\] {
+  width: 50vw;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-4\/5 {
+  width: 80%;
+}
+
+.w-\[15vw\] {
+  width: 15vw;
+}
+
+.w-\[18vw\] {
+  width: 18vw;
+}
+
+.w-\[20vw\] {
+  width: 20vw;
+}
+
+.w-\[25vw\] {
+  width: 25vw;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.w-\[55vw\] {
+  width: 55vw;
+}
+
+.w-\[60vw\] {
+  width: 60vw;
+}
+
+.w-\[1vw\] {
+  width: 1vw;
+}
+
+.w-\[65vw\] {
+  width: 65vw;
+}
+
+.w-\[100vw\] {
+  width: 100vw;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
+}
+
+.flex-none {
+  flex: none;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.gap-3 {
+  gap: 0.75rem;
+}
+
+.gap-10 {
+  gap: 2.5rem;
+}
+
+.gap-0 {
+  gap: 0px;
+}
+
+.border-4 {
+  border-width: 4px;
+}
+
+.border {
+  border-width: 1px;
+}
+
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
+.Largetext{
+  font-size: 25px;
+  font-family: Verdana;
+  margin-bottom: 1vh;
+  padding: 15px;
+}
+
+.shape1{
+  width: 0;
+  height: 0;
+  border-left: 3vw solid transparent;
+  border-right: 3vw solid transparent;
+  border-bottom: 6vw solid blueviolet;
+  display: inline-block;
+}
+
+.shape2{
+  display: inline-block;
+  width: 5vw;
+  height: 5vw;
+  background: rgb(20, 161, 44);
+  border-radius: 50%
+}
+
+.shape3{
+  width: 5vw;
+  height: 5vw;
+  max-width: 100%;
+  display: inline;
+  padding: 10px;
+  border-radius: 9px;
+  background-color: brown;
+  border-color: transparent;
+  box-shadow: 7px 7px rgb(218, 116, 79);
+}
+
+.bodytext{
+  line-height: 2;
+  padding: 5px;
+}
+
+html{
+  background-color: antiquewhite;
+}
+
+a{
+  color: black;
+  text-decoration: none;
+}
+
+.container{
+  padding: 10px;
+  font-family: Verdana;
+  background-color: rgb(232, 200, 160);
+  border: transparent;
+  border-radius: 9px;
+  box-shadow: 10px 10px rgb(180, 155, 125);
+  width: 50vw;
+  margin: auto;
+  max-width: 100%;
+}
+
+.header{
+  width: 55vw;
+  max-width: 100%;
+  border: transparent;
+  box-shadow: 9px 9px rgb(18, 85, 124);
+  background-color: cadetblue;
+  padding: 10px;
+  border-radius: 9px;
+  margin: auto;
+}
+
+.header > a{
+  font-family:system-ui;
+  margin: auto;
+  margin-left: 5vw;
+  border-radius: 9px;
+  padding: 5px;
+}
+
+.header > a:hover{
+  background-color: rgb(49, 215, 233);
+  cursor: pointer;
+}
+
+.unfinished.header{
+  text-align: center;
+  margin: auto;
+  width: 25%;
+  max-width: 100%;
+  border-color: transparent;
+  padding: 20px;
+  border-radius: 9px;
+  font-family: Verdana;
+}
+
+.formblock{
+  margin: auto;
+  max-width: 100%;
+  border: transparent;
+  border-radius: 9px;
+  width: 50%;
+  box-shadow: 10px 10px rgb(189, 163, 130);
+  background-color: rgb(210, 174, 127);
+}
+
+.label{
+  padding: 10px;
+  font-family: Verdana;
+  font-size: 15px;
+  margin: auto;
+  max-width: 100%;
+  width: 50%;
+}
+
+#desc{
+  max-width: 100%;
+}
+
+.forminput{
+  padding: 10px;
+  margin: auto;
+  max-width: 100%;
+  width: 50%;
+}
+
+#id{
+  display: inline-block;
+}
+
+#totalcost{
+  display: inline-block;
+  margin: auto;
+  width: 50%;
+  margin-left: 23%;
+}
+
+.Button{
+  text-decoration: none;
+  background-color: rgb(48, 162, 88);
+  padding: 10px;
+  width: 5vw;
+  text-align: center;
+  border-radius: 9px;
+  position: relative;
+  margin-left: 7px;
+}
+
+.Button > *{
+  color: black;
+}
+
+.Button:hover{
+  cursor:pointer;
+  background-color: rgb(56, 209, 110);
+  transform: translateY(5px);
+}
+
+.Submit{
+  font-family: Verdana;
+  font-size: 15px;
+  background-color: rgb(213, 193, 101);
+  padding: 10px;
+  width: 10vw;
+  max-width: 100%;
+  margin: auto;
+  margin-left: 25%;
+  border-radius: 9px;
+}
+
+.Submit:hover{
+  cursor: pointer;
+  background-color: rgb(84, 122, 122);
+}
+
+.LOGOUT{
+  background-color: azure;
+  border-radius: 9px;
+  box-shadow: 8px 8px rgb(97, 94, 89);
+  text-decoration: none;
+  color: black;
+  width: 25%;
+  text-align: center;
+  padding: 10px;
+}
+
+.LOGOUT:hover{
+  background-color: aquamarine;
+  cursor: pointer;
+  transform: translateY(5px);
+}
+
+.Frame{
+  margin: auto;
+  border: solid;
+  margin-top: 10vh;
+}
+
+.Header > *{
+  margin: auto;
+  border: solid;
+  padding: 9px;
+  max-width: 100%;
+  width: 13vw;
+}
+
+#view {
+  width: 0.5vw;
+  padding: 10px;
+}
+
+#order{
+  width: 3vw;
+  float: none;
+}
+
+#edit{
+  width: 5vw;
+}
+
+#browse{
+  left: 10px;
+}

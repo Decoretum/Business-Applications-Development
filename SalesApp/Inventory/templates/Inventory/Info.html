@@ -10,6 +10,18 @@
     <title> Product Information </title>
 </head>
 <body>
-    
+    {% block content %}
+    <br>
+        <div class="container">
+            <div class="Largetext"> Product Name : {{P.Name}}</div>
+            <span class="bodytext"> Description : {{P.Description}} </span> <br><br>
+            <div class="Largetext"> Manufacturer : </div> <span class="bodytext"> {{P.Manufacturer}} </span> <br><br>
+            <div class="Largetext"> Length : </div> <span class="bodytext"> {{P.Length}} </span> <br> <br>
+            <div class="Largetext"> Cost : </div> <span class="bodytext"> {{P.Cost}} </span> <br> <br>
+            <div class="Largetext"> Contact : </div> <span class="bodytext"> {{P.Contact}} </span> 
+            <a class="Button" href="{% url 'Products' %}" id="browse" style="margin-left: 15vw;"> Browse Products </a> <br> <br>
+        </div>
+        
+    {% endblock %}
 </body>
 </html>

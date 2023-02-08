@@ -157,8 +157,10 @@ def Info(request,pk):
     condition = ""
     if request.user.is_authenticated:
         condition = True
+        CurrentProd = get_object_or_404(Product, pk=pk)
         return render(request, 'Inventory/Info.html',{
-            'C' : condition
+            'C' : condition,
+            'P' : CurrentProd
 
         })
     else:
@@ -166,6 +168,13 @@ def Info(request,pk):
         return render(request, 'Inventory/Info.html',{
             'C' : condition
 
+        })
+def Edit(request,pk):
+    condition = ""
+    if request.user.is_authenticated:
+        condition = True
+        return render(request,'Inventory/edit.html',{
+            'C' : condition
         })
     
 

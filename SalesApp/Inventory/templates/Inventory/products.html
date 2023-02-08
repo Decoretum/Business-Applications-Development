@@ -12,7 +12,7 @@
 <body>
 
     {% block content %}
-    <table class="Frame">
+    <table class="Frame w-[60vw] h-[50vh]">
 
         <tr class="Header"> 
             <th> Image </th>
@@ -24,13 +24,17 @@
         </tr>
     {% if C == True %}
         {% for p in P %}
-        <tr class="Header"> 
+        <tr class="Header w-[25vw]"> 
             <th> N/A as of now </th>
             <th> {{ p.Name }} </th>
             <th> {{ p.Length }} </th>
             <th> {{ p.Manufacturer }} </th>
             <th> {{ p.Stock }} </th>
-            <th> <a class="Button" href="{% url 'order' pk=p.pk %}" id="order"> Order Product </a> <a class="Button" href="{% url 'view' pk=p.pk %}" id="view"> View Information </a> </th>
+            <th class="flex flex-row h-auto border-transparent">
+                 <a class="Button w-auto" href="{% url 'order' pk=p.pk %}"> Order </a>
+                  <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
+                  <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit Info </a> 
+            </th> 
         </tr>
         {% endfor %}
 
