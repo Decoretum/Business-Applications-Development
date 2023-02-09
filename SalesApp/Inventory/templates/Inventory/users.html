@@ -32,40 +32,33 @@
         </div> <br>
 
         <div class="container">
-            {% if not Order %}
-            
-                <div class="bodytext">
-                You haven't ordered a product yet!
-                </div>
-        
-                <br>
-            
-            {% else %}
-                {% for o in Order %}
-                 
-                    {% for P in Products %}
-                        {% if P.Finalorder == o %}
-                        <div class="bodytext">
-                            <b>Order {{o.pk}}</b> <br>
-                            {{ P.Order.Image}} <br>
-                            {{ P.Order.Name}} <br>
-                            {{ P.Order.Manufacturer}} <br>
-                            {{ P.Order.Length}} <br>
-                            {{ P.Quantity}} <br>
-                            Total Cost: {{P.totalcost}}
-                        </div> <br>
-                            {% else %}
+            {% if Order %}
+                {% for a in OrdersAndProds %}
+                    {% if a.0 >= 1 %}
+                        <div class="Largetext"> Order {{a.0}} has no ordered products! </div>
+                        
+                    {% else %}
+                    <div class="Largetext">
+                        Order {{ a.0.Finalorder.pk }}
+                    </div>
+                        {% for b in a %}
+                            <div class="Largetext"> Product: {{b.Order.Name}}</div>
                             <div class="bodytext">
-                                <b>Order {{o.pk}}</b> <br>
-                                Order has not been initialized with transaction
-                            </div> <br>
-                            {% endif %}
+                                {{b.Order.Image}} <Br>
+                                Quantity Ordered: {{b.quantity}} <br>
+                                Cost of Order: {{b.totalcost}} <br>
+                                Item Description: <Br>
+                                Length: {{b.Order.Length}} <br>
+                                Manufacturer: {{b.Order.Manufacturer}} <br>
+                                Remarks: {{b.remarks}}
+                            </div>
+                            <br>
                         {% endfor %}
-
-                    {% endfor %}
+                    {% endif %}
+                {% endfor %}
             {% endif %}
             
-            <a class="Button" href="{% url 'OrderAdded' %}"> Add New Order now </a>
+            <a class="Button" href="{% url 'OrderAdded' %}"> Add New Order now </a> <a class="Button" href="{% url 'UnfTrans' %}"> Edit Transaction </a>
         </div>
     {% endblock %}
 </body>

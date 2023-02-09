@@ -107,36 +107,56 @@ def Login(request):
     else:
         return render(request,'Inventory/Login.html')
 
-''' Logic of Users, this will be primarly front-end, no editting of transaction, but you can create new order here 
-    This will be where unfinished orders will be 
-'''
-def ShowOrders(request,Name,Cost,Length,Remark,Image,Manufacturer):
-    #I will make a hashtable
-    Order = {}
-    Order["Name"] = Name
-    Order["Cost"] = Cost
-    Order["Length"] = Length
-    Order["Remark"] = Remark
-    Order["Image"] = Image
-    Order["Manufac"] = Manufacturer
-    return Order
+''' 
 
+Logic of Users, this will be primarly front-end, with a button for editting of transaction, and you can create new order here 
+This will be where unfinished orders will be 
+
+architecture of code
+
+1. array with order numbers
+2. create an array per order number, each array will be filled with hashtables that are for multiple products 
+all product queries
+
+3. iterate through all product queries
+if product final order == product final order:
+then find keyvalue of ordernumber = final order number
+
+'''
 def Users(request):
     condition = ""
     if request.user.is_authenticated:
         condition = True
         currentuser = get_object_or_404(Userperson, username = request.session['user'])
-        OProducts = OrderedProduct.objects.filter(Client = currentuser)
-        FinalOrders = FinalOrder.objects.all()
+        FinalOrders = FinalOrder.objects.all() #order numbers
         ProductsinOrder = OrderedProduct.objects.all()
         Ordersarray=[]
-        for x in FinalOrders:
-            Ordersarray.append(x.pk)
+        Allarray = []
         
-        for x in ProductsinOrder:
-            for y in FinalOrders:
-                if x.Finalorder == y:
-                    Ordersarray.append(ShowOrders(request,x.Order.Name,x.Order.Cost,x.Order.Length,x.remarks,x.Order.Image,x.Order.Manufacturer))
+        for x in FinalOrders: #1 
+            Allarray.append(x.pk)
+
+        for x in range(0,len(FinalOrders)): #2
+            Ordersarray.append([])
+         
+        #3
+        #Might need to use pointers
+        #runtime of O(n^2), but speed not a priority in functional requirement
+        i = 0 #pointer for reference array
+        j = 0 #pointer for main array
+        while i <= len(Allarray) - 1:
+            for prod in ProductsinOrder:
+                if Allarray[i] == prod.Finalorder.pk:
+                    Ordersarray[j].append((prod))
+                
+            i += 1
+            j += 1
+
+        for i in Ordersarray: # O(n)
+            if not i:
+                i.append(Ordersarray.index(i)+1)
+
+        print(Allarray)
         print(Ordersarray)
         
     
@@ -148,11 +168,12 @@ def Users(request):
         'lastname' : request.session['lastname'],
         'birthday' : request.session['birthday'],
         'sex' : request.session['sex'],
-        'OProducts' : OProducts,
         'C' : condition,
         'Order' : FinalOrders,
-        'Products' : ProductsinOrder
+        'Products' : ProductsinOrder,
+        'OrdersAndProds' : Ordersarray
         })
+
     else:
         condition = False
         return render(request,'Inventory/users.html',
@@ -164,7 +185,6 @@ def Users(request):
         'birthday' : request.session['birthday'],
         'sex' : request.session['sex'],
         'userobj' : currentuser,
-        'OProducts' : OProducts,
         'C' : condition})
 
 def logout(request):
@@ -239,12 +259,12 @@ def Order(request,pk):
                 'C' : condition
             })
 
-def Cart(request):
+def EditTrans(request):
     condition = ""
     arraylist = []
     pricelist = 0
     Orders = FinalOrder.objects.all()
-    Products = OrderedProduct.objects.all()
+    OrderedProducts = OrderedProduct.objects.all()
     if request.user.is_authenticated:
         Current = get_object_or_404(Userperson,username = request.session['user'])
         UserProducts = OrderedProduct.objects.all().filter(Client = Current)
@@ -257,7 +277,7 @@ def Cart(request):
                     'C' : condition,
                     'User' : Current,
                     'list' : arraylist,
-                    'CurrentProd' : Products,
+                    'CurrentProd' : OrderedProducts,
                     'O' : Orders,
                     'price' : pricelist
                 })
