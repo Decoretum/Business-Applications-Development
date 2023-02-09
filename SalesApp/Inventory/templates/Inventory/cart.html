@@ -19,7 +19,8 @@
             {% for c in CurrentProd %}
             <div class="container">
                 <div class="bodytext">
-                <div class="Largetext"> Product :  <b> {{c.Order.Name}} </b> </div> 
+                <div class="Largetext"> Order:  <b> {{c.Finalorder.pk}} </b> </div> 
+                Order: <b> {{c.Order.Name}} </b> <br>
                 Order Remarks : {{c.remarks}} <br>
                 Quantity : {{c.quantity}} <br>
                 Total Cost : {{c.totalcost}}

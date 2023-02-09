@@ -107,6 +107,20 @@ def Login(request):
     else:
         return render(request,'Inventory/Login.html')
 
+''' Logic of Users, this will be primarly front-end, no editting of transaction, but you can create new order here 
+    This will be where unfinished orders will be 
+'''
+def ShowOrders(request,Name,Cost,Length,Remark,Image,Manufacturer):
+    #I will make a hashtable
+    Order = {}
+    Order["Name"] = Name
+    Order["Cost"] = Cost
+    Order["Length"] = Length
+    Order["Remark"] = Remark
+    Order["Image"] = Image
+    Order["Manufac"] = Manufacturer
+    return Order
+
 def Users(request):
     condition = ""
     if request.user.is_authenticated:
@@ -115,17 +129,16 @@ def Users(request):
         OProducts = OrderedProduct.objects.filter(Client = currentuser)
         FinalOrders = FinalOrder.objects.all()
         ProductsinOrder = OrderedProduct.objects.all()
-        array = []
-        Orderarray=[]
-        for x in OProducts:
-            array.append(x.Client)
+        Ordersarray=[]
         for x in FinalOrders:
-            print(x)
-  
-        '''for x in ProductsinOrder:
+            Ordersarray.append(x.pk)
+        
+        for x in ProductsinOrder:
             for y in FinalOrders:
                 if x.Finalorder == y:
-                    print(x.Order.Name)'''
+                    Ordersarray.append(ShowOrders(request,x.Order.Name,x.Order.Cost,x.Order.Length,x.remarks,x.Order.Image,x.Order.Manufacturer))
+        print(Ordersarray)
+        
     
         return render(request,'Inventory/users.html',
         {'username' : request.session['user'],
@@ -152,8 +165,7 @@ def Users(request):
         'sex' : request.session['sex'],
         'userobj' : currentuser,
         'OProducts' : OProducts,
-        'C' : condition,
-        'array' : array})
+        'C' : condition})
 
 def logout(request):
     print('logout')
@@ -231,6 +243,8 @@ def Cart(request):
     condition = ""
     arraylist = []
     pricelist = 0
+    Orders = FinalOrder.objects.all()
+    Products = OrderedProduct.objects.all()
     if request.user.is_authenticated:
         Current = get_object_or_404(Userperson,username = request.session['user'])
         UserProducts = OrderedProduct.objects.all().filter(Client = Current)
@@ -243,7 +257,8 @@ def Cart(request):
                     'C' : condition,
                     'User' : Current,
                     'list' : arraylist,
-                    'CurrentProd' : UserProducts,
+                    'CurrentProd' : Products,
+                    'O' : Orders,
                     'price' : pricelist
                 })
     else:

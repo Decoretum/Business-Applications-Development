@@ -32,7 +32,7 @@
         </div> <br>
 
         <div class="container">
-            {% if Order == None %}
+            {% if not Order %}
             
                 <div class="bodytext">
                 You haven't ordered a product yet!
@@ -40,9 +40,9 @@
         
                 <br>
             
-            {% elif Order != None %}
+            {% else %}
                 {% for o in Order %}
-                
+                 
                     {% for P in Products %}
                         {% if P.Finalorder == o %}
                         <div class="bodytext">
@@ -52,7 +52,7 @@
                             {{ P.Order.Manufacturer}} <br>
                             {{ P.Order.Length}} <br>
                             {{ P.Quantity}} <br>
-                            Total Cost: {{o.TotalCost}}
+                            Total Cost: {{P.totalcost}}
                         </div> <br>
                             {% else %}
                             <div class="bodytext">
