@@ -6,6 +6,8 @@ from django.contrib.auth.models import User, auth
 from django.template import loader
 from django.http import HttpResponse
 from django.core import serializers
+import random
+import string
 
 # Create your views here.
 def home(request):
@@ -287,13 +289,30 @@ def EditTrans(request):
                 'C' : condition
             })
 
+def VerifID(request):
+    ID = []
+    for x in range(12):
+        chooser = random.randint(1,2)
+        if chooser == 1:
+            randomizerlet = random.choice(string.ascii_letters)
+            x = randomizerlet 
+            ID.append(str(x))
+        elif chooser == 2:
+            randomizernum = random.randint(1,9)
+            x = randomizernum
+            ID.append(str(x))  
+
+    word = ''.join(ID)
+    return word
+
 def AddOrder(request):
     if request.user.is_authenticated:
         currentuser = get_object_or_404(Userperson, username = request.session['user'])
         OProducts = OrderedProduct.objects.filter(Client = currentuser)
         array = []
         condition = True
-        FinalOrder.objects.create()
+        Order = FinalOrder.objects.create(OrderID = VerifID(request))
+        Order.save()
         return redirect('User')
           
 

@@ -50,6 +50,8 @@ class FinalOrder(models.Model):
     TotalCost = models.CharField(max_length=20)
     ProductInfo = models.CharField(max_length=400)
     Finished = models.IntegerField(default=0) #0 is for not yet finished
+    OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)
+    OrderID = models.CharField(max_length=13, null=True)
     objects = models.Manager()
 
 

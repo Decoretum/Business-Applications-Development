@@ -39,15 +39,20 @@
                         
                     {% else %}
                     <div class="Largetext">
-                        Order {{ a.0.Finalorder.pk }}
+                        Order {{ a.0.Finalorder.pk }} <Br>
                     </div>
+
+                    <div class="Largetext inline"> Order ID: </div> {{ a.0.Finalorder.OrderID }} <br>
+                    <div class="Largetext inline"> Order Date: </div> {{ a.0.Finalorder.OrderDate }} <br>
+                    
+                  
                         {% for b in a %}
                             <div class="Largetext"> Product: {{b.Order.Name}}</div>
                             <div class="bodytext">
                                 {{b.Order.Image}} <Br>
                                 Quantity Ordered: {{b.quantity}} <br>
                                 Cost of Order: {{b.totalcost}} <br>
-                                Item Description: <Br>
+                                Item Description: {{b.Order.Description}} <Br>
                                 Length: {{b.Order.Length}} <br>
                                 Manufacturer: {{b.Order.Manufacturer}} <br>
                                 Remarks: {{b.remarks}}
