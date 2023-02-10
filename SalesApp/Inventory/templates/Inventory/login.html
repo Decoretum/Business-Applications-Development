@@ -10,14 +10,15 @@
     <title>Document</title>
 </head>
 <body>
-    {% block header %}
+    {% block header %} 
+    <br>
     <div class="unfinished header">
         DecoreManufacturing Login Site
     </div>
     {% endblock %}
     
     {% block content %}
-    <br>
+    <br><br>
     
         <form method="POST" action = "{% url 'Login' %}" autocomplete="off"> {% csrf_token %}
             <div class="formblock">

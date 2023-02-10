@@ -30,7 +30,7 @@
             <th> {{ p.Length }} </th>
             <th> {{ p.Manufacturer }} </th>
             <th> {{ p.Stock }} </th>
-            <th class="flex flex-row h-auto border-transparent">
+            <th class="actions">
                  <a class="Button w-auto" href="{% url 'order' pk=p.pk %}"> Add Transaction </a>
                   <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
                   <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit Info </a> 

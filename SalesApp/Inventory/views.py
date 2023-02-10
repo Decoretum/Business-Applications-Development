@@ -237,7 +237,6 @@ def Order(request,pk):
             OrderedProduct.objects.create(Client = CUser, Order = CurrentProd, 
             remarks = remark, quantity = quantvalue, totalcost = totalcost3, Finalorder = ChosenOrder)
             #Product.objects.filter(pk=pk).update(Stock -= quantvalue )
-            CurrentProd.Stock -= int(quantvalue)
             CurrentProd.save()
             
             return redirect('Products')
@@ -274,8 +273,7 @@ def EditTrans(request):
             arraylist.append(userp.Client)
             pricelist += userp.totalcost
         condition = True
-        if UserProducts != None:
-            return render(request,'Inventory/cart.html',{ 
+        return render(request,'Inventory/cart.html',{ 
                     'C' : condition,
                     'User' : Current,
                     'list' : arraylist,
@@ -288,6 +286,91 @@ def EditTrans(request):
         return render(request,'Inventory/cart.html',{ 
                 'C' : condition
             })
+
+#This will lead to the confirm order page, where quantity, product price, and others will be updated to confirm change in transaction
+def ChangeTrans(request,pk):
+    condition = ""
+    ChosenTrans = get_object_or_404(OrderedProduct, pk=pk)
+    quant = ChosenTrans.Order.Stock
+    prods = Product.objects.all()
+    currentq = ChosenTrans.quantity
+    currentprod = ChosenTrans.Order.Name
+    stocky = []
+    prody = []
+
+    for x in range(1,quant+1):
+        stocky.append(x)
+
+    for x in prods:
+        prody.append(x.Name)
+
+    if request.method == 'POST':
+        print('Authenticated!')
+        print(ChosenTrans.pk)
+        condition = True
+        
+        request.session['OrderedPRem'] = ChosenTrans.pk
+        request.session['OrderPname'] = request.POST.get('proddrop')
+        request.session['manufacturer'] = request.POST.get('Manufacturer')
+        request.session['Remarks'] = request.POST.get('Description')
+        if request.session['OrderPname'] == "":
+            request.session['OrderPname'] = ChosenTrans.Order.Name
+            
+        return redirect('confirmorder', pk)
+
+    else:
+        condition = True
+        return render(request,'Inventory/Editorder.html',{
+                    'C' : condition,
+                    'K' : ChosenTrans,
+                    'Prod' : currentprod,
+                    'A' : stocky,
+                    'P' : prody,
+                    'Q' : currentq
+            })
+
+
+#Confirmation, updated data should be presented from ChangeTrans
+def ConfirmTrans(request,pk):
+    ChosenTrans = get_object_or_404(OrderedProduct, pk=request.session.get('OrderedPRem'))
+    orderprodname = request.session.get('OrderPname')
+    remarks = request.session.get('Remarks')
+    Newproduct = get_object_or_404(Product, Name = orderprodname)
+    stock = Newproduct.Stock
+    stocka = []
+    condition = ""
+    for i in range(1,stock+1):
+        stocka.append(i)
+    if request.user.is_authenticated:
+        condition = True
+        if request.method == "POST":
+            if q == '':
+                q = ChosenTrans.quantity
+            ChosenTrans.quantity = int(q)
+            ChosenTrans.Order = get_object_or_404(Product, Name=orderprodname)
+            ChosenTrans.Order.Stock -= int(q)
+            ChosenTrans.save()
+            return redirect('confirmorder')
+
+        elif request.GET.get('Next') == "Next":
+            print('GOT IT')
+            request.session['OrderPRem'] = None
+            return redirect('editorder', pk)
+
+        else:
+            return render(request,'Inventory/confirmorder.html',{
+                'OrderedP' : ChosenTrans,
+                'C' : condition,
+                'Prod' : Newproduct,
+                'stock' : stocka,
+                'Rem' : remarks
+            })
+        
+        
+        
+
+
+   
 
 def VerifID(request):
     ID = []
@@ -315,12 +398,6 @@ def AddOrder(request):
         Order.save()
         return redirect('User')
           
-
-def ConfirmOrder(request):
-    if request.user.is_authenticated:
-        Current = get_object_or_404(Userperson,username = request.session['user'])
-    else:
-        pass
     
 def Developer(request):
     condition = ''
