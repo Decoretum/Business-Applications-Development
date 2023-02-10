@@ -34,21 +34,35 @@
         <div class="container">
             {% if Order %}
                 {% for a in OrdersAndProds %}
-                    {% if a.0 >= 1 %}
-                        <div class="Largetext"> Order {{a.0}} has no ordered products! </div>
+                    {% if a.1 == None %}
+                        <div class="Largetext"> Order {{a.0}} </div>
+                        <div class="bodytext" style="margin-left: 0.5vw;"> 
+                            No products yet! <br>
+                            {% for o in Order %}
+                                {% if o.pk == a.0 %}
+                            Order ID: {{o.OrderID}} <br>
+                            Order Date: {{o.OrderDate}}
+                                {% endif %}
+                            {% endfor %}
+
+                        </div>
                         
                     {% else %}
                     <div class="Largetext">
-                        Order {{ a.0.Finalorder.pk }} <Br>
+                        Order {{ a.1.Finalorder.pk }} <Br>
                     </div>
 
-                    <div class="Largetext inline"> Order ID: </div> {{ a.0.Finalorder.OrderID }} <br>
-                    <div class="Largetext inline"> Order Date: </div> {{ a.0.Finalorder.OrderDate }} <br>
                     
+                    <div class="Largetext inline" > Order ID: </div> <span style="margin-left: 0.5vw;"> {{ a.1.Finalorder.OrderID }} </span> <br>
+                    <div class="Largetext inline"> Order Date: </div> <span style="margin-left: 0.5vw;"> {{ a.1.Finalorder.OrderDate }} </span> <br>
+    
                   
                         {% for b in a %}
+                            {% if b > 0  %}
+                            
+                            {% else %}
                             <div class="Largetext"> Product: {{b.Order.Name}}</div>
-                            <div class="bodytext">
+                            <div class="bodytext" style="margin-left: 0.5vw;">
                                 {{b.Order.Image}} <Br>
                                 Quantity Ordered: {{b.quantity}} <br>
                                 Cost of Order: {{b.totalcost}} <br>
@@ -58,13 +72,18 @@
                                 Remarks: {{b.remarks}}
                             </div>
                             <br>
+
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
             {% endif %}
-            
-            <a class="Button" href="{% url 'OrderAdded' %}"> Add New Order now </a> <a class="Button" style="margin-left: 10px" href="{% url 'UnfTrans' %}"> Edit a Transaction </a>
+            <div style="margin-top:2.5vh">
+                <a class="Button" href="{% url 'OrderAdded' %}"> Add New Order now </a> <a class="Button" style="margin-left: 10px" href="{% url 'UnfTrans' %}"> Edit a Transaction </a>
+            </div>
+            <br>
         </div>
+        <Br><br>
     {% endblock %}
 </body>
 </html>

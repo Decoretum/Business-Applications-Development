@@ -139,7 +139,7 @@ def Users(request):
             Allarray.append(x.pk)
 
         for x in range(0,len(FinalOrders)): #2
-            Ordersarray.append([])
+            Ordersarray.append([Allarray[x]])
          
         #3
         #Might need to use pointers
