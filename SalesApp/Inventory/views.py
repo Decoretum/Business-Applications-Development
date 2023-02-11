@@ -9,7 +9,7 @@ from django.core import serializers
 import random
 import string
 
-# Create your views here.
+
 def home(request):
     condition = ''
     if request.user.is_authenticated:
@@ -24,7 +24,7 @@ def home(request):
             request, 'Inventory/home.html', {
             'C' : condition
             })
-    #Product.objects.create(Name = "NanoLaser",Brand = "NanoTechPH", Color = "Blue",Cost = "P5000")
+  
  
 
 def Products(request):
@@ -288,6 +288,7 @@ def EditTrans(request):
             })
 
 #This will lead to the confirm order page, where quantity, product price, and others will be updated to confirm change in transaction
+#Ito para sa akin yung pinakamahirap na ginawa ko so far for this project. I needed to simulate a UX case na walang pipiliing dropdown option ang user.
 def ChangeTrans(request,pk):
     condition = ""
     ChosenTrans = get_object_or_404(OrderedProduct, pk=pk)
@@ -331,11 +332,19 @@ def ChangeTrans(request,pk):
 
 
 #Confirmation, updated data should be presented from ChangeTrans
+''' New updated fields for ordered product object would be : 
+    Product
+    Ordered prod remarks
+    ordered prod quantity
+    ordered prod totalcost
+'''
 def ConfirmTrans(request,pk):
-    ChosenTrans = get_object_or_404(OrderedProduct, pk=request.session.get('OrderedPRem'))
-    orderprodname = request.session.get('OrderPname')
-    remarks = request.session.get('Remarks')
-    Newproduct = get_object_or_404(Product, Name = orderprodname)
+
+    ChosenTrans = get_object_or_404(OrderedProduct, pk=request.session.get('OrderedPRem')) #Orderedproduct
+    orderprodname = request.session.get('OrderPname') #Orderedproductpk
+    remarks = request.session.get('Remarks') #remarks
+    Newproduct = get_object_or_404(Product, Name = orderprodname) #new product
+
     stock = Newproduct.Stock
     stocka = []
     condition = ""
@@ -344,13 +353,17 @@ def ConfirmTrans(request,pk):
     if request.user.is_authenticated:
         condition = True
         if request.method == "POST":
+            Newremarks = request.POST.get('Description')
+            q = request.POST.get('drop')
             if q == '':
                 q = ChosenTrans.quantity
             ChosenTrans.quantity = int(q)
             ChosenTrans.Order = get_object_or_404(Product, Name=orderprodname)
-            ChosenTrans.Order.Stock -= int(q)
+            #ChosenTrans.Order.Stock -= int(q) no removing yet since order is not confirmed, just edited
+            ChosenTrans.remarks = Newremarks
+            ChosenTrans.totalcost = request.POST.get('totalcost')
             ChosenTrans.save()
-            return redirect('confirmorder')
+            return redirect('UnfTrans')
 
         elif request.GET.get('Next') == "Next":
             print('GOT IT')

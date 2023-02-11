@@ -11,20 +11,27 @@
 </head>
 <body>
     {% block content %}
-    <div class="Largetext"> Product: <span id ='productname'>{{Prod.Name}}</span> </div>
-    <div class="Largetext"> Product Price: <span id ='productcost'>{{Prod.Cost}}</span> </div>
-            <div class="Largetext"> Quantity </div>
-            <select type="text" id="drop" name="drop" style="display:inline; margin-left: 5vw;">
-                {% for x in stock %}
-                    <option type="text" id="num" name="num"> {{x}} </option>
-                {% endfor %}
-            </select>
+    <br>
+    <form method="POST" action="">{% csrf_token %}
+        <div class="container">
+            <div class="Largetext"> Product: <span id ='productname'>{{Prod.Name}}</span> </div>
+            <div class="Largetext"> Product Price: <span id ='productcost'>{{Prod.Cost}}</span> </div>
+                <div class="Largetext"> Quantity </div>
+                <select type="text" id="drop" name="drop" style="display:inline; margin-left: 5vw;">
+                    {% for x in stock %}
+                        <option type="text" id="num" name="num"> {{x}} </option>
+                    {% endfor %}
+                </select>
             <div class="Largetext"> Total Cost </div>
             <input type="text" class="forminput" name="totalcost" id="totalcost" value="{{Prod.Cost}}" style="margin-left: 5vw;"> 
             <div class="Largetext"> Remarks </div>
             <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 5vw;"> {{Rem}} </textarea>
+            <button class="Button" type="submit" style="width: 10vw;"> Submit Change in Transaction </button>
+        </div>
+    </form>
+
             <form method="get">
-                <button class="Button ml-20"  type="submit" name="Next" value="Next"> Go back </button> <!--href="{% url 'editorder' pk=OrderedP.pk %}-->
+                <button class="Button ml-20"  type="submit" name="Next" value="Next" style="position:relative; margin-left: 60vw;"> Go back </button> <!--href="{% url 'editorder' pk=OrderedP.pk %}-->
             </form>
             
     <script>
