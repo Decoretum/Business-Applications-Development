@@ -63,7 +63,7 @@
                             {% else %}
                             <div class="Largetext"> Product: {{b.Order.Name}}</div>
                             <div class="bodytext" style="margin-left: 0.5vw;">
-                                {{b.Order.Image}} <Br>
+                                <img src="{{ b.Order.Image.url }}"> <Br>
                                 Quantity Ordered: {{b.quantity}} <br>
                                 Cost of Order: {{b.totalcost}} <br>
                                 Item Description: {{b.Order.Description}} <Br>

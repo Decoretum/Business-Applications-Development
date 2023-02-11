@@ -14,6 +14,7 @@
     <br>
     <form method="POST" action="">{% csrf_token %}
         <div class="container">
+            <img src="{{ Prod.Image.url }}">
             <div class="Largetext"> Product: <span id ='productname'>{{Prod.Name}}</span> </div>
             <div class="Largetext"> Product Price: <span id ='productcost'>{{Prod.Cost}}</span> </div>
                 <div class="Largetext"> Quantity </div>
