@@ -61,7 +61,7 @@ class OrderedProduct(models.Model):
     remarks = models.CharField(max_length=200)
     quantity = models.IntegerField(default=0)
     totalcost = models.IntegerField(default=0)
-    Finalorder = models.ForeignKey(FinalOrder, on_delete=models.PROTECT, default=None)
+    Finalorder = models.ForeignKey(FinalOrder, on_delete=models.CASCADE, default=None)
     objects = models.Manager()
     
 
