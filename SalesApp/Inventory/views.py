@@ -154,10 +154,6 @@ def Users(request):
             i += 1
             j += 1
 
-        for i in Ordersarray: # O(n)
-            if not i:
-                i.append(Ordersarray.index(i)+1)
-
         print(Allarray)
         print(Ordersarray)
         
