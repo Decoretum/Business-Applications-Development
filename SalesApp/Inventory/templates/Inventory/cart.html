@@ -14,8 +14,6 @@
     <br><br>
         
     <div class="Largetext"> Unconfirmed Orders </div> 
-        {% if User in list %}
-
             {% for c in CurrentProd %}
             <div class="container">
                 <div class="bodytext">
@@ -29,13 +27,6 @@
             </div>
             <br>
             {% endfor %}
-
-        <div class="Largetext"> Total Cost: {{price}}</div>
-        {% elif User not in list %}
-        <div class="container">
-            <div class="largetext"> You have not ordered yet! </div>
-        </div>
-        {% endif %}
 
 
 

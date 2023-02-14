@@ -101,6 +101,7 @@ def Login(request):
             request.session['lastname'] = userobj.last_name
             request.session['birthday'] = str(userobj.birthday)
             request.session['sex'] = userobj.sex
+            request.session['state'] = "create"
             return redirect('home')
         else:
             messages.info(request,'Invalid Login Credentials')
@@ -214,35 +215,144 @@ def Edit(request,pk):
         return render(request,'Inventory/edit.html',{
             'C' : condition
         })
-    
+
+def VerifID(request):
+    ID = []
+    for x in range(12):
+        chooser = random.randint(1,2)
+        if chooser == 1:
+            randomizerlet = random.choice(string.ascii_letters)
+            x = randomizerlet 
+            ID.append(str(x))
+        elif chooser == 2:
+            randomizernum = random.randint(1,9)
+            x = randomizernum
+            ID.append(str(x))  
+
+    word = ''.join(ID)
+    return word
+
+
+def CreateOrder(request):
+    condition = ""
+    if request.user.is_authenticated:
+        condition = True
+        Orders = FinalOrder.objects.all()
+        Products = Product.objects.all()
+        if request.method == "POST":
+            request.session['Remarks'] = request.POST.get('remark')
+            request.session['productname'] = request.POST.get('proddrop')
+            ChosenProduct = get_object_or_404(Product, Name = request.session['productname'])
+            return redirect('confirmcreateorder', pk=ChosenProduct.pk)
+        else:
+            return render(request,'Inventory/MakeOrder.html',{ 
+                'O' : Orders,
+                'P' : Products,
+                'C' : condition
+            })
+
+def ConfirmOrder(request,pk):
+    ChosenProduct = get_object_or_404(Product, pk=pk) #product
+    remarks = request.session.get('Remarks') #remarks
+
+    stock = ChosenProduct.Stock
+    stocka = []
+    condition = ""
+    for i in range(1,stock+1):
+        stocka.append(i)
+    if request.user.is_authenticated:
+        condition = True
+        if request.method == "POST":
+            q = request.POST.get('drop')
+            Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
+
+            if int(q) == 1:
+                Cost = int(ChosenProduct.Cost)
+            else:
+                Cost = int(request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))])
+                
+            remarks = remarks
+            OrderID = AddOrder(request)
+            NewOrderProduct = OrderedProduct.objects.create(Order = ChosenProduct, remarks = remarks, quantity = q, totalcost = Cost, Finalorder = OrderID)
+
+            #ChosenTrans.Order.Stock -= int(q) no removing yet since order is not confirmed, just edited
+            NewOrderProduct.save()
+            if request.POST.get('More') == "More":
+                print('MORE')
+                return redirect('createorder')
+            else:
+                return redirect('Products')
+
+        elif request.GET.get('Back') == "Back":
+            print('GOT IT')
+            request.session['productname'] = None
+            return redirect('createorder')
+
+        elif request.GET.get('More') == "More":
+            q = request.POST.get('drop')
+            print(q)
+            print(request.POST.get('totalcost'))
+            Cost = request.POST.get('totalcost')[1:len(str(request.POST.get('totalcost')))]
+
+            if int(q) == 1:
+                Cost = int(ChosenProduct.Cost)
+            else:
+                Cost = int(str(request.POST.get('totalcost')[1:len(str(request.POST.get('totalcost')))]))
+            
+            remarks = remarks
+            OrderID = AddOrder(request)
+            NewOrderProduct = OrderedProduct.objects.create(Order = ChosenProduct, remarks = remarks, quantity = q, totalcost = Cost, Finalorder = OrderID)
+
+            #ChosenTrans.Order.Stock -= int(q) no removing yet since order is not confirmed, just edited
+            NewOrderProduct.save()
+            print('NEW PRODUCT')
+            return redirect('createorder')
+
+        else:
+            return render(request,'Inventory/confirmcreateorder.html',{
+                'OrderedP' : ChosenProduct,
+                'C' : condition,
+                'stocka' : stocka,
+                'Rem' : remarks
+            })
+        
+'''
+AddOrder will be a component of another view functionality
+
+'''
+def AddOrder(request):
+    if request.user.is_authenticated:
+        Order = FinalOrder.objects.create(OrderID = VerifID(request))
+        Order.save()
+        return Order
 
 def Order(request,pk):
+    state = ""
     condition = ""
     if request.user.is_authenticated:
         condition = True
         CurrentProd = get_object_or_404(Product, pk=pk)
         print(type(CurrentProd.pk))
         Orders = FinalOrder.objects.all()
-        CUser = get_object_or_404(Userperson, username = request.session['user'])
         if request.method == "POST":
             quantvalue = request.POST.get('drop')
             totalcost3 = request.POST.get('totalcost')
             remark = request.POST.get('remark')
             ordernumber = request.POST.get('ordername')
             ChosenOrder = get_object_or_404(FinalOrder, pk = ordernumber)
-            OrderedProduct.objects.create(Client = CUser, Order = CurrentProd, 
+            OrderedProduct.objects.create(Order = CurrentProd, 
             remarks = remark, quantity = quantvalue, totalcost = totalcost3, Finalorder = ChosenOrder)
             #Product.objects.filter(pk=pk).update(Stock -= quantvalue )
             CurrentProd.save()
             
             return redirect('Products')
         else:
-            ordersarray = []
             array = []
             P = Product.objects.all()
             for x in range(CurrentProd.Stock):
                 array.append(x+1)
             return render(request,'Inventory/order.html',{ 
+                'state' : state,
                 'O' : Orders,
                 'P' : P,
                 'Current' : CurrentProd,
@@ -258,21 +368,13 @@ def Order(request,pk):
 
 def EditTrans(request):
     condition = ""
-    arraylist = []
     pricelist = 0
     Orders = FinalOrder.objects.all()
     OrderedProducts = OrderedProduct.objects.all()
     if request.user.is_authenticated:
-        Current = get_object_or_404(Userperson,username = request.session['user'])
-        UserProducts = OrderedProduct.objects.all().filter(Client = Current)
-        for userp in UserProducts:
-            arraylist.append(userp.Client)
-            pricelist += userp.totalcost
         condition = True
         return render(request,'Inventory/cart.html',{ 
                     'C' : condition,
-                    'User' : Current,
-                    'list' : arraylist,
                     'CurrentProd' : OrderedProducts,
                     'O' : Orders,
                     'price' : pricelist
@@ -335,7 +437,7 @@ def ChangeTrans(request,pk):
     ordered prod totalcost
 '''
 def ConfirmTrans(request,pk):
-
+    state = request.session.get('state')
     ChosenTrans = get_object_or_404(OrderedProduct, pk=request.session.get('OrderedPRem')) #Orderedproduct
     orderprodname = request.session.get('OrderPname') #Orderedproductpk
     remarks = request.session.get('Remarks') #remarks
@@ -351,13 +453,16 @@ def ConfirmTrans(request,pk):
         if request.method == "POST":
             Newremarks = request.POST.get('Description')
             q = request.POST.get('drop')
-            if q == '':
-                q = ChosenTrans.quantity
+            if int(q) == 1:
+                print('q is 1')
+                ChosenTrans.totalcost = Newproduct.Cost[1:len(Newproduct.Cost)]
+            else:
+                ChosenTrans.totalcost = request.POST.get('totalcost')
+            
             ChosenTrans.quantity = int(q)
             ChosenTrans.Order = get_object_or_404(Product, Name=orderprodname)
             #ChosenTrans.Order.Stock -= int(q) no removing yet since order is not confirmed, just edited
             ChosenTrans.remarks = Newremarks
-            ChosenTrans.totalcost = request.POST.get('totalcost')
             ChosenTrans.save()
             return redirect('UnfTrans')
 
@@ -372,40 +477,8 @@ def ConfirmTrans(request,pk):
                 'C' : condition,
                 'Prod' : Newproduct,
                 'stock' : stocka,
-                'Rem' : remarks
+                'Rem' : remarks,
             })
-        
-        
-        
-
-
-   
-
-def VerifID(request):
-    ID = []
-    for x in range(12):
-        chooser = random.randint(1,2)
-        if chooser == 1:
-            randomizerlet = random.choice(string.ascii_letters)
-            x = randomizerlet 
-            ID.append(str(x))
-        elif chooser == 2:
-            randomizernum = random.randint(1,9)
-            x = randomizernum
-            ID.append(str(x))  
-
-    word = ''.join(ID)
-    return word
-
-def AddOrder(request):
-    if request.user.is_authenticated:
-        currentuser = get_object_or_404(Userperson, username = request.session['user'])
-        OProducts = OrderedProduct.objects.filter(Client = currentuser)
-        array = []
-        condition = True
-        Order = FinalOrder.objects.create(OrderID = VerifID(request))
-        Order.save()
-        return redirect('User')
           
     
 def Developer(request):

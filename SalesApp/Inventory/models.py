@@ -56,7 +56,6 @@ class FinalOrder(models.Model):
 
 
 class OrderedProduct(models.Model):
-    Client = models.ForeignKey(Userperson, on_delete=models.CASCADE)
     Order = models.ForeignKey(Product, on_delete=models.CASCADE)
     remarks = models.CharField(max_length=200)
     quantity = models.IntegerField(default=0)

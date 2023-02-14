@@ -63,7 +63,6 @@
                             {% else %}
                             <div class="Largetext"> Product: {{b.Order.Name}}</div>
                             <div class="bodytext" style="margin-left: 0.5vw;">
-                                <img src="{{ b.Order.Image.url }}"> <Br>
                                 Quantity Ordered: {{b.quantity}} <br>
                                 Cost of Ordered Product: P{{b.totalcost}} <br>
                                 Item Description: {{b.Order.Description}} <Br>
@@ -79,7 +78,7 @@
                 {% endfor %}
             {% endif %}
             <div style="margin-top:2.5vh">
-                <a class="Button" href="{% url 'OrderAdded' %}"> Add New Order now </a> <a class="Button" style="margin-left: 10px" href="{% url 'UnfTrans' %}"> Edit a Transaction </a>
+                <a class="Button" href="{% url 'OrderAdded' %}"> Add New Order now </a> 
             </div>
             <br>
         </div>

@@ -15,27 +15,28 @@
         <form method="POST" action="">{% csrf_token %}
             <div class="container">
                 <img src="{{ Prod.Image.url }}">
-                <div class="Largetext"> Product: <span id ='productname'>{{Prod.Name}}</span> </div>
-                <div class="Largetext"> Product Price: <span id ='productcost'>{{Cost}}</span> </div>
+                <div class="Largetext"> Product: <span id ='productname'>{{OrderedP.Name}}</span> </div>
+                <div class="Largetext"> Product Price: <span id ='productcost'>{{OrderedP.Cost}}</span> </div>
                     <div class="Largetext"> Quantity </div>
-                    <select type="number" id="drop" name="drop" style="display:inline; margin-left: 5vw;">
-                        {% for x in stock %}
+                    <select type="text" id="drop" name="drop" style="display:inline; margin-left: 5vw;">
+                        {% for x in stocka %}
                             <option type="text" id="num" name="num"> {{x}} </option>
                         {% endfor %}
                     </select>
                 <div class="Largetext"> Total Cost </div>
-                <input type="text" class="forminput" name="totalcost" id="totalcost" value="{{Prod.Cost}}" style="margin-left: 5vw;"> 
+                <input type="text" class="forminput" name="totalcost" id="totalcost" value="{{OrderedP.Cost}}" style="margin-left: 5vw;"> 
                 <div class="Largetext"> Remarks </div>
                 <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 5vw;"> {{Rem}} </textarea>
-                <button class="Button" type="submit" style="width: 10vw;"> Submit Change in Transaction </button>
+                <button class="Button" type="submit" style="width: 10vw;"> Submit Order </button>
+                <button class="Button ml-20"  type="submit" name="More" value="More" style="position:relative; margin-left: 1vw;"> Add a Product to this Order </button> 
             </div>
         </form>
-        <form method="get">
-            <button class="Button ml-20"  type="submit" name="Next" value="Next" style="position:relative; margin-left: 60vw;"> Go back </button> <!--href="{% url 'editorder' pk=OrderedP.pk %}-->
+        <form method="get" style="display:flex; position: relative;">
+            <button class="Button ml-20"  type="submit" name="Back" value="Back" style="position:relative; margin-left: 67vw;"> Go back </button> 
         </form>         
             
     <script>
-        let cost = "{{Prod.Cost}}";
+        let cost = "{{OrderedP.Cost}}";
         let chosen = document.getElementById('drop');
         chosen.addEventListener('change',()=>{
             let result = document.getElementById('totalcost');
