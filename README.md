@@ -11,3 +11,8 @@ Plain Javascript is used for client-side rendering of dynamic HTML changes such 
 
 <b> SQL </b> <br>
 SQL will be integrated with the SQLITE3 database in the future.
+
+<br>
+<h1> Running the Server </h1>
+Once Django is installed in the machine, go within the "SalesApp" directory and type: <br>
+python manage.py runserver
