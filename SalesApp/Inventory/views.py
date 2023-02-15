@@ -14,12 +14,16 @@ def home(request):
     condition = ''
     if request.user.is_authenticated:
         condition = True
+        
+        if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
+            print('DELETED CACHE')
+            request.session['Remarks'] = None
+            request.session['productname'] = None
+            request.session['OrderedPRem'] = None
+            request.session['OrderPname'] = None
+            request.session['manufacturer'] = None
+
         request.session['NAVIGATE'] = "home"
-        request.session['Remarks'] = None
-        request.session['productname'] = None
-        request.session['OrderedPRem'] = None
-        request.session['OrderPname'] = None
-        request.session['manufacturer'] = None
         return render(request, 'Inventory/home.html', {
         'C' : condition
         })
@@ -39,12 +43,15 @@ def Products(request):
     P = Product.objects.filter(Stock__gte = 0)
     if request.user.is_authenticated:
         condition = True
+        if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
+            print('DELETED CACHE')
+            request.session['Remarks'] = None
+            request.session['productname'] = None
+            request.session['OrderedPRem'] = None
+            request.session['OrderPname'] = None
+            request.session['manufacturer'] = None
+
         request.session['NAVIGATE'] = "products"
-        request.session['Remarks'] = None
-        request.session['productname'] = None
-        request.session['OrderedPRem'] = None
-        request.session['OrderPname'] = None
-        request.session['manufacturer'] = None
         return render(request, 'Inventory/products.html',{
             'C' : condition,
             'P':P, 
