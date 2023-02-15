@@ -76,10 +76,11 @@
                         {% endfor %}
                     {% endif %}
                 {% endfor %}
+
+            {% else %}
+                <div class="Largetext"> No pending orders! </div>
+
             {% endif %}
-            <div style="margin-top:2.5vh">
-                <a class="Button" href="{% url 'OrderAdded' %}"> Add New Order now </a> 
-            </div>
             <br>
         </div>
         <Br><br>

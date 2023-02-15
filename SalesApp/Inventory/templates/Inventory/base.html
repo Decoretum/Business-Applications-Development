@@ -15,21 +15,32 @@
 <body>
     {% block header %}
     <br>
-    <div class="header flex gap-15">
-        {% if C == True %}
-        <a class="Home" href="{% url 'home' %}"> Home </a>
-        <a class="Products" href="{% url 'Products' %}"> View Steel Inventory </a>
-        <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
-        <a class="User" href="{% url 'User' %}"> Pending Orders </a>
-        <a class="User" href="{% url 'home' %}"> Confirm orders (Not available yet) </a>
+    <form method="POST">
+        <div class="header">
+            {% if C == True %}
+            <a class="Home" href="{% url 'home' %}"> Home </a>
+            <a class="Products" href="{% url 'Products' %}"> View Steel Inventory </a>
+            <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
+            <a class="User" href="{% url 'User' %}"> Pending Orders </a>
+            <a class="User" href="{% url 'home' %}"> Confirm orders (Not available yet) </a>
 
-        {% elif C == False %}
-        <a class="Home" href="{% url 'home' %}"> Home </a>
-        <a class="Products" href="{% url 'Products' %}"> View Steel Inventory </a>
-        <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
-        <a class="User" href="{% url 'Signup' %}"> Signup/Login </a>
-        {% endif %}
-    </div>
+            {% elif C == False %}
+            <a class="Home" href="{% url 'home' %}"> Home </a>
+            <a class="Products" href="{% url 'Products' %}"> View Steel Inventory </a>
+            <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
+            <a class="User" href="{% url 'Signup' %}"> Signup/Login </a>
+            {% endif %}
+        <input id="hide" name="hide" type="hidden" value="">  
+        </div>
+    </form>
+    <script>
+        let button1 = document.querySelector('.header');
+        let input1 = document.getElementById('hide');
+        button1.addEventListener('click', ()=>{
+            console.log('clicked!');
+            input1.value = "DEAD";
+        })
+    </script>
     {% endblock %}
 
     {% block content %}

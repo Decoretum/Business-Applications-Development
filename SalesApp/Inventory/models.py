@@ -47,7 +47,7 @@ class Userperson(models.Model):
 
 #Create a model that is created upon "Add to Cart" button press designated for a user
 class FinalOrder(models.Model):
-    TotalCost = models.CharField(max_length=20)
+    TotalCost = models.IntegerField(default=0)
     ProductInfo = models.CharField(max_length=400)
     Finished = models.IntegerField(default=0) #0 is for not yet finished
     OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)

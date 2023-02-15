@@ -29,8 +29,6 @@
             
             <div class="Largetext"> Remarks </div>
             <textarea type="text" class="forminput" name="Description" id="Description" rows="8"> {{K.remarks}} </textarea>
-            <div class="Largetext"> Contact Details </div>
-            <input type="text" class="forminput" value="{{K.Order.Contact}}" name="Contact" id="Contact"> <br><br>
             <button class="Button" id="submit" type="submit"> <!-- href="{% url 'confirmorder' pk=K.pk %}" --> Change Transaction </button> <a class="Button ml-20" href="{% url 'UnfTrans' %}"> View Pending Transactions </a> <br>
         </div>
     </form>

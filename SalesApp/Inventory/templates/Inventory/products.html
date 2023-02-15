@@ -35,7 +35,6 @@
             <th> {{ p.Manufacturer }} </th>
             <th> {{ p.Stock }} </th>
             <th class="actions">
-                 <a class="Button w-auto" href="{% url 'order' pk=p.pk %}"> Add Transaction </a> <!-- New Order functionality -->
                   <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
                   <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit Info </a> 
             </th> 
