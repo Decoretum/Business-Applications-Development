@@ -7,5 +7,5 @@ let placeholder = document.getElementById('drop');
             console.log(num);
             console.log(cost);
         result.innerHTML = cost;
-
+        console.log('yeho');
         })
