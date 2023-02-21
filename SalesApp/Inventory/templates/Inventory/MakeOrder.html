@@ -28,6 +28,11 @@
             <button class="Button" id="submit" type="submit" style="margin-left: 2vw;">  Next </button> <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'Products' %}"> Go Back to Products </a> <br>
         </div>
     </form>
+    {% for m in messages %}
+    <div class="label" style="margin-top: 3vh;">
+        {{ m }}
+    </div>
+    {% endfor %}
     <br><br>
 
     {% endblock %}

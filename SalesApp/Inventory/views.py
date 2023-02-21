@@ -40,7 +40,7 @@ def home(request):
 def Products(request):
     condition = ""
     User = Userperson.objects.all()
-    P = Product.objects.filter(Stock__gte = 0)
+    P = Product.objects.filter(Stock__gte = 0).order_by('-Stock')
     if request.user.is_authenticated:
         condition = True
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
@@ -290,10 +290,15 @@ def CreateOrder(request):
         Orders = FinalOrder.objects.all()
         Products = Product.objects.all()
         if request.method == "POST":
-            request.session['Remarks'] = request.POST.get('remark')
-            request.session['productname'] = request.POST.get('proddrop')
-            ChosenProduct = get_object_or_404(Product, Name = request.session['productname'])
-            return redirect('confirmcreateorder', pk=ChosenProduct.pk)
+            print(request.POST.get('proddrop'))
+            if request.POST.get('proddrop') == "":
+                messages.info(request,"Choose a product!")
+                return redirect('createorder')
+            else:
+                request.session['Remarks'] = request.POST.get('remark')
+                request.session['productname'] = request.POST.get('proddrop')
+                ChosenProduct = get_object_or_404(Product, Name = request.session['productname'])
+                return redirect('confirmcreateorder', pk=ChosenProduct.pk)
         else:
             return render(request,'Inventory/MakeOrder.html',{ 
                 'O' : Orders,
@@ -323,8 +328,13 @@ def ConfirmOrder(request,pk):
             q = request.POST.get('drop')
             Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
             OrderNum = request.POST.get('Order')
+
             if OrderNum == "New Order":
                 order = AddOrder(request)
+            elif OrderNum == "":
+                print('Select Order!')
+                messages.info(request,"No Order Selected!")
+                return redirect('confirmcreateorder', pk)
             else:
                 order = get_object_or_404(FinalOrder, pk=OrderNum)
           
@@ -333,7 +343,7 @@ def ConfirmOrder(request,pk):
             else:
                 Cost = int(Cost)
                 
-            remarks = remarks
+            remarks = request.POST.get('Description')
             NewOrderProduct = OrderedProduct.objects.create(Order = ChosenProduct, remarks = remarks, quantity = q, totalcost = Cost, Finalorder = order)
             #ChosenTrans.Order.Stock -= int(q) no removing yet since order is not confirmed, just edited
             NewOrderProduct.save()
@@ -369,7 +379,7 @@ def EditTrans(request):
     condition = ""
     pricelist = 0
     Orders = FinalOrder.objects.all()
-    OrderedProducts = OrderedProduct.objects.all()
+    OrderedProducts = OrderedProduct.objects.all().order_by('Finalorder')
     if request.user.is_authenticated:
         condition = True
         return render(request,'Inventory/cart.html',{ 

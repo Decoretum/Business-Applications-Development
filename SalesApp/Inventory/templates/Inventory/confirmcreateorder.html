@@ -41,7 +41,11 @@
                 <button class="Button ml-20"  type="submit" name="Back" value="Back" style="position:relative; margin-left: 1vw;"> Go back </button>  
             </div>
         </form>
-    
+        {% for m in messages %}
+            <div class="label" style="margin-top: 3vh;">
+                {{m}}
+            </div>
+        {% endfor %}
             
     <script>
         let cost = "{{OrderedP.Cost}}";
