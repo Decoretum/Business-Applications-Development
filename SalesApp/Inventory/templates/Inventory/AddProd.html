@@ -1,0 +1,60 @@
+{% extends 'Inventory/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <br><br>
+    <form method="POST" action="{% url 'addproduct' %}">{% csrf_token %}
+        <div class="container">
+            <div class="Largetext"> Image </div>
+            <input type="file" accept="image/*" />
+
+            <div class="Largetext"> Product Name </div> 
+            <input type="text" class="forminput" name="Name" id="Name">
+
+            <div class="Largetext"> Length </div>
+            <input type="text" class="forminput" name="Length" id="Length">
+
+            <div class="Largetext"> Manufacturer Name </div>
+            <input type="text" class="forminput" name="Manufacturer" id="Manufacturer">
+
+            <div class="Largetext"> Manufacturer Location </div>
+            <input type="text" class="forminput" name="Location" id="Location">
+
+            <div class="Largetext"> Color </div>
+            <input type="text" class="forminput" name="Color" id="Color">
+
+            <div class="Largetext"> Cost </div>
+            <input type="text" class="forminput" name="Cost" id="Cost">
+
+            <div class="Largetext"> Stock </div>
+            <input type="text" class="forminput" name="Stock" id="Stock">
+
+            <div class="Largetext"> Description </div>
+            <textarea type="text" class="forminput" name="Description" id="desc" rows="8" placeholder="Type in new Product Description!"> </textarea>
+            
+            <div class="Largetext"> Measurement </div>
+            <input type="text" class="forminput" name="Measurement" id="Measurement" value="{{Prod.Measurement}}">
+
+            <div class="Largetext"> Gross Weight </div>
+            <input type="text" class="forminput" name="Weight" id="Weight" value="{{Prod.GrossWeight}}">
+        
+            <div class="Largetext"> Contact Details </div>
+            <input type="text" class="forminput" name="Contact" id="Contact">
+            <button class="Button" type="submit"> Add Product </button>
+            <a class="Button" href="{% url 'Products' %}"> Back to Products </a
+        </div>
+    </form>
+
+    {% endblock %}
+    
+</body>
+</html>

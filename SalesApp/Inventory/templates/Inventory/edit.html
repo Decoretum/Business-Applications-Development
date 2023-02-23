@@ -12,20 +12,45 @@
 <body>
     {% block content %}
     <br><br>
-    <div class="container">
-        <div class="Largetext"> Image </div>
-        <input type="file" accept="image/*" />
-        <div class="Largetext"> Product Name </div> 
-        <input type="text" class="forminput" name="Name">
-        <div class="Largetext"> Length </div>
-        <input type="text" class="forminput" name="Length">
-        <div class="Largetext"> Manufacturer Name </div>
-        <input type="text" class="forminput" name="Manufacturer">
-        <div class="Largetext"> Product Description </div>
-        <textarea type="text" class="forminput" name="Description" id="desc" rows="8" placeholder="Type in new Product Description!"> </textarea>
-        <div class="Largetext"> Contact Details </div>
-        <input type="text" class="forminput" name="Contact">
-    </div>
+    <form method="POST" action="{% url 'editproduct' pk=Prod.pk %}">{% csrf_token %}
+        <div class="container">
+            <div class="Largetext"> Image </div>
+            <input type="file" name="Image" accept="image/*" />
+
+            <div class="Largetext"> Product Name </div> 
+            <input type="text" class="forminput" name="Name" id="Name" value="{{ Prod.Name }}"> 
+
+            <div class="Largetext"> Length </div>
+            <input type="text" class="forminput" name="Length" id="Length" value="{{Prod.Length}}">
+
+            <div class="Largetext"> Manufacturer Name </div>
+            <input type="text" class="forminput" name="Manufacturer" id="Manufacturer" value="{{Prod.Manufacturer}}">
+
+            <div class="Largetext"> Manufacturer Location </div>
+            <input type="text" class="forminput" name="Location" id="Location" value="{{Prod.ManuLoc}}">
+
+            <div class="Largetext"> Color </div>
+            <input type="text" class="forminput" name="Color" id="Color" value="{{Prod.Color}}">
+
+            <div class="Largetext"> Cost </div>
+            <input type="text" class="forminput" name="Cost" id="Cost" value="{{Prod.Cost}}">
+
+            <div class="Largetext"> Product Description </div>
+            <textarea type="text" class="forminput" name="Description" id="Description" rows="8"> {{Prod.Description}} </textarea>
+            
+            <div class="Largetext"> Measurement </div>
+            <input type="text" class="forminput" name="Measurement" id="Measurement" value="{{Prod.Measurement}}">
+
+            <div class="Largetext"> Gross Weight </div>
+            <input type="text" class="forminput" name="Weight" id="Weight" value="{{Prod.GrossWeight}}">
+
+            <div class="Largetext"> Contact Details </div>
+            <input type="text" class="forminput" name="Contact" id="Contact" value="{{Prod.Contact}}">
+            <button class="Button" type="submit"> Edit Product </button>
+            <a class="Button" href="{% url 'view' pk=Prod.pk %}" id="browse"> Back to Product Information </a> <br> <br>
+
+        </div>
+    </form>
 
     {% endblock %}
 </body>

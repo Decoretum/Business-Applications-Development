@@ -36,6 +36,104 @@ def home(request):
             })
   
  
+def AddProduct(request):
+    condition = ""
+    if request.user.is_authenticated:
+        condition = True
+        if request.method == "POST":
+            imgfile = request.POST.get('Image')
+            if imgfile == None:
+                imgfile = "N/A"
+            name = request.POST.get('Name')
+            length = request.POST.get('Length')
+            manufacturer = request.POST.get('Manufacturer')
+            manuloc = request.POST.get('Location')
+            color = request.POST.get('Color')
+            cost = request.POST.get('Cost')
+            stock = request.POST.get('Stock')
+            desc = request.POST.get('Description')
+            contact = request.POST.get('Contact')
+            meas = request.POST.get('Measurement')
+            weight = request.POST.get('Weight')
+            Product.objects.create(
+                Name = name,
+                Image = imgfile,
+                Manufacturer = manufacturer,
+                ManuLoc = manuloc,
+                Color = color,
+                Length = length,
+                Cost = cost,
+                Stock = stock,
+                Description = desc,
+                Measurement = meas,
+                GrossWeight = weight,
+                Contact = contact,
+            )
+            New = get_object_or_404(Product, Name = name)
+            New.MakeMark()
+
+
+            return redirect ('addproduct')
+        else:
+            return render(
+                request, 'Inventory/AddProd.html',{
+                'C' : condition
+                }
+            )
+        
+    else:
+        pass
+
+def EditProduct(request,pk):
+    condition = ""
+    if request.user.is_authenticated:
+        condition = True
+        Existing = get_object_or_404(Product, pk=pk)
+
+        if request.method == "POST":
+            imgfile = request.POST.get('Image')
+            if imgfile == None:
+                imgfile = None
+            name = request.POST.get('Name')
+            length = request.POST.get('Length')
+            manufacturer = request.POST.get('Manufacturer')
+            manuloc = request.POST.get('Location')
+            color = request.POST.get('Color')
+            cost = request.POST.get('Cost')
+            contact = request.POST.get('Contact')
+
+            desc = request.POST.get('Description')
+            meas = request.POST.get('Measurement')
+            weight = request.POST.get('Weight')
+
+
+            Existing.Name = name
+            if imgfile == None:
+                Existing.Image = imgfile
+
+            Existing.Measurement = meas
+            Existing.GrossWeight = weight
+            Existing.Manufacturer = manufacturer
+            Existing.ManuLoc = manuloc
+            Existing.Color = color
+            Existing.Length = length
+            Existing.Cost = cost
+            Existing.Description = desc
+            Existing.Contact = contact
+            print(Existing.Manufacturer)
+            Existing.MakeMark()
+            return redirect ('view',pk)
+        
+        else:
+            return render(
+                request, 'Inventory/edit.html',{
+                'C' : condition,
+                'Prod' : Existing
+                }
+            )
+        
+    else:
+        pass
 
 def Products(request):
     condition = ""
@@ -266,7 +364,7 @@ def Edit(request,pk):
             'C' : condition
         })
 
-def VerifID(request):
+def VerifID(request): #use for both FinalOrder and OrderedProduct
     ID = []
     for x in range(12):
         chooser = random.randint(1,2)
@@ -282,6 +380,9 @@ def VerifID(request):
     word = ''.join(ID)
     return word
 
+'''
+At this point, Creating an order and an ordered product will cause the following:
+'''
 
 def CreateOrder(request):
     condition = ""
