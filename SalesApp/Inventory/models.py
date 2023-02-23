@@ -86,6 +86,15 @@ class FinalOrder(models.Model):
     Finished = models.IntegerField(default=0) #0 is for not yet finished
     OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)
     #New Fields
+    Place = models.CharField(max_length=50)
+    NumOfBL = models.IntegerField(default=3)
+    PayAt = models.CharField(max_length=40)
+    PlaceDate = models.CharField()
+
+    def PD(self): #call this when confirming the order
+        self.PlaceDate = self.Place + ", " + self.OrderDate
+        super(FinalOrder,self).save()
+    FreightsCharges = models.FloatField(default=None)
     Verification = models.CharField(max_length=13, null=True) #Orderid -> verification
     Shipper = models.ForeignKey(Company.ShipperName, on_delete=models.CASCADE)
     BL = models.ForeignKey(Consignee.BL, on_delete=models.CASCADE)
