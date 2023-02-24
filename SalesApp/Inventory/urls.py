@@ -16,6 +16,7 @@ path('ConfirmCreateOrder/<int:pk>/', views.ConfirmOrder, name='confirmcreateorde
 path('view/<int:pk>/', views.Info, name='view'),
 path('edit/<int:pk>/', views.Edit, name='edit'),
 path('UnfinishedTransactions', views.EditTrans, name='UnfTrans'),
+path('DeleteTrans/<int:pk>/', views.DeleteTrans, name='deltrans'),
 path('editorder/<int:pk>/', views.ChangeTrans, name='editorder'),
 path('confirmorder/<int:pk>/', views.ConfirmTrans, name='confirmorder'),
 path('UserAdded', views.AddOrder, name='OrderAdded'),

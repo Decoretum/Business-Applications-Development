@@ -17,14 +17,23 @@
                 <img src="{{ Prod.Image.url }}">
                 <div class="Largetext"> Product: <span id ='productname'>{{OrderedP.Name}}</span> </div>
                 <div class="Largetext"> Product Price: <span id ='productcost'>{{OrderedP.Cost}}</span> </div>
-                <div class="Largetext"> Order Number </div>
-                    <select type="text" id="Order" name="Order" style="display:inline; margin-left: 5vw;">
-                        <option value=""> Select Order Number </option>
-                        {% for o in Orders %}
-                            <option type="text" id="O" name="rder"> {{o.pk}} </option>
-                        {% endfor %}
-                        <option type="text" id ="New" name="New"> New Order </option>
-                    </select>
+                
+                {% if Order == "" %}
+                <div class="Largetext"> Consignee Name: </div>
+                <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 5vw;" value="Type new Consignee Name"> 
+                
+                <div class="Largetext"> Port of Discharge: </div>
+                <input type="text" class="forminput" name="Port" id="Poirt" style="margin-left: 5vw;" value="Type new Port of Discharge">
+
+                {% else %}
+                <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 5vw;" value="{{Order.BL.Name}}"> 
+                
+                <div class="Largetext"> Port of Discharge: </div>
+                <input type="text" class="forminput" name="Port" id="Poirt" style="margin-left: 5vw;" value="{{Order.BL.PortDischarge}}">
+
+                {% endif %}
+
+
 
                     <div class="Largetext"> Quantity </div>
                     <select type="text" id="drop" name="drop" style="display:inline; margin-left: 5vw;">
@@ -54,10 +63,38 @@
             let result = document.getElementById('totalcost');
             let chosen = document.getElementById('drop');
             let val = chosen.value;
-            console.log(val);
-            console.log(cost);
-            result.value = "P" + parseInt(val) * parseInt(cost.slice(1));
+            result.value = "$" + parseInt(val) * parseInt(cost.slice(1));
         })
+
+        let order = document.getElementById('Order')
+        let person = document.getElementById('Person')
+        order.addEventListener('change',()=>{
+            let obj = {
+
+            }
+            let query = "{% for i in Orders %} {{ i.BL }} {% endfor %}"
+            let queries = query.trim().replaceAll(" ","")
+            let sam = 0;
+            if (queries.length === 0){
+                console.log('empty')
+                person.value = "Type Name of Consignee"
+                console.log("queries.`${sam}`")
+            }
+            else{
+                let data = order.value;
+                let sam = 0;
+            
+
+            }
+           
+            
+        })
+
+        
+        
+
+
+        
     </script>
     {% endblock %}
     

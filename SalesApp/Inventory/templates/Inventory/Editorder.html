@@ -19,7 +19,7 @@
             <input type="file" name="image" id="image" class="m-18" value="{{K.Image}}" accept="image/*" />
             <div class="Largetext"> Product Name </div> 
             <select type="text" id="proddrop" name="proddrop" style="display:inline;">
-                <option value=""> {{K.Order.Name}} </option>
+                <option value=""> {{K.Marks.Name}} </option>
                 {% for p in P %}
                     {% if p != Prod %}
                     <option type="text" id="product" name="product"> {{p}} </option>

@@ -17,12 +17,13 @@
             {% for c in CurrentProd %}
             <div class="container">
                 <div class="bodytext">
-                <div class="Largetext"> Order:  <b> {{c.Finalorder.pk}} </b> </div> 
-                Order: <b> {{c.Order.Name}} </b> <br>
+                <div class="Largetext"> Order:  <b> {{c.OrderID.pk}} </b> </div> 
+                Order: <b> {{c.Marks.Name}} </b> <br>
                 Order Remarks : {{c.remarks}} <br>
                 Quantity : {{c.quantity}} <br>
                 Total Cost : P{{c.totalcost}}
                 <a class="Button" href="{% url 'editorder' pk=c.pk %}"> Edit Transaction </a>
+                <a class="Button" href="{% url 'deltrans' pk=c.pk %}"> Delete Transaction </a>
                 </div>
             </div>
             <br>

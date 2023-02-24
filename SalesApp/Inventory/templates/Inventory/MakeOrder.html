@@ -22,6 +22,15 @@
                     <option type="text" id="product" name="product"> {{p.Name}} </option>
                 {% endfor %}
             </select> 
+
+            <div class="Largetext"> Order Number </div>
+                    <select type="text" id="Order" name="Order" style="display:inline;">
+                        <option value=""> Select Order Number </option>
+                        {% for o in O %}
+                            <option type="text" id="O" name="rder"> {{o.pk}} </option>
+                        {% endfor %}
+                        <option type="text" id ="New" name="New"> New Order </option>
+                    </select>
             
             <div class="Largetext"> Remarks </div>
             <textarea type="text" class="forminput" name="remark" id="remark" rows="8">  </textarea>

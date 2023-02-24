@@ -29,9 +29,9 @@ class NotifyParty(models.Model):
     objects = models.Manager()
 
 class Consignee(models.Model):
-    BL = models.CharField(max_length=20, unique=True)
-    Name = models.CharField(max_length=100,unique=True)
-    PortDischarge = models.CharField(max_length=100)
+    BL = models.CharField(max_length=20, default='', unique=True)
+    Name = models.CharField(max_length=100)
+    PortDischarge = models.CharField(max_length=100, default='', blank=True)
 
 
 class Product(models.Model): #Steels, not food 
@@ -100,34 +100,31 @@ class FinalOrder(models.Model):
     Finished = models.IntegerField(default=0) #0 is for not yet finished
     OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)
 
-    Verification = models.CharField(default=None,unique=True, max_length=13) #Orderid -> verification
-    
-    Shipper = models.ForeignKey(Company, on_delete=models.CASCADE, default=None)
-    NotifyName = models.ForeignKey(NotifyParty, default=None, on_delete=models.CASCADE)
-    BL = models.CharField(max_length=20, unique=True)
-    NumOfBL = models.IntegerField(default=3, null=True)
-    PayAt = models.CharField(default=None, max_length=70, null=True)
-    Place = models.CharField(default=None, max_length=70)
-    PlaceDate = models.CharField(default=None, max_length=100)
+    Verification = models.CharField(default=None,unique=True, max_length=13, null=True, blank=True) #Orderid -> verification
+    BL = models.ForeignKey(Consignee, null=False, blank=True, on_delete=models.CASCADE)
 
-    Charges = models.FloatField(default=None, max_length=11, validators=[MinValueValidator(float('0.01'))], null=True)
-    RevTons = models.CharField(max_length=1000, default=None, null=True)
+    Shipper = models.ForeignKey(Company, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    NotifyName = models.ForeignKey(NotifyParty, default=None, on_delete=models.CASCADE, null=True, blank=True)
+    NumOfBL = models.IntegerField(default=3, null=True, blank=True)
+    PayAt = models.CharField(default='', max_length=70, null=True, blank=True)
+    Place = models.CharField(default="Kaohsiung, Taiwan", max_length=70, null=False)
+    PlaceDate = models.CharField(default='', max_length=100, blank=True)
+
+    Charges = models.FloatField(default=None, max_length=11, validators=[MinValueValidator(float('0.01'))], null=True, blank=True)
+    RevTons = models.CharField(max_length=1000, default=None, null=True, blank=True)
     Rate = models.FloatField(default=None, null=True, validators=[MinValueValidator(float('0.01'))])
-    Prepaid = models.CharField(max_length=20, default=None)
-    Collect = models.CharField(max_length=20, default=None)
+    Prepaid = models.CharField(max_length=20, default='', blank=True)
+    Collect = models.CharField(max_length=20, default='', blank=True)
     
-    Portload = models.CharField(max_length=255, default=None)
-    Portdis = models.CharField(max_length=255, default=None)
-    TranshTo = models.CharField(max_length=50, default=None, null=True)
-    FinalDest = models.CharField(max_length=255, default=None, null=True)
-    Voyage = models.SmallIntegerField(default=0)
+    Portload = models.CharField(max_length=255, default='', blank=True)
+    Portdis = models.CharField(max_length=255, default='', blank=True)
+    TranshTo = models.CharField(max_length=50, default='', null=True, blank=True)
+    FinalDest = models.CharField(max_length=255, default='', null=True, blank=True)
+    Voyage = models.SmallIntegerField(default=0, null=False, blank=True)
 
     def PD(self): #call this when confirming the order
-        self.PlaceDate = self.Place + ", " + self.OrderDate
+        self.PlaceDate = str(self.Place) + ", " + str(self.OrderDate)
         super(FinalOrder,self).save()
-
-    FreightsCharges = models.FloatField(default=None, null=True)
-    Collect = models.CharField(max_length=70, default=None)
 
     objects = models.Manager()
 
@@ -139,7 +136,7 @@ class OrderedProduct(models.Model):
 
     #New Fields
     OrderedProductID = models.CharField(default=None, unique=True, max_length=13)
-    Verificaton = models.ForeignKey(FinalOrder, default=None, on_delete=models.CASCADE)
+    OrderID = models.ForeignKey(FinalOrder, default=None, on_delete=models.CASCADE)
     Marks = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 

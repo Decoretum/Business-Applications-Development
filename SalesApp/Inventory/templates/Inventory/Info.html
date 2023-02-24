@@ -27,7 +27,9 @@
             <div class="Largetext"> Measurement : </div> <span class="bodytext"> {{P.Measurement}} </span> <br> <br>
             <div class="Largetext"> Contact : </div> <span class="bodytext"> {{P.Contact}} </span> 
             <a class="Button w-auto" href="{% url 'edit' pk=P.pk %}"> Edit Info </a>
+            <a class="Button" href="{% url 'Products' %}" id="browse"> Delete Product </a>
             <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
+             
         </div>
     {% elif C == False %}
     <br>
