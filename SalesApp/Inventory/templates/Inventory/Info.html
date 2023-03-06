@@ -14,7 +14,7 @@
     {% if C == True %}
     <br>
         <div class="container">
-            <img src="{{ P.Image.url }}"> 
+            <img src="{{P.Image.url}}"> 
             <div class="Largetext"> Product Name : {{P.Name}}</div>
             <span class="bodytext"> Description : {{P.Description}} </span> <br><br>
             <div class="Largetext"> Product Marks: </div> <span class="bodytext"> {{ P.Marks }} </span><br><br>
@@ -49,6 +49,47 @@
         <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
     </div>
     {% endif %}
+
+    <script>
+        let tempbox = document.getElementById('tempbox');
+        let trigger = document.getElementById('edittemp');
+        let back = document.getElementById('hideme');
+        trigger.addEventListener('click',() => {
+            tempbox.style.display = "inline";
+            tempbox.classList.add("shade");
+        })
+        back.addEventListener('click',()=>{
+            tempbox.style.display = "none";
+            tempbox.classList.remove("shade");
+        })
+    
+    </script>
+
+    <style>
+        #tempbox{
+            position: fixed;
+            /*right: 24.5vw;
+            bottom: -50vw;*/
+            bottom: 50vh;
+            right: 24.5vw;
+            display: none;
+            height: 30vh;
+            background-color: rgb(53, 192, 213);
+        }
+
+        #temp{
+            background-color: azure;
+            
+        }
+
+        #hideme{
+            background-color: azure;
+        }
+
+        .showme{
+            display: inline;
+        }
+    </style>
     {% endblock %}
 </body>
 </html>

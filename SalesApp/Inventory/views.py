@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User, auth
 from django.template import loader
 from django.http import HttpResponse
-from django.core import serializers
+from django.conf import settings
 import random
 import string
 
@@ -56,6 +56,19 @@ def AddProduct(request):
             contact = request.POST.get('Contact')
             meas = request.POST.get('Measurement')
             weight = request.POST.get('Weight')
+            print(cost[slice(1)] != "$" and cost[slice(1)] != "P")
+            if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
+                messages.info(request, 'You must fill out all the fields')
+                return redirect('addproduct')
+
+            elif cost[slice(1)] != "$" or cost[slice(1)] != "P":
+                messages.warning(request, "The currency is not in USD or Pesos")
+                return redirect('addproduct')
+            
+            elif stock == "" or stock == None or int(stock) < 0 or "." in stock:
+                messages.error(request, 'Stock must not be blank, a decimal, or less than 0')
+                return redirect('addproduct')
+            
             Product.objects.create(
                 Name = name,
                 Image = imgfile,
@@ -92,9 +105,7 @@ def EditProduct(request,pk):
         Existing = get_object_or_404(Product, pk=pk)
 
         if request.method == "POST":
-            imgfile = request.POST.get('Image')
-            if imgfile == None:
-                imgfile = None
+            imgfile = request.FILES.get('Image')
             name = request.POST.get('Name')
             length = request.POST.get('Length')
             manufacturer = request.POST.get('Manufacturer')
@@ -110,8 +121,10 @@ def EditProduct(request,pk):
 
             Existing.Name = name
             if imgfile == None:
+                pass
+            else:
                 Existing.Image = imgfile
-
+            
             Existing.Measurement = meas
             Existing.GrossWeight = weight
             Existing.Manufacturer = manufacturer
@@ -121,7 +134,6 @@ def EditProduct(request,pk):
             Existing.Cost = cost
             Existing.Description = desc
             Existing.Contact = contact
-            print(Existing.Manufacturer)
             Existing.MakeMark()
             return redirect ('view',pk)
         
@@ -159,11 +171,12 @@ def Products(request):
             'username' : request.session['user']
             })
     else:
-        condition = False
+        condition = False   
         return render(request, 'Inventory/products.html',{
             'C' : condition,
             'P':P, 
-            'User':User
+            'User':User,
+            'url':settings.MEDIA_URL
             })
 
 def Signup(request):

@@ -37,7 +37,7 @@ class Consignee(models.Model):
 class Product(models.Model): #Steels, not food 
     objects = models.Manager()
     Name = models.CharField(max_length=200, unique=True)
-    Image = models.ImageField(default="N/A", null= True, blank=True, upload_to="images/") #not have image if we dont have one, uploaded to images folder automatically
+    Image = models.ImageField(default=None, null= True, blank=True, upload_to="images/") #not have image if we dont have one, uploaded to images folder automatically
     
     Manufacturer = models.CharField(default=None, max_length=100)
     ManuLoc = models.CharField(default=None,max_length=255)

@@ -12,11 +12,13 @@
 <body>
     {% block content %}
     <br><br>
-    <form method="POST" action="{% url 'addproduct' %}">{% csrf_token %}
+    <form method="POST" action="{% url 'addproduct' %}" enctype="multipart/form-data">{% csrf_token %}
         <div class="container">
             <div class="Largetext"> Image </div>
-            <input type="file" accept="image/*" />
-
+            <input type="file" accept="image/*" /> 
+                {% for m in messages %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span {% if m.tag == 'info' %} class="{{ m.info }}" {% endif %}>{{m}} </span> {% endif %}
+                {% endfor %}
             <div class="Largetext"> Product Name </div> 
             <input type="text" class="forminput" name="Name" id="Name">
 
@@ -35,8 +37,20 @@
             <div class="Largetext"> Cost </div>
             <input type="text" class="forminput" name="Cost" id="Cost">
 
-            <div class="Largetext"> Stock </div>
-            <input type="text" class="forminput" name="Stock" id="Stock">
+            {% for m in messages %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span {% if m.tags %} class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
+            {% endfor %}
+
+            <br><br>
+
+            <span class="Largetext"> Stock </span> <span class="bodytext" id="stocknote"> </span> 
+            <br><br>
+            
+            <input type="text" class="forminput" name="Stock" id="Stock"> 
+               {% for m in messages %}
+                    {% if m.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <p {% if m.tag == 'error' %} class="{{m.tags}}" {% endif %}> {{m}}</p> {% endif %}
+                {% endfor %}
+            <br><br>
 
             <div class="Largetext"> Description </div>
             <textarea type="text" class="forminput" name="Description" id="desc" rows="8" placeholder="Type in new Product Description!"> </textarea>
@@ -53,7 +67,41 @@
             <a class="Button" href="{% url 'Products' %}"> Back to Products </a
         </div>
     </form>
+    
 
+    <style>
+        #sticknote{
+            margin-left: 20vw;
+        }
+
+        #Stock{
+            margin-bottom: 3vh;
+        }
+
+    </style>
+
+    <script>
+        let s = document.getElementById('Stock')
+        let snote = document.getElementById('stocknote');
+        s.addEventListener('keyup',(e)=>{
+            if (Number(s.value) < 0){
+                snote.innerHTML = "Stock cannot be less than 0!";
+            }
+
+            else if (s.value.trim() === ""){
+                snote.innerHTML = "";
+            }
+
+            else if (!Number.isInteger(Number(s.value))){
+                snote.innerHTML = "Not an integer!";
+            }
+        })
+
+        if (Number(s) < 0){
+            alert('Stock cannot be negative!');
+        }
+
+    </script>
     {% endblock %}
     
 </body>

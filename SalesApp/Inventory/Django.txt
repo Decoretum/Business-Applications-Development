@@ -1,0 +1,48 @@
+GUIDE FOR EFFICIENT DJANGO: (By Gael)
+
+First of all, know the purpose of your project.
+
+
+User authentication
+After knowing the purpose, start creating python models for user authentication. 
+You then proceed to develop views pages for user authentication first.
+
+Displaying of User data as well as Product/service data of interests
+Proceed to create models for product/service data, and create views pages for these. This includes 
+request.session (User data) as well as querying objects. Remember to use primary and foreign keys as well
+to display data and zoom in to those data.
+
+
+IMAGE ACCEPTANCE:
+
+1. Set up MEDIA_URL and MEDIA_ROOT
+
+MEDIA_URL is the URL of you media files, hence it will be where your media/image files will go.
+ex. /media/. It is a placeholder for the url a client will use to access the /media/ files.
+We use this in order for the client to access our media not just from our local system
+but from an external storage like database when viewing the application.
+
+MEDIA_ROOT is the Absolute filesystem path to the directory that will hold user-uploaded files.
+We then connect the BASE_DIR to our new /media/ url of our MEDIA_URL.
+HENCE, when we have the upload_to field in our model, the file will be uploaded to the directory within
+MEDIA_ROOT/<directory specified in model>
+ex. MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 2nd argument is the directory of our MEDIA_URL
+
+
+
+
+Back-End Functional done:
+1 Log into the system: Done
+2 Display Materials information: Done
+3 View Transactions: done
+4 Add new Transactions: Done
+5 Edit Transaction : Done
+6 Add Inventory Item / Product : Done
+7 Remove Inventory item from website : Done
+8 Edit Inventory item / Product from website: Done
+
+
+
+
+
+

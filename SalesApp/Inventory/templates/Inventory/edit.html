@@ -12,10 +12,10 @@
 <body>
     {% block content %}
     <br><br>
-    <form method="POST" action="{% url 'editproduct' pk=Prod.pk %}">{% csrf_token %}
+    <form method="POST" enctype="multipart/form-data" action="{% url 'editproduct' pk=Prod.pk %}">{% csrf_token %}
         <div class="container">
             <div class="Largetext"> Image </div>
-            <input type="file" name="Image" accept="image/*" />
+            <input type="file" name="Image" id="Image">
 
             <div class="Largetext"> Product Name </div> 
             <input type="text" class="forminput" name="Name" id="Name" value="{{ Prod.Name }}"> 
@@ -46,12 +46,57 @@
 
             <div class="Largetext"> Contact Details </div>
             <input type="text" class="forminput" name="Contact" id="Contact" value="{{Prod.Contact}}">
-            <button class="Button" type="submit"> Edit Product </button>
+            <a class="Button" id="edittemp"> Edit Product </a>
             <a class="Button" href="{% url 'view' pk=Prod.pk %}" id="browse"> Back to Product Information </a> <br> <br>
-
         </div>
-    </form>
 
+        <div class="container" id="tempbox">
+            <div class="Largetext"> Are you sure you sure you want to save these changes? </div>
+            <button class="Button" type="submit" id="temp"> Yes </button>
+            <a class="Button" id="hideme"> No </a>
+        </div>
+    </form> 
+
+    <script>
+        let tempbox = document.getElementById('tempbox');
+        let trigger = document.getElementById('edittemp');
+        let back = document.getElementById('hideme');
+        trigger.addEventListener('click',() => {
+            tempbox.style.display = "inline";
+            tempbox.classList.add("shade");
+        })
+        back.addEventListener('click',()=>{
+            tempbox.style.display = "none";
+            tempbox.classList.remove("shade");
+        })
+    
+    </script>
+
+    <style>
+        #tempbox{
+            position: fixed;
+            /*right: 24.5vw;
+            bottom: -50vw;*/
+            bottom: 50vh;
+            right: 24.5vw;
+            display: none;
+            height: 30vh;
+            background-color: rgb(53, 192, 213);
+        }
+
+        #temp{
+            background-color: azure;
+            
+        }
+
+        #hideme{
+            background-color: azure;
+        }
+
+        .showme{
+            display: inline;
+        }
+    </style>
     {% endblock %}
 </body>
 </html>
