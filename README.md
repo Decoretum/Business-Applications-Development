@@ -7,7 +7,7 @@ The real-world client of this project is Taiwan Steel Company. <br>
 This framework utilizes Python and is used for both front-end and back-end. For this project, it is heavily used for back-end computing especially in session data, Model data analysis, and model instance creations. <br>
 
 <b> Javascript </b> <br>
-Plain Javascript is used for client-side rendering of dynamic HTML changes such as dropdown quantity and total cost. It is possible that jQuery will be used. <br>
+Plain Javascript will be used for client-side rendering of dynamic HTML changes such as dropdown quantity and total cost. This will also be used for User Interface and User experience. <br>
 
 <b> SQL </b> <br>
 SQL will be integrated with the SQLITE3 database in the future.
