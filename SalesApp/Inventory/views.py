@@ -35,16 +35,46 @@ def home(request):
             request, 'Inventory/home.html', {
             'C' : condition
             })
-  
+
+def Clerk(request):
+    condition = ""
+    if request.user.is_authenticated:
+        condition = True
+        if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
+            print('DELETED CACHE')
+            request.session['Remarks'] = None
+            request.session['productname'] = None
+            request.session['OrderedPRem'] = None
+            request.session['OrderPname'] = None
+            request.session['manufacturer'] = None
+            request.session['Order'] = None
+        return render(
+            request,'Inventory/clerk.html',{
+                'C' : condition,
+                'username' : request.session['user'],
+                'userid' : request.session['userid'],
+                'password' : request.session['password'],
+                'firstname' : request.session['firstname'],
+                'lastname' : request.session['lastname'],
+                'birthday' : request.session['birthday'],
+                'sex' : request.session['sex'],
+            }
+        )
+
+
+def isDigit(request,num):
+    try:
+        float(num)
+        return True
+    except ValueError:
+        return False
  
 def AddProduct(request):
     condition = ""
     if request.user.is_authenticated:
         condition = True
         if request.method == "POST":
-            imgfile = request.POST.get('Image')
-            if imgfile == None:
-                imgfile = "N/A"
+            imgfile = request.FILES.get('Image')               
             name = request.POST.get('Name')
             length = request.POST.get('Length')
             manufacturer = request.POST.get('Manufacturer')
@@ -56,22 +86,30 @@ def AddProduct(request):
             contact = request.POST.get('Contact')
             meas = request.POST.get('Measurement')
             weight = request.POST.get('Weight')
-            print(cost[slice(1)] != "$" and cost[slice(1)] != "P")
+
             if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
                 messages.info(request, 'You must fill out all the fields')
                 return redirect('addproduct')
 
-            elif cost[slice(1)] != "$" or cost[slice(1)] != "P":
+            elif cost[slice(1)] != "$" and cost[slice(1)] != "P":
                 messages.warning(request, "The currency is not in USD or Pesos")
+                return redirect('addproduct')
+
+            elif isDigit(request,num = str(cost[1:])) == False:
+                messages.warning(request,"Input cost was not a number")
+                return redirect('addproduct')
+
+
+            elif float(cost[slice(1,len(cost))]) <= 0:
+                messages.warning(request,"No negative costs or costs equal to 0")
                 return redirect('addproduct')
             
             elif stock == "" or stock == None or int(stock) < 0 or "." in stock:
                 messages.error(request, 'Stock must not be blank, a decimal, or less than 0')
                 return redirect('addproduct')
             
-            Product.objects.create(
+            New = Product.objects.create(
                 Name = name,
-                Image = imgfile,
                 Manufacturer = manufacturer,
                 ManuLoc = manuloc,
                 Color = color,
@@ -83,8 +121,12 @@ def AddProduct(request):
                 GrossWeight = weight,
                 Contact = contact,
             )
-            New = get_object_or_404(Product, Name = name)
-            New.MakeMark()
+
+            if imgfile == None:
+                New.MakeMark()
+            else:
+                New.Image = imgfile
+                New.MakeMark()
 
 
             return redirect ('Products')
@@ -118,6 +160,22 @@ def EditProduct(request,pk):
             meas = request.POST.get('Measurement')
             weight = request.POST.get('Weight')
 
+            if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
+                messages.info(request, 'You must fill out all the fields')
+                return redirect('editproduct',pk)
+
+            elif isDigit(request,num = str(cost[1:])) == False:
+                messages.warning(request,"Input cost was not a number")
+                return redirect('editproduct', pk)
+
+            elif float(cost[slice(1,len(cost))]) <= 0:
+                messages.warning(request,"No negative costs or costs equal to 0")
+                return redirect('editproduct', pk)
+
+            elif cost[slice(1)] != "$" and cost[slice(1)] != "P":
+                messages.warning(request, "The currency is not in USD or Pesos")
+                return redirect('editproduct',pk)
+
 
             Existing.Name = name
             if imgfile == None:
@@ -147,6 +205,17 @@ def EditProduct(request,pk):
         
     else:
         pass
+
+def delProduct(request,pk):
+    condition = ""
+    Deleted = get_object_or_404(Product, pk=pk)
+    if request.user.is_authenticated:
+        condition = True
+        Deleted.delete()
+        return redirect('Products')
+
+
+
 
 def Products(request):
     condition = ""
@@ -289,13 +358,7 @@ def Users(request):
         
     
         return render(request,'Inventory/users.html',
-        {'username' : request.session['user'],
-        'userid' : request.session['userid'],
-        'password' : request.session['password'],
-        'firstname' : request.session['firstname'],
-        'lastname' : request.session['lastname'],
-        'birthday' : request.session['birthday'],
-        'sex' : request.session['sex'],
+        {
         'C' : condition,
         'Order' : FinalOrders,
         'Products' : ProductsinOrder,
@@ -408,6 +471,8 @@ def CreateOrder(request):
         condition = True
         Orders = FinalOrder.objects.all()
         Products = Product.objects.all()
+        for o in Products:
+            print(o.Name)
         if request.method == "POST":
             OrderNum = request.POST.get('Order')
             if request.POST.get('proddrop') == "":
@@ -530,7 +595,8 @@ def ConfirmOrder(request,pk):
                 'C' : condition,
                 'stocka' : stocka,
                 'Rem' : remarks,
-                'Orders' : AllOrders
+                'Orders' : AllOrders,
+                'fetch' : fetch
             })
         
 '''

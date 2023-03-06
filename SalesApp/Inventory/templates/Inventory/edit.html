@@ -16,6 +16,9 @@
         <div class="container">
             <div class="Largetext"> Image </div>
             <input type="file" name="Image" id="Image">
+            {% for m in messages %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span {% if m.tag == 'info' %} class="{{ m.info }}" {% endif %}>{{m}} </span> {% endif %}
+            {% endfor %}
 
             <div class="Largetext"> Product Name </div> 
             <input type="text" class="forminput" name="Name" id="Name" value="{{ Prod.Name }}"> 
@@ -30,10 +33,14 @@
             <input type="text" class="forminput" name="Location" id="Location" value="{{Prod.ManuLoc}}">
 
             <div class="Largetext"> Color </div>
-            <input type="text" class="forminput" name="Color" id="Color" value="{{Prod.Color}}">
+            <input type="text" class="forminput" name="Color" id="Color" value="{{Prod.Color}}"> <br><br>
 
-            <div class="Largetext"> Cost </div>
+            <span class="Largetext"> Cost </span> <span class="bodytext" id="costnote"> </span><br><br>
             <input type="text" class="forminput" name="Cost" id="Cost" value="{{Prod.Cost}}">
+
+            {% for m in messages %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span {% if m.tags %} class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
+            {% endfor %}
 
             <div class="Largetext"> Product Description </div>
             <textarea type="text" class="forminput" name="Description" id="Description" rows="8"> {{Prod.Description}} </textarea>
@@ -69,7 +76,33 @@
             tempbox.style.display = "none";
             tempbox.classList.remove("shade");
         })
-    
+
+        let c = document.getElementById('Cost');
+        let cnote = document.getElementById('costnote');
+
+        c.addEventListener('keyup',(e)=>{
+
+            if (c.value.trim() === ""){
+                cnote.innerHTML = "";
+            }
+
+            else if (Number(c.value.slice(1)) < 0){
+                cnote.innerHTML = "Stock cannot be less than 0!";
+            }
+
+            else if (isNaN(c.value.slice(1))){
+                cnote.innerHTML = "Not an integer/float"
+            }
+
+            else if (c.value[0] !== "$" && c.value[0] !== "P"){
+                cnote.innerHTML = "Currency is not in Peso or USD";
+            }
+
+            else{
+                cnote.innerHTML = "";
+            }
+        })
+        
     </script>
 
     <style>

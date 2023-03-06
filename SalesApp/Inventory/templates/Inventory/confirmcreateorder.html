@@ -20,16 +20,24 @@
                 
                 {% if Order == "" %}
                 <div class="Largetext"> Consignee Name: </div>
+        
                 <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 5vw;" value="Type new Consignee Name"> 
                 
                 <div class="Largetext"> Port of Discharge: </div>
                 <input type="text" class="forminput" name="Port" id="Poirt" style="margin-left: 5vw;" value="Type new Port of Discharge">
 
                 {% else %}
-                <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 5vw;" value="{{Order.BL.Name}}"> 
+                
+                <div class="Largetext"> Consignee Name: </div>
+                {% if fetch != "New" %}
+                <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 5vw;" value="{{Order.BL.Name}}" readonly> 
+                {% endif %}
+
                 
                 <div class="Largetext"> Port of Discharge: </div>
-                <input type="text" class="forminput" name="Port" id="Poirt" style="margin-left: 5vw;" value="{{Order.BL.PortDischarge}}">
+                {% if fetch != "New" %}
+                <input type="text" class="forminput" name="Port" id="Poirt" style="margin-left: 5vw;" value="{{Order.BL.PortDischarge}}" readonly>
+                {% endif %}
 
                 {% endif %}
 

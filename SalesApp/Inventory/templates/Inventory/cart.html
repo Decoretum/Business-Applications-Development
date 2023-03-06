@@ -11,8 +11,7 @@
 </head>
 <body>
     {% block content %}
-    <br><br>
-        
+    <br><br>      
     <div class="Largetext"> Unconfirmed Orders </div> 
             {% for c in CurrentProd %}
             <div class="container">
@@ -22,15 +21,12 @@
                 Order Remarks : {{c.remarks}} <br>
                 Quantity : {{c.quantity}} <br>
                 Total Cost : P{{c.totalcost}}
-                <a class="Button" href="{% url 'editorder' pk=c.pk %}"> Edit Transaction </a>
-                <a class="Button" href="{% url 'deltrans' pk=c.pk %}"> Delete Transaction </a>
+                <a class="Button" href="{% url 'editorder' pk=c.pk %}" style="margin-left: 1vw;"> Edit Transaction </a>
+                <a class="Button" href="{% url 'deltrans' pk=c.pk %}" style="margin-left: 2vw;"> Delete Transaction </a>
                 </div>
             </div>
             <br>
             {% endfor %}
-
-
-
     {% endblock %}
 </body>
 </html>
