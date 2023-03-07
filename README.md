@@ -1,6 +1,6 @@
 # Business-Applications-Development
 This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project.<br><br>
-The real-world client of this project is Taiwan Steel Company. <br><br>
+The real-world client of this project is China Global Steel Corporation. <br><br>
 <b> Tech Stack used </b>: Python (including Django), Javascript, TailWind CSS, SQL <br>
 
 <b> Django </b> <br>
