@@ -15,11 +15,9 @@
     {% if C == True %}
     <br>
         <div class="container">
-
-            <img class="image" style="margin: 10px;" src="{{P.Image.url}}">
-          
-            <div class="Largetext"> Product Name : {{P.Name}}</div>
-            <span class="bodytext"> Description : {{P.Description}} </span> <br><br>
+            <img class="image" style="margin: 10px;" src="{{P.Image.url}}">     
+            <div class="Largetext"> Product Name : {{P.Name}}</div><br>
+            <span class="Largetext"> Description : </span> <br><br> <span class="bodytext">{{P.Description}} </span> <br><br>
             <div class="Largetext"> Product Marks: </div> <span class="bodytext"> {{ P.Marks }} </span><br><br>
             <div class="Largetext"> Manufacturer : </div> <span class="bodytext"> {{P.Manufacturer}} </span> <br><br>
             <div class="Largetext"> Location of Manufacturer : </div> <span class="bodytext"> {{P.ManuLoc}} </span> <br> <br>   
@@ -29,10 +27,13 @@
             <div class="Largetext"> Color : </div> <span class="bodytext"> {{P.Color}} </span> <br> <br>
             <div class="Largetext"> Measurement : </div> <span class="bodytext"> {{P.Measurement}} </span> <br> <br>
             <div class="Largetext"> Contact : </div> <span class="bodytext"> {{P.Contact}} </span> 
-            <a class="Button w-auto" href="{% url 'edit' pk=P.pk %}"> Edit Info </a>
-            <a class="Button" id="edittemp" style="margin-left: 1vw;"> Delete Product </a>
-            <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
+            <div style="margin-left: 20vw; display: inline-flex; margin-bottom: 2vh;"> 
+                <a class="Button w-auto" href="{% url 'edit' pk=P.pk %}"> Edit Info </a>
+                <a class="Button" id="edittemp" style="margin-left: 1vw;"> Delete Product </a>
+                <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
+            </div>
         </div>
+        <br>
         <div class="container" id="tempbox">
             <div class="Largetext"> Are you sure you sure you want to save these changes? </div>
             <a class="Button" type="submit" id="temp" href="{% url 'deleteproduct' pk=P.pk %}"> Yes </a>
@@ -43,7 +44,7 @@
     <div class="container">
         <img src="{{ P.Image.url }}"> 
         <div class="Largetext"> Product Name : {{P.Name}}</div>
-        <span class="bodytext"> Description : {{P.Description}} </span> <br><br>
+        <span class="bodytext desc"> Description : {{P.Description}} </span> <br><br>
         <div class="Largetext"> Product Marks: </div> <span class="bodytext"> {{ P.Marks }} </span><br><br>
         <div class="Largetext"> Manufacturer : </div> <span class="bodytext"> {{P.Manufacturer}} </span> <br><br>
         <div class="Largetext"> Location of Manufacturer : </div> <span class="bodytext"> {{P.ManuLoc}} </span> <br> <br>   
@@ -53,10 +54,10 @@
         <div class="Largetext"> Color : </div> <span class="bodytext"> {{P.Color}} </span> <br> <br>
         <div class="Largetext"> Measurement : </div> <span class="bodytext"> {{P.Measurement}} </span> <br> <br>
         <div class="Largetext"> Contact : </div> <span class="bodytext"> {{P.Contact}} </span> 
-        <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
+        <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br><br>
     </div>
     {% endif %}
-
+    <br><br<br>
     <script>
         let tempbox = document.getElementById('tempbox');
         let trigger = document.getElementById('edittemp');
@@ -74,7 +75,7 @@
 
     <style>
         .bodytext{
-            margin-left: 1vw;
+            margin-left: 1.5vw;
         }
         #tempbox{
             position: fixed;
@@ -85,6 +86,10 @@
             display: none;
             height: 30vh;
             background-color: rgb(53, 192, 213);
+        }
+        
+        .container > span:not('.bodytext.desc'){
+            margin-left: 4vw;
         }
 
         #temp{
@@ -98,6 +103,11 @@
 
         .showme{
             display: inline;
+        }
+
+        #browse{
+            margin-left: 30vw;
+            margin-bottom: 5vh;
         }
     </style>
     {% endblock %}

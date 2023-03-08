@@ -21,25 +21,25 @@
     <br><br>
     
         <form method="POST" action = "{% url 'Login' %}" autocomplete="off"> {% csrf_token %}
-            <div class="formblock" style="width: 45vw;">
-                <div class="Largetext" style="margin-left: 32%; width: 50%;"> Login </div>
-                <div class="label" style="margin-left: 15vw;"> Username </div>
-                <div class="forminput" style="margin-left: 15vw;">
+            <div class="formblock" style="width: 35vw;">
+                <div class="Largetext" style="margin-left: 32.5%; width: 50%; max-width: 100%;"> Login </div>
+                <div class="label" style="margin-left: 11.5vw;"> Username </div>
+                <div class="forminput" style="margin-left: 11.5vw;">
                     <input class="forminput" name="username"> </input>
                 </div>
 
-                <div class="label" style="margin-left: 15vw;"> Password </div>
-                <div class="forminput" style="margin-left: 15vw;">
+                <div class="label" style="margin-left: 11.5vw; max-width: 100%;"> Password </div>
+                <div class="forminput" style="margin-left: 11.5vw; max-width: 100%;">
                     <input class="forminput" name="password" type="password"> </input>
                 </div>
 
-                <button style="margin-left: 35%; margin-top: 3vh;" class="Button" type="submit">
+                <button style="margin-left: 34.5%; margin-top: 3vh; max-width: 100%;" class="Button" type="submit">
                     Login
                 </button>
                 <br><br>
 
                 <div class="Largetext" style="margin-left: 32%; width: 50%; max-width: 100%;"> Need to make an account? </div>
-                    <a class="Button" style="margin-left: 35%;" href="{% url 'Signup' %}"> Signup </a>
+                    <a class="Button" style="margin-left: 34%; max-width: 100%;" href="{% url 'Signup' %}"> Signup </a>
                 <br>
                 <br>
             </div>

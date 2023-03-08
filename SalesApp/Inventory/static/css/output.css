@@ -604,6 +604,7 @@ a{
 .header > a{
   font-family:Helvetica;
   font-weight: 300;
+  font-size: 17px;
   margin: auto;
   margin-left: 3vw;
   border-radius: 9px;
@@ -614,7 +615,6 @@ a{
 }
 
 .header > a:hover{
-  background-color: rgb(49, 215, 233);
   cursor: pointer;
 }
 
@@ -626,6 +626,7 @@ a{
   padding: 20px;
   border-radius: 9px;
   font-family: Verdana;
+  font-size: large;
 }
 
 .formblock{
