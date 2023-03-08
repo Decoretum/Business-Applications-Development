@@ -20,7 +20,7 @@
         <a class="Button" style="margin-left: 10px;" href="{% url 'addproduct' %}"> Add A Product </a>
     
         {% endif %}
-    <table class="Frame w-[60vw]">
+    <table class="Frame w-[60vw]" style="font-style: normal; font-weight: normal;">
         <tr class="Header"> 
             <th> Image </th>
             <th> Product </th>
@@ -32,14 +32,16 @@
     {% if C == True %}
         {% for p in P %}
         <tr class="Header w-[25vw]"> 
-            <th> <img src="{{ p.Image.url }}"> </th>
+            <th> <img class="image" src="{{ p.Image.url }}"> </th></th>
             <th> {{ p.Name }} </th>
             <th> {{ p.Length }} </th>
             <th> {{ p.Manufacturer }} </th>
             <th> {{ p.Stock }} </th>
-            <th class="actions">
+            <th>
+                <div class="actions">
                   <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
                   <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit Info </a> 
+                </div>
             </th> 
         </tr>
         {% endfor %}

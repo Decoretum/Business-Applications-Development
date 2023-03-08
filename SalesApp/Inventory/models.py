@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from PIL import Image
 
 '''
 Models that are active for confirmation of order:
@@ -38,7 +39,6 @@ class Product(models.Model): #Steels, not food
     objects = models.Manager()
     Name = models.CharField(max_length=200, unique=True)
     Image = models.ImageField(default=None, null= True, blank=True, upload_to="images/") #not have image if we dont have one, uploaded to images folder automatically
-    
     Manufacturer = models.CharField(default=None, max_length=100)
     ManuLoc = models.CharField(default=None,max_length=255)
     Color = models.CharField(default=None, max_length=20)

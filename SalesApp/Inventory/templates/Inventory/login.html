@@ -21,28 +21,30 @@
     <br><br>
     
         <form method="POST" action = "{% url 'Login' %}" autocomplete="off"> {% csrf_token %}
-            <div class="formblock">
-                <div class="Largetext" style="margin: auto; width: 50%;"> Login </div>
-                <div class="label"> Username </div>
-                <div class="forminput">
+            <div class="formblock" style="width: 45vw;">
+                <div class="Largetext" style="margin-left: 32%; width: 50%;"> Login </div>
+                <div class="label" style="margin-left: 15vw;"> Username </div>
+                <div class="forminput" style="margin-left: 15vw;">
                     <input class="forminput" name="username"> </input>
                 </div>
 
-                <div class="label"> Password </div>
-                <div class="forminput">
+                <div class="label" style="margin-left: 15vw;"> Password </div>
+                <div class="forminput" style="margin-left: 15vw;">
                     <input class="forminput" name="password" type="password"> </input>
                 </div>
 
-                <button class="Button" type="submit">
+                <button style="margin-left: 35%; margin-top: 3vh;" class="Button" type="submit">
                     Login
                 </button>
+                <br><br>
 
-                <div class="Largetext" style="margin: auto; width: 50%; max-width: 100%;"> Need to make an account? </div>
-                    <a class="Button" href="{% url 'Signup' %}"> Signup </a>
+                <div class="Largetext" style="margin-left: 32%; width: 50%; max-width: 100%;"> Need to make an account? </div>
+                    <a class="Button" style="margin-left: 35%;" href="{% url 'Signup' %}"> Signup </a>
                 <br>
                 <br>
             </div>
         </form>
+        <br><br>
 
         {% for m in messages %}
         <div class="label">

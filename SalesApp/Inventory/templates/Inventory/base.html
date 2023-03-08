@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> DecoreManufacturing </title>
     <link rel="stylesheet" type="text/css" href="{%  static '/css/output2.css' %}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{%  static '/css/output.css' %}">
 
 </head>
 <body>
     {% block header %}
     <br>
-    <form method="POST">
+
+        <img src= "{% static 'pic/chinalogo.gif' %}" style="margin-left: 10vw;"> <br>
         <div class="header">
             {% if C == True %}
             <a class="Home" href="{% url 'home' %}"> Home </a>
@@ -33,7 +33,7 @@
             {% endif %}
         <input id="hide" name="hide" type="hidden" value="">  
         </div>
-    </form>
+        
     <script>
         let button1 = document.querySelector('.header');
         let input1 = document.getElementById('hide');

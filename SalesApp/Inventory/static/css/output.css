@@ -41,7 +41,8 @@
 }
 
 html{
-  background-color: antiquewhite;
+  background: rgb(143,193,203);
+background: linear-gradient(90deg, rgba(143,193,203,1) 4%, rgba(202,204,208,1) 55%, rgba(174,174,203,1) 84%);
 }
 
 a{
@@ -67,17 +68,23 @@ a{
   border: transparent;
   box-shadow: 9px 9px rgb(18, 85, 124);
   background-color: cadetblue;
-  padding: 10px;
   border-radius: 9px;
   margin: auto;
+  display: flex;
+  padding: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .header > a{
-  font-family:system-ui;
+  font-family:Geneva;
+  font-weight: 300;
   margin: auto;
   margin-left: 3vw;
   border-radius: 9px;
   padding: 5px;
+  width: 10vw;
+  text-align: center;
 }
 
 .header > a:hover{
@@ -129,7 +136,9 @@ a{
 .actions{
   display:flex;
   flex-direction:row;
+  flex-wrap: wrap;
   height:auto;
+  border: transparent;
 }
 
 .actions > *{
@@ -208,15 +217,36 @@ a{
   margin: auto;
   border: solid;
   margin-top: 5vh;
+  background-color: rgb(251, 251, 244);
 }
 
-.Header > *{
+.Frame >*{
+  font-weight: 100;
+}
+
+.Header > *:not(.actions){
   margin: auto;
   border: solid;
   padding: 9px;
   max-width: 100%;
   width: 13vw;
+  font-weight: normal;
 }
+
+.actions > * {
+  background-color: rgb(74, 120, 198);
+}
+
+.actions > *:hover{ 
+  background-color: rgb(128, 180, 249);
+}
+
+.image{
+  max-width: 20vw;
+  max-height: 20vh;
+  margin: auto;
+}
+
 
 #view {
   width: 0.5vw;

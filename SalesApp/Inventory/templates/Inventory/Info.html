@@ -14,7 +14,9 @@
     {% if C == True %}
     <br>
         <div class="container">
-            <img src="{{P.Image.url}}"> 
+
+            <img class="image" style="margin: 10px;" src="{{P.Image.url}}">
+          
             <div class="Largetext"> Product Name : {{P.Name}}</div>
             <span class="bodytext"> Description : {{P.Description}} </span> <br><br>
             <div class="Largetext"> Product Marks: </div> <span class="bodytext"> {{ P.Marks }} </span><br><br>
@@ -27,7 +29,7 @@
             <div class="Largetext"> Measurement : </div> <span class="bodytext"> {{P.Measurement}} </span> <br> <br>
             <div class="Largetext"> Contact : </div> <span class="bodytext"> {{P.Contact}} </span> 
             <a class="Button w-auto" href="{% url 'edit' pk=P.pk %}"> Edit Info </a>
-            <a class="Button" id="edittemp"> Delete Product </a>
+            <a class="Button" id="edittemp" style="margin-left: 1vw;"> Delete Product </a>
             <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
         </div>
         <div class="container" id="tempbox">
