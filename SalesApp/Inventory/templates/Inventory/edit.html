@@ -12,6 +12,7 @@
 <body>
     {% block content %}
     <br><br>
+    <span class="Largetext" style="margin-left: 23.5vw;"> Edit Product </span><br><br>
     <form method="POST" enctype="multipart/form-data" action="{% url 'editproduct' pk=Prod.pk %}">{% csrf_token %}
         <div class="container">
             <div class="Largetext"> Image </div>
@@ -43,7 +44,7 @@
             {% endfor %}
 
             <div class="Largetext"> Product Description </div>
-            <textarea type="text" class="forminput" name="Description" id="Description" rows="8"> {{Prod.Description}} </textarea>
+            <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> {{Prod.Description}} </textarea>
             
             <div class="Largetext"> Measurement </div>
             <input type="text" class="forminput" name="Measurement" id="Measurement" value="{{Prod.Measurement}}">
@@ -113,8 +114,9 @@
             bottom: 50vh;
             right: 24.5vw;
             display: none;
-            height: 30vh;
+            height: 20vh;
             background-color: rgb(53, 192, 213);
+            max-width: 100%;
         }
 
         #temp{

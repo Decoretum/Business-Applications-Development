@@ -12,16 +12,19 @@
 <body>
 
     {% block content %}
-    <br>
+    <span class="Largetext" style="margin-left:8vw; font-family: Helvetica;"> Product Inventory Management Site </span> <br> 
         {% if C == True %}
         <br>
+
+        <div style="margin-left: -1vw;"> 
         <a class="Button w-auto" href="{% url 'createorder' %}" style="margin-left:10vw; position: relative;"> Create Transaction </a>
         <a class="Button" style="margin-left: 10px" href="{% url 'UnfTrans' %}"> Edit a Transaction </a>
         <a class="Button" style="margin-left: 10px;" href="{% url 'addproduct' %}"> Add A Product </a>
-    
+        </div>
+
         {% endif %}
-    <table class="Frame w-[60vw]" style="font-style: normal; font-weight: normal;">
-        <tr class="Header"> 
+    <table style="font-style: normal; font-weight: normal; border: solid 1px; border-radius: 9px;" class="Frame">
+        <tr class="Header identify"> 
             <th> Image </th>
             <th> Product </th>
             <th> Length </th>
@@ -31,7 +34,7 @@
         </tr>
     {% if C == True %}
         {% for p in P %}
-        <tr class="Header w-[25vw]"> 
+        <tr class="Header"> 
             <th> <img class="image" src="{{ p.Image.url }}"> </th></th>
             <th> {{ p.Name }} </th>
             <th> {{ p.Length }} </th>
@@ -60,7 +63,7 @@
         {% endfor %}
     {% endif %}
     </table>
-
+    <br><br>
     {% endblock %}
     
 </body>

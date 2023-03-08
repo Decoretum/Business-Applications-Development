@@ -22,7 +22,7 @@
                     {% if a.1 == None %}
                         <br><br>
                         <div class="Largetext"> <b> Order {{a.0}} </b> </div>
-                        <div class="bodytext" style="margin-left: 0.5vw;"> 
+                        <div class="bodytext" style="margin-left: 1.5vw;"> 
                             No products yet! <br><br>
                             {% for o in Order %}
                                 {% if o.pk == a.0 %}
@@ -44,20 +44,20 @@
                         <b> Order {{ a.1.OrderID.pk }} </b> <Br>
                     </div>
                  
-                    <span style="margin-left: 0.7vw;"> Verification Code: </span> <span style="margin-left: 0.5vw;"> {{ a.1.OrderID.Verification }} </span> <br><br>
-                    <span style="margin-left: 0.7vw;"> Order Date: </span>  <span style="margin-left: 0.5vw;"> {{ a.1.OrderID.OrderDate }} </span> <br><br>
-                    <span style="margin-left: 0.7vw;"> Place and Date of Issue: </span>  <span style="margin-left: 0.5vw;"> {{ a.1.OrderID.PlaceDate }} </span> <br><br> 
-                    <span style="margin-left: 0.7vw;"> Consignee: {{a.1.OrderID.BL.Name}}</span> <br><br>
-                    <span style="margin-left: 0.7vw;"> Consignee B/L Number: {{a.1.OrderID.BL.BL}}</span> <br><br>
-                    <span style="margin-left: 0.7vw;"> Port of Discharge: {{a.1.OrderID.BL.PortDischarge}}</span> <br><br>
+                    <span style="margin-left: 2vw;"> Verification Code: </span> <span style="margin-left: 0.5vw;"> {{ a.1.OrderID.Verification }} </span> <br><br>
+                    <span style="margin-left: 2vw;"> Order Date: </span>  <span style="margin-left: 0.5vw;"> {{ a.1.OrderID.OrderDate }} </span> <br><br>
+                    <span style="margin-left: 2vw;"> Place and Date of Issue: </span>  <span style="margin-left: 0.5vw;"> {{ a.1.OrderID.PlaceDate }} </span> <br><br> 
+                    <span style="margin-left: 2vw;"> Consignee: {{a.1.OrderID.BL.Name}}</span> <br><br>
+                    <span style="margin-left: 2vw;"> Consignee B/L Number: {{a.1.OrderID.BL.BL}}</span> <br><br>
+                    <span style="margin-left: 2vw;"> Port of Discharge: {{a.1.OrderID.BL.PortDischarge}}</span> <br><br>
                   
                         {% for b in a %}
                             {% if b > 0  %}
                             
                             {% else %}
                             <div class="Largetext"> Product: {{b.Marks.Name}}</div>
-                             <div class="bodytext" style="margin-left: 0.5vw;"> Ordered Product ID: {{ b.OrderedProductID }} </div><br>
-                            <div class="bodytext" style="margin-left: 0.5vw;">
+                             <div class="bodytext" style="margin-left: 1.5vw;"> Ordered Product ID: {{ b.OrderedProductID }} </div><br>
+                            <div class="bodytext" style="margin-left: 1.5vw;">
                                 Quantity Ordered: {{b.quantity}} <br><br>
                                 Cost of Ordered Product: ${{b.totalcost}} <br><br>
                                 Item Description: {{b.Marks.Description}} <br><br>

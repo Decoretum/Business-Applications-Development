@@ -48,18 +48,27 @@ background: linear-gradient(90deg, rgba(143,193,203,1) 4%, rgba(202,204,208,1) 5
 a{
   color: black;
   text-decoration: none;
+  text-align: center;
 }
 
 .container{
   padding: 10px;
-  font-family: Verdana;
-  background-color: rgb(232, 200, 160);
+  font-family: Helvetica;
+  background-color: rgb(212, 203, 191);
   border: transparent;
   border-radius: 9px;
   box-shadow: 10px 10px rgb(180, 155, 125);
   width: 50vw;
   margin: auto;
   max-width: 100%;
+}
+
+.container > *{
+  margin-left: 1vw;
+}
+
+.container > input{
+  margin-left: 2vw;
 }
 
 .header{
@@ -77,14 +86,15 @@ a{
 }
 
 .header > a{
-  font-family:Geneva;
+  font-family:Helvetica;
   font-weight: 300;
   margin: auto;
   margin-left: 3vw;
   border-radius: 9px;
   padding: 5px;
   width: 10vw;
-  text-align: center;
+  align-self: center;
+ 
 }
 
 .header > a:hover{
@@ -93,7 +103,6 @@ a{
 }
 
 .unfinished.header{
-  text-align: center;
   margin: auto;
   width: 25%;
   max-width: 100%;
@@ -115,7 +124,7 @@ a{
 
 .label{
   padding: 10px;
-  font-family: Verdana;
+  font-family: Helvetica;
   font-size: 15px;
   margin: auto;
   max-width: 100%;
@@ -139,11 +148,15 @@ a{
   flex-wrap: wrap;
   height:auto;
   border: transparent;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
 }
 
 .actions > *{
-  margin-left: 5px;
+  margin-left: 1vw;
   flex: 0 0;
+  max-width: 100%;
 }
 
 #id{
@@ -162,6 +175,7 @@ a{
   text-decoration: none;
   background-color: rgb(48, 162, 88);
   padding: 10px;
+  max-width: 100%;
   width: 5vw;
   text-align: center;
   border-radius: 9px;
@@ -215,13 +229,17 @@ a{
 
 .Frame{
   margin: auto;
-  border: solid;
   margin-top: 5vh;
   background-color: rgb(251, 251, 244);
+  border-width: 1px;
+  box-shadow: 10px 10px rgb(85, 83, 80);
+  border-radius: 9px;
 }
 
-.Frame >*{
+.Frame > *{
   font-weight: 100;
+  border-width: 1px;
+  font-family: Helvetica;
 }
 
 .Header > *:not(.actions){
@@ -231,14 +249,27 @@ a{
   max-width: 100%;
   width: 13vw;
   font-weight: normal;
+
+}
+
+.Header.identify{
+  background-color: rgb(223, 230, 132);
+  border-width: 1px;
+  border-color: black;
+
+}
+
+.Header.identify > *{
+  border-radius: 9px;
 }
 
 .actions > * {
-  background-color: rgb(74, 120, 198);
+  background-color: rgb(20, 145, 30);
+  position: relative;
 }
 
 .actions > *:hover{ 
-  background-color: rgb(128, 180, 249);
+  background-color: rgb(55, 231, 69);
 }
 
 .image{

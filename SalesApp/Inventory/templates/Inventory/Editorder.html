@@ -16,9 +16,9 @@
     <form method="POST" action="{% url 'editorder' pk=K.pk %}">{% csrf_token %}
         <div class="container">
             <div class="Largetext"> Image </div>
-            <input type="file" name="image" id="image" class="m-18" value="{{K.Image}}" accept="image/*" />
+            <input type="file" name="image" id="image" class="m-18" value="{{K.Image}}" style="margin-left: 2vw;" accept="image/*" />
             <div class="Largetext"> Product Name </div> 
-            <select type="text" id="proddrop" name="proddrop" style="display:inline;">
+            <select type="text" id="proddrop" name="proddrop" style="display:inline; margin-left: 2vw;">
                 <option value=""> {{K.Marks.Name}} </option>
                 {% for p in P %}
                     {% if p != Prod %}
@@ -28,8 +28,11 @@
             </select> 
             
             <div class="Largetext"> Remarks </div>
-            <textarea type="text" class="forminput" name="Description" id="Description" rows="8"> {{K.remarks}} </textarea>
-            <button class="Button" id="submit" type="submit"> <!-- href="{% url 'confirmorder' pk=K.pk %}" --> Change Transaction </button> <a class="Button ml-20" href="{% url 'UnfTrans' %}"> View Pending Transactions </a> <br>
+            <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> {{K.remarks}} </textarea> 
+            <div class="actions" style="margin:auto; display: flex; float:right; margin-right: -1vw; margin-top: 15vh">
+                <button class="Button" id="submit" type="submit" style="width:10vw"> Change Transaction </button>
+                <a class="Button ml-20" href="{% url 'UnfTrans' %}"> Back </a> 
+            </div>
         </div>
     </form>
     <br><br>

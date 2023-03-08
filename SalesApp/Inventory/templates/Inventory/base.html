@@ -14,8 +14,6 @@
 <body>
     {% block header %}
     <br>
-
-        <img src= "{% static 'pic/chinalogo.gif' %}" style="margin-left: 10vw;"> <br>
         <div class="header">
             {% if C == True %}
             <a class="Home" href="{% url 'home' %}"> Home </a>
@@ -24,15 +22,17 @@
             <a class="User" href="{% url 'User' %}"> Pending Orders </a>
             <a class="User" href="{% url 'clerk' %}"> Clerk Page </a>          
             <a class="User" href="{% url 'home' %}"> Confirm orders (Not available yet) </a>
-
+   
             {% elif C == False %}
+   
             <a class="Home" href="{% url 'home' %}"> Home </a>
             <a class="Products" href="{% url 'Products' %}"> View Steel Inventory </a>
             <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
             <a class="User" href="{% url 'Signup' %}"> Signup/Login </a>
             {% endif %}
-        <input id="hide" name="hide" type="hidden" value="">  
+            <input id="hide" name="hide" type="hidden" value="">  
         </div>
+        <img src= "{% static 'pic/chinalogo.gif' %}" style="float: right; margin-right: 9vw; margin-top: 3vh;"> <br><br><br>
         
     <script>
         let button1 = document.querySelector('.header');
