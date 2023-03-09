@@ -21,7 +21,12 @@
     <br><br>
     
         <form method="POST" action = "{% url 'Login' %}" autocomplete="off"> {% csrf_token %}
-            <div class="formblock" style="width: 35vw;">
+            <div class="formblock" style="width: 35vw; background-color: rgb(174, 215, 218); position: relative;">
+                {% for m in messages %}
+                    <div class="label" style="position: absolute; right:-1vw; top:3vh; color: red; font-size: medium;">
+                        {{ m }}
+                    </div>
+                {% endfor %} <br>
                 <div class="Largetext" style="margin-left: 32.5%; width: 50%; max-width: 100%;"> Login </div>
                 <div class="label" style="margin-left: 11.5vw;"> Username </div>
                 <div class="forminput" style="margin-left: 11.5vw;">
@@ -42,15 +47,11 @@
                     <a class="Button" style="margin-left: 34%; max-width: 100%;" href="{% url 'Signup' %}"> Signup </a>
                 <br>
                 <br>
+                <br>
             </div>
         </form>
         <br><br>
-
-        {% for m in messages %}
-        <div class="label">
-            {{ m }}
-        </div>
-        {% endfor %}   
+  
     {% endblock %}
 
 </body>

@@ -657,6 +657,7 @@ a{
   max-width: 100%;
   width: 50%;
   margin: auto;
+  border-radius: 9px;
 }
 
 .actions{
@@ -748,10 +749,9 @@ a{
   margin: auto;
   margin-top: 5vh;
   background-color: rgb(251, 251, 244);
-  border: none;
+  border: transparent;
+  border-color: #0000;
   box-shadow: 10px 10px rgb(85, 83, 80);
-  border-radius: 9px;
-  outline: none;
 }
 
 .Frame > *{

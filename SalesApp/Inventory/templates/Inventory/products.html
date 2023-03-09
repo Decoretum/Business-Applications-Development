@@ -23,7 +23,7 @@
         </div>
 
         {% endif %}
-    <table style="font-style: normal; font-weight: normal; border-radius: 9px;" class="Frame">
+    <table style="font-style: normal; font-weight: normal;" class="Frame">
         <tr class="identify"> 
             <th> Image </th>
             <th> Product </th>
@@ -53,7 +53,7 @@
     {% elif C == False %}
         {% for p in P %}
         <tr class="Header" id="Listed"> 
-            <th> <img src="{{ p.Image.url }}"> </th>
+            <th> <img src="{{ p.Image.url }}" class="image"> </th>
             <th> {{ p.Name }} </th>
             <th> {{ p.Length }} </th>
             <th> {{ p.Manufacturer }} </th>
