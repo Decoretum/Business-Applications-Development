@@ -512,6 +512,9 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+html > *:not(.image){
+  max-width: 100%;
+}
 
 .Largetext{
   font-size: 25px;
@@ -574,6 +577,7 @@ a{
   border-radius: 9px;
   box-shadow: 10px 10px rgb(180, 155, 125);
   width: 50vw;
+  height: fit-content;
   margin: auto;
   max-width: 100%;
   position:relative;

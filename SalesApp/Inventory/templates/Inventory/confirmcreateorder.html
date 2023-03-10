@@ -14,7 +14,7 @@
         <br><br><br>
         <form method="POST" action="">{% csrf_token %}
             <div class="container">
-                <img src="{{ Prod.Image.url }}">
+                <img src="{{ OrderedP.Image.url }}" class="image" style="float:left; margin: 10px;"><br><br><br><br><br><br><br><br><br>
                 <div class="Largetext"> Product: <span id ='productname'>{{OrderedP.Name}}</span> </div>
                 <div class="Largetext"> Product Price: <span id ='productcost'>{{OrderedP.Cost}}</span> </div>
                 
