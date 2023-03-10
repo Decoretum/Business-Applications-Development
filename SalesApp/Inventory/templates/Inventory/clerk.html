@@ -13,7 +13,7 @@
     {% block content %}
         {% if C == True %}
             <Br>
-            <div class="container" style="height: 30vh;">
+            <div class="container" style="height: fit-content;">
                 <div class="bodytext">
                     User Logged in: {{username}} <br>
                     First name: {{firstname}} <Br>
@@ -23,6 +23,7 @@
                     
                     
                         <a href="{% url 'logout' %}" class="LOGOUT" style="display: inline;"> Logout </a>
+                        <br><br>
                     
                 </div>
             </div>

@@ -15,7 +15,7 @@
     <br><br><br>
     <form method="POST" action="{% url 'editorder' pk=K.pk %}">{% csrf_token %}
         <div class="container" style="position: relative;">
-            <img src="{{K.Marks.Image.url}}" style="position: absolute; right: 2vw; top: 1vw;">   
+            <img src="{{K.Marks.Image.url}}" class="image" style="float: left; margin-top: 2vh; margin-left: 2vw;"><br><br><br><br><br><br>      
             <div class="Largetext"> Product Name </div> 
             <select type="text" id="proddrop" name="proddrop" style="display:inline; margin-left: 2vw;">
                 <option value=""> {{K.Marks.Name}} </option>
@@ -28,8 +28,8 @@
             
             <div class="Largetext"> Remarks </div>
             <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> {{K.remarks}} </textarea> 
-            <div style="margin:auto; display: flex; float:right; margin-right: 1vw; margin-top: 15vh">
-                <button class="Button" id="submit" type="submit" style="width:10vw; margin-right: 1vw;"> Change Transaction </button>
+            <div style="margin:auto; display: flex; float:right; margin-right: 1vw; margin-top: 25vh">
+                <button class="Button" id="submit" type="submit" style= "margin-right: 1vw;"> Change Transaction </button>
                 <a class="Button ml-20" href="{% url 'UnfTrans' %}"> Back </a> 
             </div>
         </div>

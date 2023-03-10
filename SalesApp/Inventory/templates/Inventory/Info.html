@@ -27,7 +27,7 @@
             <div class="Largetext"> Color : </div> <span class="bodytext"> {{P.Color}} </span> <br> <br>
             <div class="Largetext"> Measurement : </div> <span class="bodytext"> {{P.Measurement}} </span> <br> <br>
             <div class="Largetext"> Contact : </div> <span class="bodytext"> {{P.Contact}} </span> 
-            <div style="margin-left: 20vw; display: inline-flex; margin-bottom: 2vh;" id="buts"> 
+            <div style="margin-left: 2vw; display: inline-flex; margin-bottom: 2vh;" id="buts"> 
                 <a class="Button w-auto" href="{% url 'edit' pk=P.pk %}"> Edit Info </a>
                 <a class="Button" id="edittemp" style="margin-left: 1vw;"> Delete Product </a>
                 <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
@@ -84,7 +84,7 @@
             bottom: 50vh;
             right: 24.5vw;
             display: none;
-            height: 21vh;
+            height: fit-content;
             background-color: rgb(53, 192, 213);
         }
         

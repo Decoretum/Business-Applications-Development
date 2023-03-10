@@ -694,7 +694,7 @@ a{
   background-color: rgb(48, 162, 88);
   padding: 10px;
   max-width: 100%;
-  width: 5vw;
+  width: fit-content;
   text-align: center;
   border-radius: 9px;
   position: relative;
@@ -729,11 +729,13 @@ a{
 }
 
 .LOGOUT{
+  position: relative;
   background-color: azure;
   border-radius: 9px;
   box-shadow: 8px 8px rgb(97, 94, 89);
   text-decoration: none;
   color: black;
+  max-width: 100%;
   width: 25%;
   text-align: center;
   padding: 10px;
