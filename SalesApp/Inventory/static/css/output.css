@@ -514,6 +514,10 @@ video {
 }
 html > *:not(.image){
   max-width: 100%;
+  /*background: rgb(143,193,203);
+  background: linear-gradient(90deg, rgba(143,193,203,1) 4%, rgba(202,204,208,1) 55%, rgba(174,174,203,1) 84%);*/
+  background: rgb(70,103,154);
+  background: linear-gradient(90deg, rgba(70,103,154,1) 11%, rgba(61,144,159,1) 52%, rgba(39,111,181,1) 60%);
 }
 
 .Largetext{
@@ -556,11 +560,6 @@ html > *:not(.image){
   line-height: 2;
   padding: 5px;
   margin-left: 3vw;
-}
-
-html{
-  background: rgb(143,193,203);
-background: linear-gradient(90deg, rgba(143,193,203,1) 4%, rgba(202,204,208,1) 55%, rgba(174,174,203,1) 84%);
 }
 
 a{
