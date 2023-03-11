@@ -15,19 +15,19 @@
     <br>
         <div class="header">
             {% if C == True %}
-            <a class="Home" href="{% url 'home' %}"> Home </a>
-            <a class="Products" href="{% url 'Products' %}"> View Steel Inventory </a>
-            <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
-            <a class="User" href="{% url 'User' %}"> Pending Orders </a>
-            <a class="User" href="{% url 'clerk' %}"> Clerk Page </a>          
+            <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"> Home </a>
+            <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> View Steel Inventory </a>
+            <a class="About {% if request.path == '/Developer' %}active{% endif %}" href="{% url 'Developer' %}"> About the Developer </a>
+            <a class="User {% if request.path == '/PendingOrders' %}active{% endif %}" href="{% url 'User' %}"> Pending Orders </a>
+            <a class="User {% if request.path == '/ClerkPage' %}active{% endif %}" href="{% url 'clerk' %}"> Clerk Page </a>          
             <a class="User" href="{% url 'home' %}"> Confirm orders (Not available yet) </a>
    
             {% elif C == False %}
-   
-            <a class="Home" href="{% url 'home' %}"> Home </a>
-            <a class="Products" href="{% url 'Products' %}"> View Steel Inventory </a>
-            <a class="About" href="{% url 'Developer' %}"> About the Developer </a>
-            <a class="User" href="{% url 'Signup' %}"> Signup/Login </a>
+            
+            <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"> Home </a>
+            <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> View Steel Inventory </a>
+            <a class="About {% if request.path == '/Developer' %}active{% endif %}" href="{% url 'Developer' %}"> About the Developer </a>
+            <a class="User {% if request.path == '/ClerkPage' %}active{% endif %}" href="{% url 'Signup' %}"> Signup/Login </a>
             {% endif %}
             <input id="hide" name="hide" type="hidden" value="">  
         </div>

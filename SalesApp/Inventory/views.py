@@ -38,6 +38,7 @@ def home(request):
 
 def Clerk(request):
     condition = ""
+    print(request.path)
     if request.user.is_authenticated:
         condition = True
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
@@ -219,6 +220,7 @@ def delProduct(request,pk):
 
 def Products(request):
     condition = ""
+    print(request.path)
     User = Userperson.objects.all()
     P = Product.objects.filter(Stock__gte = 0).order_by('-Stock')
     if request.user.is_authenticated:

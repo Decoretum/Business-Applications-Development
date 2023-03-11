@@ -604,6 +604,10 @@ a{
   flex-wrap: wrap;
 }
 
+.active{
+  color: azure;
+}
+
 .header > a{
   font-family:Helvetica;
   font-weight: 300;

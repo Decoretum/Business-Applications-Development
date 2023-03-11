@@ -16,7 +16,7 @@
         {% if C == True %}
         <br>
 
-        <div style="margin-left: -1vw;"> 
+        <div style="margin-left: -1vw;" id="options"> 
         <a class="Button w-auto" href="{% url 'createorder' %}" style="margin-left:10vw; position: relative;"> Create Transaction </a>
         <a class="Button" style="margin-left: 10px" href="{% url 'UnfTrans' %}"> Edit a Transaction </a>
         <a class="Button" style="margin-left: 10px;" href="{% url 'addproduct' %}"> Add A Product </a>
@@ -64,7 +64,16 @@
     {% endif %}
     </table>
     <br><br>
-    {% endblock %}
+    <style>
+        #options > a{
+            background-color: rgb(209, 209, 54);
+        }
 
+        #options > a:hover{
+            background-color: rgb(244, 244, 4);
+        }
+
+    </style>
+    {% endblock %}
 </body>
 </html>
