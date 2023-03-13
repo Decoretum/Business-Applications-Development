@@ -11,22 +11,30 @@
 </head>
 <body>
     {% block content %}
-    <br><br>      
-    <div class="Largetext" style="margin-left: 24vw;"> Edit a Transaction </div> 
-            {% for c in CurrentProd %}
+        <br><br><br>
+        {% if e == True %}      
             <div class="container">
-                <div class="bodytext">
-                <div class="Largetext"> Order:  <b> {{c.OrderID.pk}} </b> </div> 
-                Order: <b> {{c.Marks.Name}} </b> <br>
-                Order Remarks : {{c.remarks}} <br>
-                Quantity : {{c.quantity}} <br>
-                Total Cost : P{{c.totalcost}}
-                <a class="Button" href="{% url 'editorder' pk=c.pk %}" style="margin-left: 1vw;"> Edit Transaction </a>
-                <a class="Button" href="{% url 'deltrans' pk=c.pk %}" style="margin-left: 2vw;"> Delete Transaction </a>
-                </div>
+                <div class="Largetext" style="position: relative;"> No Products for this order yet! </div><br>
+                <a class="Button" href="{% url 'Products2' %}" style="margin-bottom: 1vh; position: relative;"> Back to Pending Orders </a><br><br>
             </div>
-            <br>
-            {% endfor %}
+        {% else %}
+                <div class="Largetext" style="margin-left: 24vw;"> Edit a Transaction from Order {{p}} </div> 
+                {% for o in Products %}
+                <div class="container">
+                    <div class="bodytext">
+                    <div class="Largetext"> <b>Ordered Product ID:</b>   {{o.OrderedProductID}} </div> 
+                    Product: <b> {{o.Marks.Name}} </b> <br>
+                    Order Remarks : {{o.remarks}} <br>
+                    Quantity : {{o.quantity}} <br>
+                    Total Cost : ${{o.totalcost}}
+                    <a class="Button" href="{% url 'editorder' pk=o.pk %}" style="margin-left: 1vw;"> Edit Transaction </a>
+                    <a class="Button" href="{% url 'deltrans' pk=o.pk %}" style="margin-left: 2vw;"> Delete Transaction </a>
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+                <a class="Button" href="{% url 'Products2' %}" style=" float: right; margin-right: 25vw; margin-top:2vh; background-color: yellow;"> Back to Pending Orders </a>
+        {% endif %}
     {% endblock %}
 </body>
 </html>

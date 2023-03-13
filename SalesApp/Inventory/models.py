@@ -42,12 +42,11 @@ class Product(models.Model): #Steels, not food
     Manufacturer = models.CharField(default=None, max_length=100)
     ManuLoc = models.CharField(default=None,max_length=255)
     Color = models.CharField(default=None, max_length=20)
-    #Status = models.BooleanField(default=True) #Records incase of removed
+    Status = models.BooleanField(default=True) #Records incase of removed
 
     Measurement = models.CharField(default=None, max_length=30)
     Description = models.CharField(default=None, max_length=500)
     GrossWeight = models.CharField(default=None, max_length=40)
-
 
     Marks = models.CharField(default=None, null=True, max_length=300) 
     def MakeMark(self):
@@ -59,7 +58,10 @@ class Product(models.Model): #Steels, not food
     Stock = models.BigIntegerField(default=0)
     Contact = models.CharField(max_length=500)
     
-
+    def WhatStatus(self):
+        self.Status = self.Stock > 0
+        super(Product,self).save()
+        return self.Status
 
 
 class Userperson(models.Model):
@@ -97,8 +99,8 @@ class Userperson(models.Model):
 #Create a model that is created upon "Add to Cart" button press designated for a user
 class FinalOrder(models.Model):
     TotalCost = models.IntegerField(default=0) 
-    ProductInfo = models.CharField(max_length=400)
-    Finished = models.IntegerField(default=0) #0 is for not yet finished
+    ProductInfo = models.CharField(max_length=400, blank=True,default=None)
+    Finished = models.BooleanField(default=False) #confirmed or not
     OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)
 
     Verification = models.CharField(default=None,unique=True, max_length=13, null=True, blank=True) #Orderid -> verification
@@ -113,7 +115,7 @@ class FinalOrder(models.Model):
 
     Charges = models.FloatField(default=None, max_length=11, validators=[MinValueValidator(float('0.01'))], null=True, blank=True)
     RevTons = models.CharField(max_length=1000, default=None, null=True, blank=True)
-    Rate = models.FloatField(default=None, null=True, validators=[MinValueValidator(float('0.01'))])
+    Rate = models.FloatField(default=None, null=True, blank=True, validators=[MinValueValidator(float('0.01'))])
     Prepaid = models.CharField(max_length=20, default='', blank=True)
     Collect = models.CharField(max_length=20, default='', blank=True)
     

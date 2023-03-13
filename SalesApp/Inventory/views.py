@@ -92,8 +92,8 @@ def AddProduct(request):
                 messages.info(request, 'You must fill out all the fields')
                 return redirect('addproduct')
 
-            elif cost[slice(1)] != "$" and cost[slice(1)] != "P":
-                messages.warning(request, "The currency is not in USD or Pesos")
+            elif cost[slice(1)] != "$":
+                messages.warning(request, "The currency is not in USD")
                 return redirect('addproduct')
 
             elif isDigit(request,num = str(cost[1:])) == False:
@@ -212,7 +212,8 @@ def delProduct(request,pk):
     Deleted = get_object_or_404(Product, pk=pk)
     if request.user.is_authenticated:
         condition = True
-        Deleted.delete()
+        Deleted.Status = False
+        Deleted.save()
         return redirect('Products')
 
 
@@ -222,7 +223,7 @@ def Products(request):
     condition = ""
     print(request.path)
     User = Userperson.objects.all()
-    P = Product.objects.filter(Stock__gte = 0).order_by('-Stock')
+    P = Product.objects.filter(Stock__gte = 1).filter(Status = True).order_by('-Stock')
     if request.user.is_authenticated:
         condition = True
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
@@ -235,6 +236,7 @@ def Products(request):
             request.session['Order'] = None
 
         request.session['NAVIGATE'] = "products"
+
         return render(request, 'Inventory/products.html',{
             'C' : condition,
             'P':P, 
@@ -327,76 +329,25 @@ def ShowProds(request):
 
         request.session['NAVIGATE'] = "users"
 
-        AllOrders = FinalOrder.objects.all()
-        AllProds = OrderedProduct.objects.all()
+        AllOrders = FinalOrder.objects.filter(Finished = False)
 
-
-def Users(request):
-    condition = ""
-    if request.user.is_authenticated:
-        condition = True
-    
-        if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
-            print('DELETED CACHE')
-            request.session['Remarks'] = None
-            request.session['productname'] = None
-            request.session['OrderedPRem'] = None
-            request.session['OrderPname'] = None
-            request.session['manufacturer'] = None
-            request.session['Order'] = None
-
-        request.session['NAVIGATE'] = "users"
-
-        currentuser = get_object_or_404(Userperson, username = request.session['user'])
-        FinalOrders = FinalOrder.objects.all() #order numbers
-        ProductsinOrder = OrderedProduct.objects.all()
-        Ordersarray=[]
-        Allarray = []
-
-        
-        for x in FinalOrders: #1 
-            Allarray.append(x.pk)
-
-        for x in range(0,len(FinalOrders)): #2
-            Ordersarray.append([Allarray[x]])
-         
-        #3
-        #Might need to use pointers
-        #runtime of O(n^2), but speed not a priority in functional requirement
-        i = 0 #pointer for reference array
-        j = 0 #pointer for main array
-        while i <= len(Allarray) - 1:
-            for prod in ProductsinOrder:
-                if Allarray[i] == prod.OrderID.pk:
-                    Ordersarray[j].append((prod))
-                
-            i += 1
-            j += 1
-
-        print(Allarray)
-        print(Ordersarray)
-        
-    
-        return render(request,'Inventory/users.html',
-        {
-        'C' : condition,
-        'Order' : FinalOrders,
-        'Products' : ProductsinOrder,
-        'OrdersAndProds' : Ordersarray
+        return render(request, 'Inventory/users2.html',{
+            'C' : condition,
+            'Orders' : AllOrders,
         })
 
-    else:
-        condition = False
-        return render(request,'Inventory/users.html',
-        {'username' : request.session['user'],
-        'userid' : request.session['userid'],
-        'password' : request.session['password'],
-        'firstname' : request.session['firstname'],
-        'lastname' : request.session['lastname'],
-        'birthday' : request.session['birthday'],
-        'sex' : request.session['sex'],
-        'userobj' : currentuser,
-        'C' : condition})
+def ProdsinOrder(request, pk):
+    condition = True
+    Ordered = OrderedProduct.objects.filter(OrderID = pk)
+    empty = len(Ordered) == 0
+    return render(request, 'Inventory/ProductsinOrder.html',{
+        'C' : condition,
+        'Ordered' : Ordered,
+        'e' : empty
+    })
+
+
+
 
 def logout(request):
     print('logout')
@@ -489,10 +440,9 @@ def CreateOrder(request):
     condition = ""
     if request.user.is_authenticated:
         condition = True
-        Orders = FinalOrder.objects.all()
-        Products = Product.objects.all()
-        for o in Products:
-            print(o.Name)
+        Orders = FinalOrder.objects.filter(Finished = False)
+        Products = Product.objects.filter(Stock__gte = 1).filter(Status = True)
+   
         if request.method == "POST":
             OrderNum = request.POST.get('Order')
             if request.POST.get('proddrop') == "":
@@ -529,13 +479,12 @@ def ConfirmOrder(request,pk):
     
     if fetch != "New":
         ChosenOrder = get_object_or_404(FinalOrder, pk=fetch)
-        ChosenConsignee = get_object_or_404(Consignee, Name=ChosenOrder.BL.Name)
+        #ChosenConsignee = get_object_or_404(Consignee, Name=ChosenOrder.BL.Name)
 
     else:
         ChosenOrder = ""
-        ChosenConsignee = ""
+        #ChosenConsignee = ""
 
-    AllOrders = FinalOrder.objects.all() #all orders
     stock = ChosenProduct.Stock
     stocka = []
     condition = ""
@@ -563,11 +512,13 @@ def ConfirmOrder(request,pk):
                 return redirect('confirmcreateorder', pk)
 
             if int(q) == 1:
-                Cost = int(ChosenProduct.Cost[1:len(request.POST.get('totalcost'))])
+                Cost = float(ChosenProduct.Cost[1:len(request.POST.get('totalcost'))])
 
             else:
-                Cost = int(Cost)
-                
+                Cost = float(Cost)
+
+            
+            #Final Order Section
             if fetch == "New":
             
                 NewConsign = Consignee.objects.create(
@@ -585,6 +536,12 @@ def ConfirmOrder(request,pk):
                 NewOrder.PD()
                 ChosenOrder = NewOrder
             
+            else:
+                ChosenOrder.TotalCost += Cost
+                ChosenOrder.save()
+
+            
+            #Ordered Product Section
             remarks = request.POST.get('Description')
 
             if str(remarks).strip() == "":
@@ -617,7 +574,6 @@ def ConfirmOrder(request,pk):
                 'C' : condition,
                 'stocka' : stocka,
                 'Rem' : remarks,
-                'Orders' : AllOrders,
                 'fetch' : fetch
             })
         
@@ -636,27 +592,26 @@ def AddOrder(request):
     
 def DeleteTrans(request,pk):
     TobeDel = get_object_or_404(OrderedProduct, pk=pk)
+    Order = get_object_or_404(FinalOrder, pk=TobeDel.OrderID.pk)
+    Order.TotalCost -= TobeDel.totalcost
+    Order.save()
     TobeDel.delete()
-    return redirect('UnfTrans')
+    return redirect('UnfTrans', pk=Order.pk)
 
-def EditTrans(request):
+def EditTrans(request, pk):
     condition = ""
-    pricelist = 0
-    Orders = FinalOrder.objects.all()
-    OrderedProducts = OrderedProduct.objects.all().order_by('OrderID')
+    Order = get_object_or_404(FinalOrder, pk=pk)
+    Products = OrderedProduct.objects.filter(OrderID = Order).order_by('-totalcost')
     if request.user.is_authenticated:
         condition = True
+        empty = len(Products) == 0
         return render(request,'Inventory/cart.html',{ 
                     'C' : condition,
-                    'CurrentProd' : OrderedProducts,
-                    'O' : Orders,
-                    'price' : pricelist
+                    'Products' : Products,
+                    'p' : pk,
+                    'e' : empty
                 })
-    else:
-        condition = False
-        return render(request,'Inventory/cart.html',{ 
-                'C' : condition
-            })
+   
 
 #This will lead to the confirm order page, where quantity, product price, and others will be updated to confirm change in transaction
 #Ito para sa akin yung pinakamahirap na ginawa ko so far for this project. I needed to simulate a UX case na walang pipiliing dropdown option ang user.
@@ -664,7 +619,7 @@ def ChangeTrans(request,pk):
     condition = ""
     ChosenTrans = get_object_or_404(OrderedProduct, pk=pk)
     quant = ChosenTrans.Marks.Stock
-    prods = Product.objects.all()
+    prods = Product.objects.filter(Stock__gte = 1).filter(Status = True)
     currentq = ChosenTrans.quantity
     currentprod = ChosenTrans.Marks.Name
     stocky = []
@@ -702,19 +657,13 @@ def ChangeTrans(request,pk):
             })
 
 
-#Confirmation, updated data should be presented from ChangeTrans
-''' New updated fields for ordered product object would be : 
-    Product
-    Ordered prod remarks
-    ordered prod quantity
-    ordered prod totalcost
-'''
 def ConfirmTrans(request,pk):
     state = request.session.get('state')
     ChosenTrans = get_object_or_404(OrderedProduct, pk=request.session.get('OrderedPRem')) #Orderedproduct
     orderprodname = request.session.get('OrderPname') #Orderedproductpk
     remarks = request.session.get('Remarks') #remarks
     Newproduct = get_object_or_404(Product, Name = orderprodname) #new product
+    Order = get_object_or_404(FinalOrder,pk=ChosenTrans.OrderID.pk)
 
     stock = Newproduct.Stock
     stocka = []
@@ -731,17 +680,21 @@ def ConfirmTrans(request,pk):
             Newremarks = request.POST.get('Description')
             q = request.POST.get('drop')
             if int(q) == 1:
-                print('q is 1')
-                ChosenTrans.totalcost = Newproduct.Cost[1:len(Newproduct.Cost)]
+                Order.TotalCost -= ChosenTrans.totalcost
+                ChosenTrans.totalcost = float(Newproduct.Cost[1:len(Newproduct.Cost)])
+                Order.TotalCost += ChosenTrans.totalcost
+                Order.save()
             else:
-                ChosenTrans.totalcost = cost[1:len(cost)]
+                Order.TotalCost -= ChosenTrans.totalcost
+                ChosenTrans.totalcost = float(cost[1:len(cost)])
+                Order.TotalCost += ChosenTrans.totalcost
+                Order.save()
             
             ChosenTrans.quantity = int(q)
             ChosenTrans.Marks = get_object_or_404(Product, Name=orderprodname)
-            #ChosenTrans.Order.Stock -= int(q) no removing yet since order is not confirmed, just edited
             ChosenTrans.remarks = Newremarks
             ChosenTrans.save()
-            return redirect('UnfTrans')
+            return redirect('UnfTrans', pk=ChosenTrans.OrderID.pk)
 
         elif request.GET.get('Next') == "Next":
             print('GOT IT')

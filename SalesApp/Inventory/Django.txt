@@ -42,6 +42,76 @@ Back-End Functional done:
 8 Edit Inventory item / Product from website: Done
 
 
+My Beautiful Algorithm for a good Front-End
+'''def Users(request):
+    condition = ""
+    if request.user.is_authenticated:
+        condition = True
+    
+        if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
+            print('DELETED CACHE')
+            request.session['Remarks'] = None
+            request.session['productname'] = None
+            request.session['OrderedPRem'] = None
+            request.session['OrderPname'] = None
+            request.session['manufacturer'] = None
+            request.session['Order'] = None
+
+        request.session['NAVIGATE'] = "users"
+
+        currentuser = get_object_or_404(Userperson, username = request.session['user'])
+        FinalOrders = FinalOrder.objects.all() #order numbers
+        ProductsinOrder = OrderedProduct.objects.all()
+        Ordersarray=[]
+        Allarray = []
+
+        
+        for x in FinalOrders: #1 
+            Allarray.append(x.pk)
+
+        for x in range(0,len(FinalOrders)): #2
+            Ordersarray.append([Allarray[x]])
+         
+        #3
+        #Might need to use pointers
+        #runtime of O(n^2), but speed not a priority in functional requirement
+        i = 0 #pointer for reference array
+        j = 0 #pointer for main array
+        while i <= len(Allarray) - 1:
+            for prod in ProductsinOrder:
+                if Allarray[i] == prod.OrderID.pk:
+                    Ordersarray[j].append((prod))
+                
+            i += 1
+            j += 1
+
+        print(Allarray)
+        print(Ordersarray)
+        
+    
+        return render(request,'Inventory/users.html',
+        {
+        'C' : condition,
+        'Order' : FinalOrders,
+        'Products' : ProductsinOrder,
+        'OrdersAndProds' : Ordersarray
+        })
+
+    else:
+        condition = False
+        return render(request,'Inventory/users.html',
+        {'username' : request.session['user'],
+        'userid' : request.session['userid'],
+        'password' : request.session['password'],
+        'firstname' : request.session['firstname'],
+        'lastname' : request.session['lastname'],
+        'birthday' : request.session['birthday'],
+        'sex' : request.session['sex'],
+        'userobj' : currentuser,
+        'C' : condition})
+'''
+
+
 
 
 

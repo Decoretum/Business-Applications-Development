@@ -1,0 +1,38 @@
+{% extends 'Inventory/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <br><br><br>
+
+    {% if e == False %}
+    {% for i in Ordered %}
+    <br><br>
+    <div class="container">
+        <div class="Largetext"> Ordered Product ID: {{i.OrderedProductID}} </div>
+        <div class="bodytext">
+            Product: <b> {{i.Marks.Name}} </b> <br>
+            Order Remarks : {{i.remarks}} <br>
+            Quantity : {{i.quantity}} <br>
+            Total Cost : ${{i.totalcost}}
+        </div>
+    </div>
+    {% endfor %}
+    <a class="Button" href="{% url 'Products2' %}" style=" float: right; margin-right: 25vw; margin-top:5vh; background-color: yellow;"> Back to Pending Orders </a>
+    
+    {% else %}
+    <div class="container">
+        <div class="Largetext" style="position: relative;"> No Products for this order yet! </div><br>
+        <a class="Button" href="{% url 'Products2' %}" style="margin-bottom: 1vh; position: relative;"> Back to Pending Orders </a><br><br>
+    </div>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>
