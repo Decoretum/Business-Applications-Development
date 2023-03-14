@@ -258,13 +258,12 @@ def Signup(request):
         last_name = request.POST.get('lastn')
         birthday = request.POST.get('birthday1')
         sex = request.POST.get('sexx')
-        print(username)
 
         if User.objects.filter(username = username):
             messages.info(request,"Username is already taken")
             return redirect('Signup')
         else:
-            if username == '' or password == '' or first_name == '' or last_name == '' or birthday == '' or sex == '':
+            if str(username).strip() == '' or str(password).strip() == '' or str(first_name).strip() == '' or str(last_name).strip() == '' or str(birthday).strip() == '' or str(sex).strip() == '':
                 messages.info(request,"Missing Credentials!")
                 return redirect('Signup')
                 
@@ -540,7 +539,7 @@ def ConfirmOrder(request,pk):
             Person = request.POST.get('Person')
             Port = request.POST.get('Port')
 
-            if Person == '' or Port == '':
+            if str(Person).strip() == '' or str(Port).strip() == '':
                 messages.info(request,"No fields for either Consignee or Port of Discharge")
                 return redirect('confirmcreateorder', pk)
 
