@@ -15,6 +15,11 @@
     <form method="POST" action="{% url 'createorder' %}">{% csrf_token %}
         <div class="container">
             <div class="Largetext"> <b> New Order Creation </b> </div>
+            {% for m in messages %}
+                <span class="label" style="display:inline; float: right; margin-right: -5vw; color: red;">
+                    {{ m }}
+                </span>
+            {% endfor %}
             <div class="Largetext"> Product Name </div> 
             <select type="text" id="proddrop" name="proddrop" style="display:inline; margin-left: 2vw;">
                 <option value=""> Choose Product </option>
@@ -39,11 +44,6 @@
             </div>
             </div>
     </form>
-    {% for m in messages %}
-    <div class="label" style="margin-top: 3vh;">
-        {{ m }}
-    </div>
-    {% endfor %}
     <br><br>
 
     {% endblock %}

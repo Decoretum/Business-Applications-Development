@@ -539,8 +539,8 @@ def ConfirmOrder(request,pk):
             Person = request.POST.get('Person')
             Port = request.POST.get('Port')
 
-            if str(Person).strip() == '' or str(Port).strip() == '':
-                messages.info(request,"No fields for either Consignee or Port of Discharge")
+            if str(Person).strip() == '' or str(Port).strip() == '' or str(Person).strip() == "Type new Consignee Name" or str(Port).strip() == "Type new Port of Discharge":
+                messages.info(request,"No proper fields for either Consignee or Port of Discharge")
                 return redirect('confirmcreateorder', pk)
 
             if int(q) == 1:
@@ -565,10 +565,12 @@ def ConfirmOrder(request,pk):
                 )
                 NewOrder.PD()
                 ChosenOrder = NewOrder
-
-
             
             remarks = request.POST.get('Description')
+
+            if str(remarks).strip() == "":
+                remarks = "No remarks"
+
             NewOrderProduct = OrderedProduct.objects.create(
                 OrderedProductID = VerifID(request),
                 OrderID = ChosenOrder,
