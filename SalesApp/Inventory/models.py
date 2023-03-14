@@ -42,6 +42,7 @@ class Product(models.Model): #Steels, not food
     Manufacturer = models.CharField(default=None, max_length=100)
     ManuLoc = models.CharField(default=None,max_length=255)
     Color = models.CharField(default=None, max_length=20)
+    #Status = models.BooleanField(default=True) #Records incase of removed
 
     Measurement = models.CharField(default=None, max_length=30)
     Description = models.CharField(default=None, max_length=500)

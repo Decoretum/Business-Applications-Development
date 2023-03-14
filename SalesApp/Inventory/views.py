@@ -430,7 +430,7 @@ def Edit(request,pk):
             'C' : condition
         })
 
-def VerifID(request): #use for both FinalOrder and OrderedProduct
+def VerifID(request): #use for both FinalOrder and OrderedProduct, tanggalin letters
     ID = []
     for x in range(13):
         chooser = random.randint(1,2)
