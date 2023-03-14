@@ -312,6 +312,25 @@ def Login(request):
     else:
         return render(request,'Inventory/Login.html')
 
+def ShowProds(request):
+    condition = ""
+    if request.user.is_authenticated:
+        condition = True
+        if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
+            print('DELETED CACHE')
+            request.session['Remarks'] = None
+            request.session['productname'] = None
+            request.session['OrderedPRem'] = None
+            request.session['OrderPname'] = None
+            request.session['manufacturer'] = None
+            request.session['Order'] = None
+
+        request.session['NAVIGATE'] = "users"
+
+        AllOrders = FinalOrder.objects.all()
+        AllProds = OrderedProduct.objects.all()
+
+
 def Users(request):
     condition = ""
     if request.user.is_authenticated:
