@@ -1,6 +1,7 @@
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, DecimalValidator
 from PIL import Image
+from django.conf.urls.static import static
 
 '''
 Models that are active for confirmation of order:
@@ -38,7 +39,7 @@ class Consignee(models.Model):
 class Product(models.Model): #Steels, not food 
     objects = models.Manager()
     Name = models.CharField(max_length=200, unique=True)
-    Image = models.ImageField(default=None, null= True, blank=True, upload_to="images/") #not have image if we dont have one, uploaded to images folder automatically
+    Image = models.ImageField(default= "images/defproduct.jpg", blank=True, upload_to="images/") #not have image if we dont have one, uploaded to images folder automatically
     Manufacturer = models.CharField(default=None, max_length=100)
     ManuLoc = models.CharField(default=None,max_length=255)
     Color = models.CharField(default=None, max_length=20)
@@ -54,7 +55,7 @@ class Product(models.Model): #Steels, not food
         super(Product,self).save() 
     
     Length = models.CharField(max_length=20)
-    Cost = models.CharField(max_length=10) #declared value USD
+    Cost = models.FloatField(default=0, validators=[DecimalValidator(5,2)]) #declared value USD
     Stock = models.BigIntegerField(default=0)
     Contact = models.CharField(max_length=500)
     
@@ -98,12 +99,12 @@ class Userperson(models.Model):
 
 #Create a model that is created upon "Add to Cart" button press designated for a user
 class FinalOrder(models.Model):
-    TotalCost = models.IntegerField(default=0) 
-    ProductInfo = models.CharField(max_length=400, blank=True,default=None)
+    TotalCost = models.FloatField(default=0, validators=[DecimalValidator(10,2)]) 
+    ProductInfo = models.CharField(max_length=400, blank=True,default='')
     Finished = models.BooleanField(default=False) #confirmed or not
     OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)
 
-    Verification = models.CharField(default=None,unique=True, max_length=13, null=True, blank=True) #Orderid -> verification
+    Verification = models.CharField(default='',unique=True, max_length=13, null=True, blank=True) #Orderid -> verification
     BL = models.ForeignKey(Consignee, null=False, blank=True, on_delete=models.CASCADE)
 
     Shipper = models.ForeignKey(Company, on_delete=models.CASCADE, default=None, null=True, blank=True)
@@ -114,7 +115,7 @@ class FinalOrder(models.Model):
     PlaceDate = models.CharField(default='', max_length=100, blank=True)
 
     Charges = models.FloatField(default=None, max_length=11, validators=[MinValueValidator(float('0.01'))], null=True, blank=True)
-    RevTons = models.CharField(max_length=1000, default=None, null=True, blank=True)
+    RevTons = models.CharField(max_length=1000, default='', null=True, blank=True)
     Rate = models.FloatField(default=None, null=True, blank=True, validators=[MinValueValidator(float('0.01'))])
     Prepaid = models.CharField(max_length=20, default='', blank=True)
     Collect = models.CharField(max_length=20, default='', blank=True)
@@ -135,7 +136,7 @@ class FinalOrder(models.Model):
 class OrderedProduct(models.Model):
     remarks = models.CharField(max_length=200)
     quantity = models.IntegerField(default=0)
-    totalcost = models.IntegerField(default=0)
+    totalcost = models.FloatField(default=0, validators=[DecimalValidator(10,2)])
 
     #New Fields
     OrderedProductID = models.CharField(default=None, unique=True, max_length=13)

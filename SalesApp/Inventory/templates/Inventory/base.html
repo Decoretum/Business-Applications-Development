@@ -20,7 +20,7 @@
             <a class="About {% if request.path == '/Developer' %}active{% endif %}" href="{% url 'Developer' %}"> About the Developer </a>
             <a class="User {% if request.path == '/PendingOrders' %}active{% endif %}" href="{% url 'Products2' %}"> Pending Orders </a>
             <a class="User {% if request.path == '/ClerkPage' %}active{% endif %}" href="{% url 'clerk' %}"> Clerk Page </a>          
-            <a class="User" href="{% url 'home' %}"> Confirm orders (Not available yet) </a>
+            <a class="User {% if request.path == '/ConfirmedOrders' %}active{% endif %}" href="{% url 'doneorders' %}"> Confirmed orders </a>
    
             {% elif C == False %}
             

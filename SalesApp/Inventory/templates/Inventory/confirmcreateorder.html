@@ -23,7 +23,7 @@
                 
                 <br><br><br><br><br><br><br><br><br>
                 <div class="Largetext"> Product: <span id ='productname'>{{OrderedP.Name}}</span> </div>
-                <div class="Largetext"> Product Price: <span id ='productcost'>{{OrderedP.Cost}}</span> </div>
+                <div class="Largetext"> Product Price: <span id ='productcost'>${{OrderedP.Cost}}</span> </div>
                 
                 {% if Order == "" %}
                 <div class="Largetext"> Consignee Name: </div>
@@ -55,7 +55,7 @@
                         {% endfor %}
                     </select>
                 <div class="Largetext"> Total Cost </div>
-                <input type="text" class="forminput" name="totalcost" id="totalcost" value="{{OrderedP.Cost}}" style="margin-left: 5vw;"> 
+                <input type="text" class="forminput" name="totalcost" id="totalcost" value="${{OrderedP.Cost}}" style="margin-left: 5vw;"> 
                 <div class="Largetext"> Remarks </div>
                 <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 5vw;"> {{Rem}} </textarea><br><br><br>
 
@@ -76,7 +76,7 @@
             let result = document.getElementById('totalcost');
             let chosen = document.getElementById('drop');
             let val = chosen.value;
-            result.value = "$" + parseInt(val) * parseInt(cost.slice(1));
+            result.value = "$" + parseFloat(parseInt(val) * parseFloat(cost.slice(0))).toFixed(2);
         })
 
         let order = document.getElementById('Order')

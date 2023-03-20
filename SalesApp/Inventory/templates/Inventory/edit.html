@@ -40,7 +40,7 @@
             <input type="text" class="forminput" name="Cost" id="Cost" value="{{Prod.Cost}}">
 
             {% for m in messages %}
-                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span {% if m.tags %} class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span {% if m.tags %} style="color: red;" class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
             {% endfor %}
 
             <div class="Largetext"> Product Description </div>
@@ -87,17 +87,14 @@
                 cnote.innerHTML = "";
             }
 
-            else if (Number(c.value.slice(1)) < 0){
+            else if (Number(c.value.slice(0)) <= 0){
                 cnote.innerHTML = "Stock cannot be less than 0!";
             }
 
-            else if (isNaN(c.value.slice(1))){
+            else if (isNaN(c.value.slice(0))){
                 cnote.innerHTML = "Not an integer/float"
             }
 
-            else if (c.value[0] !== "$" && c.value[0] !== "P"){
-                cnote.innerHTML = "Currency is not in Peso or USD";
-            }
 
             else{
                 cnote.innerHTML = "";

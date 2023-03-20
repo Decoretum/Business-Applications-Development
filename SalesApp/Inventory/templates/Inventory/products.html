@@ -12,57 +12,101 @@
 <body>
 
     {% block content %}
-    <span class="Largetext" style="margin-left:8vw; font-family: Helvetica;"> Product Inventory Management Site </span> <br> 
-        {% if C == True %}
-        <br>
+        {% if use == 'home' %}
+        <span class="Largetext" style="margin-left:8vw; font-family: Helvetica;"> Product Inventory Management Site </span> <br> 
+            {% if C == True %}
+            <br>
 
-        <div style="margin-left: -1vw;" id="options"> 
-            <a class="Button w-auto" href="{% url 'createorder' %}" style="margin-left:10vw; position: relative;"> Create Transaction </a>
-            <a class="Button" style="margin-left: 10px;" href="{% url 'addproduct' %}"> Add A Product </a>
+            <div style="margin-left: -1vw;" id="options"> 
+                <a class="Button w-auto" href="{% url 'createorder' %}" style="margin-left:10vw; position: relative;"> Create Transaction </a>
+                <a class="Button" style="margin-left: 10px;" href="{% url 'addproduct' %}"> Add A Product </a>
+            </div>
+
+        
+        <table style="font-style: normal; font-weight: normal;" class="Frame">
+            <tr class="identify"> 
+                <th> Image </th>
+                <th> Product </th>
+                <th> Length </th>
+                <th> Manufacturer Name </th>
+                <th> Quantity </th>
+                <th> Action </th>
+            </tr>
+            
+                {% for p in P %}
+                <tr class="Header"> 
+                    <th> <img class="image" src="{{ p.Image.url }}"> </th>
+                    <th> {{ p.Name }} </th>
+                    <th> {{ p.Length }} </th>
+                    <th> {{ p.Manufacturer }} </th>
+                    <th> {{ p.Stock }} </th>
+                    <th>
+                        <div class="actions">
+                        <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
+                        <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit Info </a> 
+                        </div>
+                    </th> 
+                </tr>
+                {% endfor %}
+
+
+            {% elif C == False %}
+                {% for p in P %}
+                <tr class="Header" id="Listed"> 
+                    <th> <img src="{{ p.Image.url }}" class="image"> </th>
+                    <th> {{ p.Name }} </th>
+                    <th> {{ p.Length }} </th>
+                    <th> {{ p.Manufacturer }} </th>
+                    <th> {{ p.Stock }} </th>
+                    <th> <a class="Button" href="{% url 'view' pk=p.pk %}" id="view"> View Information </a> </th>
+                </tr>
+                {% endfor %}
+            {% endif %}
+            </table>
+            <br><br>
+
+    {% elif use == 'complete' %}
+        {% if C == True %}
+
+        <br><br><br>
+
+        {% for o in O %}
+        <div class="container">
+            <div class="Largetext"><b> Order {{o.pk}} </b></div>
+            <div class="bodytext" id="done"> 
+                <span> Order ID: {{o.Verification}} </span> <br><br>
+                <span> Order Total Cost: ${{o.TotalCost}} </span> <br><br>
+                <span> Order Place and Date of Issue: {{o.PlaceDate}} </span> <br><br>
+                <span> Consignee: {{o.BL.Name}} </span> <br><br>
+                <span> Consignee ID: {{o.BL.BL}} </span> <br><br>
+                <span> Port of Discharge: {{o.BL.PortDischarge}} </span> <br><br>
+                <span> Number of B/L: {{o.NumOfBL}} </span> <br><br>
+            </div>
+            {% for p in Ord %}
+                {% if p.OrderID == o %}
+                <div class="container" id="sub" style="display: relative; max-height: fit-content;">
+                    <img src="{{p.Marks.Image.url}}" class="image" style="padding: 20px; position: absolute; right: 0vw; top: -0.3vh; border-radius: 9px; border: solid aliceblue; background-color: aliceblue;">
+                    <div class="bodytext">
+                        <span><b> Ordered Product ID: {{p.OrderedProductID}} </b></span> <br>
+                        <span> Product Name: {{p.Marks.Name}} </span><br>
+                        <span> Quantity: {{p.quantity}} </span><br>
+                        <span> Total Cost: ${{p.totalcost}} </span><br>
+                        <span> Remarks: {{p.remarks}} </span>
+
+
+                    </div>
+                    
+                </div>
+                <br>
+                {% endif %}
+            {% endfor %}
         </div>
+        {% endfor %}
 
         {% endif %}
-    <table style="font-style: normal; font-weight: normal;" class="Frame">
-        <tr class="identify"> 
-            <th> Image </th>
-            <th> Product </th>
-            <th> Length </th>
-            <th> Manufacturer Name </th>
-            <th> Quantity </th>
-            <th> Action </th>
-        </tr>
-    {% if C == True %}
-        {% for p in P %}
-        <tr class="Header"> 
-            <th> <img class="image" src="{{ p.Image.url }}"> </th>
-            <th> {{ p.Name }} </th>
-            <th> {{ p.Length }} </th>
-            <th> {{ p.Manufacturer }} </th>
-            <th> {{ p.Stock }} </th>
-            <th>
-                <div class="actions">
-                  <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
-                  <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit Info </a> 
-                </div>
-            </th> 
-        </tr>
-        {% endfor %}
-
-
-    {% elif C == False %}
-        {% for p in P %}
-        <tr class="Header" id="Listed"> 
-            <th> <img src="{{ p.Image.url }}" class="image"> </th>
-            <th> {{ p.Name }} </th>
-            <th> {{ p.Length }} </th>
-            <th> {{ p.Manufacturer }} </th>
-            <th> {{ p.Stock }} </th>
-            <th> <a class="Button" href="{% url 'view' pk=p.pk %}" id="view"> View Information </a> </th>
-        </tr>
-        {% endfor %}
     {% endif %}
-    </table>
-    <br><br>
+
+
     <style>
         #options > a{
             background-color: rgb(209, 209, 54);
@@ -72,7 +116,22 @@
             background-color: rgb(244, 244, 4);
         }
 
+        #done > span{
+            font-size: 20px;
+            font-weight:200;
+            margin-left: 0.5vw;
+        }
+        
+        #sub{
+            background-color: rgb(238, 176, 135);
+            margin: auto;
+        }
+
     </style>
+    <br><br>
     {% endblock %}
+
+
+    
 </body>
 </html>

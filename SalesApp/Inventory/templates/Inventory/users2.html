@@ -20,13 +20,16 @@
 
         {% for o in Orders %}
         <tr class="Header" id="main">
-            <th> Order <b>{{o.pk}}</b></ht>
+            <th> 
+                Order <b>{{o.pk}}</b> <br><br>
+                <a class="Button" style="width: 20vw;" href="{% url 'completeorder' pk=o.pk %}"> Confirm Order </a>
+            </th>
             <th> Order ID: {{o.Verification}} <br><br>
                 Place & Date of Issue: {{o.PlaceDate}} <br><br>
                 Port of Discharge: {{o.BL.PortDischarge}} <br><br>
                 Consignee: {{o.BL.Name}} <br><br>
                 Consignee BL Number: {{o.BL.BL}} <br><br> 
-                Total Cost: ${{o.TotalCost}}      
+                Total Cost: ${{o.TotalCost}}
             </th>
             <th> <a class="Button" href="{% url 'Products3' pk=o.pk %}" id="ViewProds"> View Products in Order {{o.pk}} </a> </th>
             <th> <a class="Button" href="{% url 'UnfTrans' pk=o.pk %}"> Edit Transaction/s of Order {{o.pk}} </a> </th>

@@ -4,6 +4,7 @@ from .models import Userperson, Product, OrderedProduct, FinalOrder, NotifyParty
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User, auth
 from django.template import loader
+from django.templatetags.static import static
 from django.http import HttpResponse
 from django.conf import settings
 import random
@@ -12,6 +13,7 @@ import string
 
 def home(request):
     condition = ''
+    use = "home"
     if request.user.is_authenticated:
         condition = True
         
@@ -33,7 +35,8 @@ def home(request):
         condition = False
         return render(
             request, 'Inventory/home.html', {
-            'C' : condition
+            'C' : condition,
+            'use' : use
             })
 
 def Clerk(request):
@@ -92,20 +95,16 @@ def AddProduct(request):
                 messages.info(request, 'You must fill out all the fields')
                 return redirect('addproduct')
 
-            elif cost[slice(1)] != "$":
-                messages.warning(request, "The currency is not in USD")
-                return redirect('addproduct')
-
-            elif isDigit(request,num = str(cost[1:])) == False:
+            elif isDigit(request,num = str(cost[0:])) == False:
                 messages.warning(request,"Input cost was not a number")
                 return redirect('addproduct')
 
 
-            elif float(cost[slice(1,len(cost))]) <= 0:
+            elif float(cost[slice(0,len(cost))]) <= 0:
                 messages.warning(request,"No negative costs or costs equal to 0")
                 return redirect('addproduct')
-            
-            elif stock == "" or stock == None or int(stock) < 0 or "." in stock:
+ 
+            elif stock == "" or stock == None or "." in stock or int(stock) <= 0:
                 messages.error(request, 'Stock must not be blank, a decimal, or less than 0')
                 return redirect('addproduct')
             
@@ -165,17 +164,13 @@ def EditProduct(request,pk):
                 messages.info(request, 'You must fill out all the fields')
                 return redirect('editproduct',pk)
 
-            elif isDigit(request,num = str(cost[1:])) == False:
+            elif isDigit(request,num = str(cost[0:])) == False:
                 messages.warning(request,"Input cost was not a number")
                 return redirect('editproduct', pk)
 
-            elif float(cost[slice(1,len(cost))]) <= 0:
+            elif float(cost[slice(0,len(cost))]) <= 0:
                 messages.warning(request,"No negative costs or costs equal to 0")
                 return redirect('editproduct', pk)
-
-            elif cost[slice(1)] != "$" and cost[slice(1)] != "P":
-                messages.warning(request, "The currency is not in USD or Pesos")
-                return redirect('editproduct',pk)
 
 
             Existing.Name = name
@@ -208,10 +203,8 @@ def EditProduct(request,pk):
         pass
 
 def delProduct(request,pk):
-    condition = ""
     Deleted = get_object_or_404(Product, pk=pk)
     if request.user.is_authenticated:
-        condition = True
         Deleted.Status = False
         Deleted.save()
         return redirect('Products')
@@ -220,8 +213,8 @@ def delProduct(request,pk):
 
 
 def Products(request):
+    use = 'home'
     condition = ""
-    print(request.path)
     User = Userperson.objects.all()
     P = Product.objects.filter(Stock__gte = 1).filter(Status = True).order_by('-Stock')
     if request.user.is_authenticated:
@@ -241,7 +234,8 @@ def Products(request):
             'C' : condition,
             'P':P, 
             'User':User,
-            'username' : request.session['user']
+            'username' : request.session['user'],
+            'use' : use
             })
     else:
         condition = False   
@@ -249,7 +243,8 @@ def Products(request):
             'C' : condition,
             'P':P, 
             'User':User,
-            'url':settings.MEDIA_URL
+            'url':settings.MEDIA_URL,
+            'use' : use
             })
 
 def Signup(request):
@@ -480,10 +475,8 @@ def ConfirmOrder(request,pk):
     if fetch != "New":
         ChosenOrder = get_object_or_404(FinalOrder, pk=fetch)
         #ChosenConsignee = get_object_or_404(Consignee, Name=ChosenOrder.BL.Name)
-
     else:
         ChosenOrder = ""
-        #ChosenConsignee = ""
 
     stock = ChosenProduct.Stock
     stocka = []
@@ -511,11 +504,8 @@ def ConfirmOrder(request,pk):
                 messages.info(request,"No proper fields for either Consignee or Port of Discharge")
                 return redirect('confirmcreateorder', pk)
 
-            if int(q) == 1:
-                Cost = float(ChosenProduct.Cost[1:len(request.POST.get('totalcost'))])
-
-            else:
-                Cost = float(Cost)
+          
+            Cost = float(Cost)
 
             
             #Final Order Section
@@ -531,8 +521,10 @@ def ConfirmOrder(request,pk):
                 NewOrder = FinalOrder.objects.create(
                     Verification = VerifID(request),
                     BL = NewConsign,
-                    NumOfBL = 3
+                    NumOfBL = 3,
                 )
+
+                NewOrder.TotalCost += Cost
                 NewOrder.PD()
                 ChosenOrder = NewOrder
             
@@ -577,10 +569,28 @@ def ConfirmOrder(request,pk):
                 'fetch' : fetch
             })
         
-'''
-AddOrder will be a component of another view functionality
 
-'''
+def CompleteOrder(request,pk):
+    OrderDone = get_object_or_404(FinalOrder, pk=pk)
+    OrderDone.Finished = True
+    OrderDone.save()
+    print(OrderDone.pk)
+    return redirect('Products2')
+
+def ShowComplete(request):
+    condition = True
+    use = 'complete'
+    DoneOrders = FinalOrder.objects.filter(Finished = True)
+    OrderedP = OrderedProduct.objects.all()
+    if request.user.is_authenticated:
+        pass
+        return render(request, 'Inventory/products.html',{
+            'use' : use,
+            'C' : condition,
+            'O' : DoneOrders,
+            'Ord' : OrderedP
+        })
+
 def AddOrder(request):
     if request.user.is_authenticated:
         Order = FinalOrder.objects.create(
@@ -589,6 +599,7 @@ def AddOrder(request):
         Order.PlaceDate = str(Order.Place) + ", " + str(Order.OrderDate) 
         Order.save()
         return Order
+    
     
 def DeleteTrans(request,pk):
     TobeDel = get_object_or_404(OrderedProduct, pk=pk)
@@ -679,16 +690,11 @@ def ConfirmTrans(request,pk):
             cost = request.POST.get('totalcost')
             Newremarks = request.POST.get('Description')
             q = request.POST.get('drop')
-            if int(q) == 1:
-                Order.TotalCost -= ChosenTrans.totalcost
-                ChosenTrans.totalcost = float(Newproduct.Cost[1:len(Newproduct.Cost)])
-                Order.TotalCost += ChosenTrans.totalcost
-                Order.save()
-            else:
-                Order.TotalCost -= ChosenTrans.totalcost
-                ChosenTrans.totalcost = float(cost[1:len(cost)])
-                Order.TotalCost += ChosenTrans.totalcost
-                Order.save()
+    
+            Order.TotalCost -= ChosenTrans.totalcost
+            ChosenTrans.totalcost = float(cost[1:len(cost)])
+            Order.TotalCost += ChosenTrans.totalcost
+            Order.save()
             
             ChosenTrans.quantity = int(q)
             ChosenTrans.Marks = get_object_or_404(Product, Name=orderprodname)
