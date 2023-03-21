@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, DecimalValidator
 from PIL import Image
 from django.conf.urls.static import static
+from decimal import Decimal
 
 '''
 Models that are active for confirmation of order:
@@ -55,7 +56,7 @@ class Product(models.Model): #Steels, not food
         super(Product,self).save() 
     
     Length = models.CharField(max_length=20)
-    Cost = models.FloatField(default=0, validators=[DecimalValidator(5,2)]) #declared value USD
+    Cost = models.DecimalField(default=0, validators=[DecimalValidator(5,2)], decimal_places=2, max_digits=7) #declared value USD
     Stock = models.BigIntegerField(default=0)
     Contact = models.CharField(max_length=500)
     
@@ -99,7 +100,7 @@ class Userperson(models.Model):
 
 #Create a model that is created upon "Add to Cart" button press designated for a user
 class FinalOrder(models.Model):
-    TotalCost = models.FloatField(default=0, validators=[DecimalValidator(10,2)]) 
+    TotalCost = models.DecimalField(default=0, validators=[DecimalValidator(10,2)], decimal_places=2, max_digits=10) 
     ProductInfo = models.CharField(max_length=400, blank=True,default='')
     Finished = models.BooleanField(default=False) #confirmed or not
     OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)
@@ -114,9 +115,9 @@ class FinalOrder(models.Model):
     Place = models.CharField(default="Kaohsiung, Taiwan", max_length=70, null=False)
     PlaceDate = models.CharField(default='', max_length=100, blank=True)
 
-    Charges = models.FloatField(default=None, max_length=11, validators=[MinValueValidator(float('0.01'))], null=True, blank=True)
+    Charges = models.DecimalField(default=None, max_length=11, validators=[MinValueValidator(Decimal('0.01'))], null=True, blank=True, decimal_places=2, max_digits=8)
     RevTons = models.CharField(max_length=1000, default='', null=True, blank=True)
-    Rate = models.FloatField(default=None, null=True, blank=True, validators=[MinValueValidator(float('0.01'))])
+    Rate = models.DecimalField(default=None, null=True, blank=True, validators=[MinValueValidator(Decimal('0.01'))], decimal_places=2, max_digits=8)
     Prepaid = models.CharField(max_length=20, default='', blank=True)
     Collect = models.CharField(max_length=20, default='', blank=True)
     
@@ -136,7 +137,7 @@ class FinalOrder(models.Model):
 class OrderedProduct(models.Model):
     remarks = models.CharField(max_length=200)
     quantity = models.IntegerField(default=0)
-    totalcost = models.FloatField(default=0, validators=[DecimalValidator(10,2)])
+    totalcost = models.DecimalField(default=0, validators=[DecimalValidator(10,2)], decimal_places=2, max_digits=10)
 
     #New Fields
     OrderedProductID = models.CharField(default=None, unique=True, max_length=13)

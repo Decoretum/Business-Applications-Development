@@ -7,6 +7,7 @@ from django.template import loader
 from django.templatetags.static import static
 from django.http import HttpResponse
 from django.conf import settings
+from decimal import Decimal
 import random
 import string
 
@@ -68,7 +69,7 @@ def Clerk(request):
 
 def isDigit(request,num):
     try:
-        float(num)
+        Decimal(num)
         return True
     except ValueError:
         return False
@@ -100,7 +101,7 @@ def AddProduct(request):
                 return redirect('addproduct')
 
 
-            elif float(cost[slice(0,len(cost))]) <= 0:
+            elif Decimal(cost[slice(0,len(cost))]) <= 0:
                 messages.warning(request,"No negative costs or costs equal to 0")
                 return redirect('addproduct')
  
@@ -168,7 +169,7 @@ def EditProduct(request,pk):
                 messages.warning(request,"Input cost was not a number")
                 return redirect('editproduct', pk)
 
-            elif float(cost[slice(0,len(cost))]) <= 0:
+            elif Decimal(cost[slice(0,len(cost))]) <= 0:
                 messages.warning(request,"No negative costs or costs equal to 0")
                 return redirect('editproduct', pk)
 
@@ -505,7 +506,7 @@ def ConfirmOrder(request,pk):
                 return redirect('confirmcreateorder', pk)
 
           
-            Cost = float(Cost)
+            Cost = Decimal(Cost)
 
             
             #Final Order Section
@@ -573,6 +574,13 @@ def ConfirmOrder(request,pk):
 def CompleteOrder(request,pk):
     OrderDone = get_object_or_404(FinalOrder, pk=pk)
     OrderDone.Finished = True
+
+    OrderedProds = OrderedProduct.objects.filter(OrderID = OrderDone)
+    for item in OrderedProds:
+        item.Marks.Stock -= item.quantity
+        item.Marks.save()
+        item.save()
+
     OrderDone.save()
     print(OrderDone.pk)
     return redirect('Products2')
@@ -692,7 +700,7 @@ def ConfirmTrans(request,pk):
             q = request.POST.get('drop')
     
             Order.TotalCost -= ChosenTrans.totalcost
-            ChosenTrans.totalcost = float(cost[1:len(cost)])
+            ChosenTrans.totalcost = Decimal(cost[1:len(cost)])
             Order.TotalCost += ChosenTrans.totalcost
             Order.save()
             
