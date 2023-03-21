@@ -667,6 +667,10 @@ a{
   border-radius: 9px;
 }
 
+.forminput:focus{
+  outline: none;
+}
+
 .actions{
   display:flex;
   flex-direction:row;
