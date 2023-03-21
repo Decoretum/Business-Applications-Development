@@ -26,13 +26,13 @@
     </div>
     {% endfor %}
     <a class="Button" href="{% url 'Products2' %}" style=" float: right; margin-right: 25vw; margin-top:5vh; background-color: yellow;"> Back to Pending Orders </a>
-    
+    <br><br>    
     {% else %}
     <div class="container">
         <div class="Largetext" style="position: relative;"> No Products for this order yet! </div><br>
         <a class="Button" href="{% url 'Products2' %}" style="margin-bottom: 1vh; position: relative;"> Back to Pending Orders </a><br><br>
     </div>
-    {% endif %}
+    {% endif %} <br><br>
     {% endblock %}
 </body>
 </html>

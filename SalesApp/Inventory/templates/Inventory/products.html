@@ -16,52 +16,54 @@
         <span class="Largetext" style="margin-left:8vw; font-family: Helvetica;"> Product Inventory Management Site </span> <br> 
             {% if C == True %}
             <br>
-
             <div style="margin-left: -1vw;" id="options"> 
                 <a class="Button w-auto" href="{% url 'createorder' %}" style="margin-left:10vw; position: relative;"> Create Transaction </a>
                 <a class="Button" style="margin-left: 10px;" href="{% url 'addproduct' %}"> Add A Product </a>
             </div>
-
+            {% endif %}
         
         <table style="font-style: normal; font-weight: normal;" class="Frame">
             <tr class="identify"> 
-                <th> Image </th>
+                <th style="border-top-left-radius: 9px;"> Image </th>
                 <th> Product </th>
                 <th> Length </th>
                 <th> Manufacturer Name </th>
                 <th> Quantity </th>
-                <th> Action </th>
+                <th style="border-top-right-radius: 9px;"> Action </th>
             </tr>
             
                 {% for p in P %}
-                <tr class="Header"> 
-                    <th> <img class="image" src="{{ p.Image.url }}"> </th>
-                    <th> {{ p.Name }} </th>
-                    <th> {{ p.Length }} </th>
-                    <th> {{ p.Manufacturer }} </th>
-                    <th> {{ p.Stock }} </th>
-                    <th>
-                        <div class="actions">
-                        <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
-                        <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit Info </a> 
-                        </div>
-                    </th> 
-                </tr>
-                {% endfor %}
+                    {% if C == True %}
+                    <tr class="Header"> 
+                        <th> <img class="image" src="{{ p.Image.url }}"> </th>
+                        <th> {{ p.Name }} </th>
+                        <th> {{ p.Length }} </th>
+                        <th> {{ p.Manufacturer }} </th>
+                        <th> {{ p.Stock }} </th>
+                        
+                        <th>
+                            <div class="actions">
+                            <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
+                            <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit Info </a> 
+                            </div>
+                        </th> 
+                    </tr>
+              
 
 
-            {% elif C == False %}
-                {% for p in P %}
-                <tr class="Header" id="Listed"> 
-                    <th> <img src="{{ p.Image.url }}" class="image"> </th>
-                    <th> {{ p.Name }} </th>
-                    <th> {{ p.Length }} </th>
-                    <th> {{ p.Manufacturer }} </th>
-                    <th> {{ p.Stock }} </th>
-                    <th> <a class="Button" href="{% url 'view' pk=p.pk %}" id="view"> View Information </a> </th>
-                </tr>
+                    {% elif C == False %}
+
+                        <tr class="Header" id="Listed"> 
+                            <th> <img src="{{ p.Image.url }}" class="image"> </th>
+                            <th> {{ p.Name }} </th>
+                            <th> {{ p.Length }} </th>
+                            <th> {{ p.Manufacturer }} </th>
+                            <th> {{ p.Stock }} </th>
+                            <th> <a class="Button" href="{% url 'view' pk=p.pk %}" id="view"> View Information </a> </th>
+                        </tr>
+                      
+                    {% endif %}
                 {% endfor %}
-            {% endif %}
             </table>
             <br><br>
 
@@ -85,7 +87,7 @@
             {% for p in Ord %}
                 {% if p.OrderID == o %}
                 <div class="container" id="sub" style="display: relative; max-height: fit-content;">
-                    <img src="{{p.Marks.Image.url}}" class="image" style="padding: 20px; position: absolute; right: 0vw; top: -0.3vh; border-radius: 9px; border: solid aliceblue; background-color: aliceblue;">
+                    <img src="{{p.Marks.Image.url}}" class="image" style="padding: 20px; max-width: 100%; position: absolute; right: 0vw; top: -0.3vh; border-radius: 9px; border: solid aliceblue; background-color: aliceblue;">
                     <div class="bodytext">
                         <span><b> Ordered Product ID: {{p.OrderedProductID}} </b></span> <br>
                         <span> Product Name: {{p.Marks.Name}} </span><br>
@@ -100,7 +102,7 @@
                 <br>
                 {% endif %}
             {% endfor %}
-        </div>
+        </div> <br><br>
         {% endfor %}
 
         {% endif %}

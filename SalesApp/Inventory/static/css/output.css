@@ -758,9 +758,12 @@ a{
   margin: auto;
   margin-top: 5vh;
   background-color: rgb(251, 251, 244);
-  border: transparent;
+  border: none transparent;
   border-color: #0000;
   box-shadow: 10px 10px rgb(85, 83, 80);
+  border-radius: 9px;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .Frame > *{
@@ -786,7 +789,6 @@ border-radius: 9px;
 
 .identify > *{
   background-color: rgb(223, 230, 132);
-  border: none;
   margin: auto;
   padding: 9px;
   max-width: 100%;

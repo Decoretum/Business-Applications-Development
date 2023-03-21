@@ -12,17 +12,16 @@
     <br><br>
     <table style="font-style: normal; font-weight: normal;" class="Frame">
         <tr class="identify"> 
-            <th> Order No. </th>
+            <th style="border-top-left-radius: 9px;"> Order No. </th>
             <th> Order Information </th>
             <th> Product Info. </th>
-            <th> Edit Transaction </th>
+            <th style="border-top-right-radius: 9px;"> Confirm Order </th>
         </tr>
 
         {% for o in Orders %}
         <tr class="Header" id="main">
-            <th> 
+            <th id="firsty"> 
                 Order <b>{{o.pk}}</b> <br><br>
-                <a class="Button" style="width: 20vw;" href="{% url 'completeorder' pk=o.pk %}"> Confirm Order </a>
             </th>
             <th> Order ID: {{o.Verification}} <br><br>
                 Place & Date of Issue: {{o.PlaceDate}} <br><br>
@@ -31,8 +30,9 @@
                 Consignee BL Number: {{o.BL.BL}} <br><br> 
                 Total Cost: ${{o.TotalCost}}
             </th>
-            <th> <a class="Button" href="{% url 'Products3' pk=o.pk %}" id="ViewProds"> View Products in Order {{o.pk}} </a> </th>
-            <th> <a class="Button" href="{% url 'UnfTrans' pk=o.pk %}"> Edit Transaction/s of Order {{o.pk}} </a> </th>
+            <th> <a class="Button" href="{% url 'UnfTrans' pk=o.pk %}" id="ViewProds"> View & Edit Products of <br> Order {{o.pk}} </a> </th>
+            <th id="lasty"> <a class="Button" style="width: 20vw;" href="{% url 'completeorder' pk=o.pk %}"> Confirm Order </a>
+            </th>
         </tr>
         {% endfor %}
     </table>
@@ -42,9 +42,31 @@
 
     <br><br>
     <style>
-        #main > *{
-            border: solid 1.5px rgb(141, 126, 126);
+        #main > *:not(#firsty,#lasty){
+            border-right: solid 1px rgb(141, 126, 126);
+            border-top: solid 1px rgb(141, 126, 126);
+
         }
+
+        #firsty, #lasty{
+            border-top: solid 1px rgb(141, 126, 126);
+            border-right: solid 1px rgb(141, 126, 126);
+        }
+
+        #lasty{
+            border-bottom-right-radius: 9px;
+            border-right: none;
+        }
+        #Edit{
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        #ViewProds{
+            display: flex;
+            flex-wrap: nowrap;
+        }
+       
     </style>
     {% endblock %}
     
