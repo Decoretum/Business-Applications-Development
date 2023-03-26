@@ -76,47 +76,47 @@
         <div class="container">
             <div class="Largetext"><b> Order {{o.pk}} </b></div>
             <div class="bodytext" id="done"> 
-                <span> Order ID: {{o.Verification}} </span> 
-                <span style="margin-left: 4.5vw;"> Order Total Cost: ${{o.TotalCost}} </span> <br><br>
-                <span> Order Place and Date of Issue: {{o.PlaceDate}} </span> <br><br>
-                <span> Consignee: {{o.BL.Name}} </span> <br><br>
-                <span> Consignee ID: {{o.BL.BL}} </span> <br><br>
-                <span> Shipper Company: {{o.ShipperName}} </span> <br><br>
+                <span> <span style="font-weight:bold"> Order ID:</span> {{o.Verification}} </span> 
+                <span style="margin-left: 4.5vw;"> <span style="font-weight:bold"> Order Total Cost:</span> ${{o.TotalCost}} </span> <br><br><br>
+                <span> <span style="font-weight:bold"> Order Place & Date of Issue:</span> {{o.PlaceDate}} </span> <br><br><br>
+                <span> <span style="font-weight:bold"> Consignee:</span> {{o.BL.Name}} </span> 
+                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Consignee ID:</span> {{o.BL.BL}} </span> <br><br><br>
+                <span> <span style="font-weight:bold"> Shipper Company:</span> {{o.ShipperName}} </span>
 
                 {% if o.OceanVessel != "" %}
-                <span> Ocean Vessel: {{o.OceanVessel}} </span> <br><br>
+                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Ocean Vessel:</span> {{o.OceanVessel}} </span> <br><br><br>
                 {% endif %}
                 {% if o.LocalVessel != "" %}
-                <span> Local Vessel: {{o.LocalVessel}} </span> <br><br>
+                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Local Vessel:</span> {{o.LocalVessel}} </span> <br><br><br>
                 {% endif %}
                 {% if o.LocalVesselOrigin != "" %}
-                <span> Local Vessel Origin: {{o.LocalVesselOrigin}} </span> <br><br>
+                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Local Vessel Origin:</span> {{o.LocalVesselOrigin}} </span> <br><br><br>
                 {% endif %}
 
-                <span> Port of Loading: {{o.Portload}} </span> <br><br>
-                <span> Port of Discharge: {{o.Portdis}} </span> <br><br>
-                <span> Number of B/L: {{o.NumOfBL}} </span> <br><br>
+                <span> <span style="font-weight:bold"> Port of Loading:</span> {{o.Portload}} </span> 
+                <span  style="margin-left: 2vw;"> <span style="font-weight:bold"> Port of Discharge:</span> {{o.Portdis}} </span> <br><br><br>
+                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Number of B/L:</span> {{o.NumOfBL}} </span> <br><br><br>
 
-                <span> Notify Party: {{o.NotifyName.Name}} </span> <br><br>
-                <span> Notify Party Address: {{o.NotifyName.Address}} </span> <br><br>
+                <span> <span style="font-weight:bold"> Notify Party:</span> {{o.NotifyName.Name}} </span> <br><br><br>
+                <span class="bodytext" style="margin-left: 0.1vw; display: flex; flex-wrap: wrap; word-break: break-word;"> <span style="font-weight:bold"> Notify Party Address:</span> {{o.NotifyName.Address}}</span> <br><br>
 
                 {% if o.PayAt != "" %}
-                <span> Payable At: {{o.PayAt}} </span> <br><br>
+                <span> <span style="font-weight:bold"> Payable At:</span> {{o.PayAt}} </span> 
                 {% endif %}
                 {% if o.Charges != 0 %}
-                <span> Charges: ${{o.Charges}} </span> <br><br>
+                <span> <span style="font-weight:bold"> Charges:</span> ${{o.Charges}} </span>
                 {% endif %}
                 {% if o.RevTons != "" %}
-                <span> Revenue Tons: {{o.RevTons}} </span> <br><br>
+                <span> <span style="font-weight:bold"> Revenue Tons:</span> {{o.RevTons}} </span> 
                 {% endif %}
                 {% if o.Rate != 0 %}
-                <span> Rate: ${{o.Rate}} </span> <br><br>
+                <span> <span style="font-weight:bold"> Rate:</span> ${{o.Rate}} </span> 
                 {% endif %}
 
                 {% if o.Prepaid == "Yes" %}
-                <span> Prepaid: {{o.Prepaid}} </span> <br><br>
+                <span> <span style="font-weight:bold"> Prepaid:</span> {{o.Prepaid}} </span> <br><br>
                 {% else %}
-                <span> Collect: {{o.Collect}} </span> <br><br>
+                <span> <span style="font-weight:bold"> Collect:</span> {{o.Collect}} </span> <br><br>
                 {% endif %}
 
 
@@ -130,9 +130,7 @@
                         <span> Product Name: {{p.Marks.Name}} </span><br>
                         <span> Quantity: {{p.quantity}} </span><br>
                         <span> Total Cost: ${{p.totalcost}} </span><br>
-                        <span> Remarks: {{p.remarks}} </span>
-
-
+                        <span style="display: flex; flex-wrap: wrap; word-break: break-word; max-width: 30vw;"> Remarks: {{p.remarks}} </span>
                     </div>
                     
                 </div>
@@ -161,7 +159,6 @@
             font-weight:200;
             margin-left: 0.5vw;
             max-width: 100%;
-            height: 20vh;
         }
         
         #sub{

@@ -15,18 +15,24 @@
     {% if C == True %}
     <br>
         <div class="container">
-            <img class="image" style="float: left; margin: 10px;" src="{{P.Image.url}}"> <br><br><br><br><br><br><br><br><br>
-            <div class="Largetext"> Product Name : {{P.Name}}</div><br>
-            <span class="Largetext"> Description : </span> <br><br> <span class="bodytext">{{P.Description}} </span> <br><br>
-            <div class="Largetext"> Product Marks: </div> <span class="bodytext"> {{ P.Marks }} </span><br><br>
-            <div class="Largetext"> Manufacturer : </div> <span class="bodytext"> {{P.Manufacturer}} </span> <br><br>
-            <div class="Largetext"> Location of Manufacturer : </div> <span class="bodytext"> {{P.ManuLoc}} </span> <br> <br>   
-            <div class="Largetext"> Length : </div> <span class="bodytext"> {{P.Length}} </span> <br> <br>
-            <div class="Largetext"> Cost : </div> <span class="bodytext"> ${{P.Cost}} </span> <br> <br>
-            <div class="Largetext"> Gross Weight : </div> <span class="bodytext"> {{P.GrossWeight}} </span> <br> <br>
-            <div class="Largetext"> Color : </div> <span class="bodytext"> {{P.Color}} </span> <br> <br>
-            <div class="Largetext"> Measurement : </div> <span class="bodytext"> {{P.Measurement}} </span> <br> <br>
-            <div class="Largetext"> Contact : </div> <span class="bodytext"> {{P.Contact}} </span> 
+            <img class="image" style="float: left; margin: 10px;" src="{{P.Image.url}}"> <!-- <br><br><br><br><br><br><br><br><br> -->
+            <span class="Largetext"> Product Name : {{P.Name}}</span><br><br><br>
+            <span class="Largetext"> Product Marks: </span> <span class="bodytext" style="margin-left: -1vw;"> {{ P.Marks }} </span><br><br><br><br><br>
+
+            <div id="basic">
+               
+                <span class="Largetext" > Description: </span> <span class="bodytext" style="margin-left: 0.5vw; display: flex; flex-wrap: wrap; word-break: break-word;">{{P.Description}}</span> <br><br>
+                <span class="Largetext"> Manufacturer: </span> <span class="bodytext"> {{P.Manufacturer}} </span>
+                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Location of Manufacturer : </span> <span class="bodytext"> {{P.ManuLoc}} </span> <br> <br> <br>  
+          
+                <span class="Largetext"> Length: </span> <span class="bodytext"> {{P.Length}} </span> 
+                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Cost: </span> <span class="bodytext"> ${{P.Cost}} </span>
+                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Gross Weight: </span> <span class="bodytext"> {{P.GrossWeight}} </span> <br> <br> <br>
+                <span class="Largetext"> Color: </span> <span class="bodytext"> {{P.Color}} </span>
+                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Measurement : </span> <span class="bodytext"> {{P.Measurement}} </span> <br> <br> <br>
+                <span class="Largetext"> Contact: </span> <span class="bodytext"> {{P.Contact}} </span>
+            </div> <br>
+             
             <div style="margin-left: 2vw; display: inline-flex; margin-bottom: 2vh;" id="buts"> 
                 <a class="Button w-auto" href="{% url 'edit' pk=P.pk %}"> Edit Info </a>
                 <a class="Button" id="edittemp" style="margin-left: 1vw;"> Delete Product </a>
@@ -41,21 +47,29 @@
         </div>
     {% elif C == False %}
     <br>
-    <div class="container">
-        <img src="{{ P.Image.url }}" class="image" style="float:left; margin: 10px;"> <br><br><br><br><br><br><br><br><br><br>
-        <div class="Largetext"> Product Name : {{P.Name}}</div>
-        <span class="bodytext desc"> Description : {{P.Description}} </span> <br><br>
-        <div class="Largetext"> Product Marks: </div> <span class="bodytext"> {{ P.Marks }} </span><br><br>
-        <div class="Largetext"> Manufacturer : </div> <span class="bodytext"> {{P.Manufacturer}} </span> <br><br>
-        <div class="Largetext"> Location of Manufacturer : </div> <span class="bodytext"> {{P.ManuLoc}} </span> <br> <br>   
-        <div class="Largetext"> Length : </div> <span class="bodytext"> {{P.Length}} </span> <br> <br>
-        <div class="Largetext"> Cost : </div> <span class="bodytext"> ${{P.Cost}} </span> <br> <br>
-        <div class="Largetext"> Gross Weight : </div> <span class="bodytext"> {{P.GrossWeight}} </span> <br> <br>
-        <div class="Largetext"> Color : </div> <span class="bodytext"> {{P.Color}} </span> <br> <br>
-        <div class="Largetext"> Measurement : </div> <span class="bodytext"> {{P.Measurement}} </span> <br> <br>
-        <div class="Largetext"> Contact : </div> <span class="bodytext"> {{P.Contact}} </span> 
-        <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br><br>
-    </div>
+        <div class="container">
+            <img class="image" style="float: left; margin: 10px;" src="{{P.Image.url}}"> <!-- <br><br><br><br><br><br><br><br><br> -->
+            <span class="Largetext"> Product Name : {{P.Name}}</span><br><br><br>
+            <span class="Largetext"> Product Marks: </span> <span class="bodytext" style="margin-left: -1vw;"> {{ P.Marks }} </span><br><br><br><br><br>
+
+            <div id="basic">
+               
+                <span class="Largetext" > Description: </span> <span class="bodytext" style="margin-left: 0.5vw; display: flex; flex-wrap: wrap; word-break: break-word;">{{P.Description}}</span> <br><br>
+                <span class="Largetext"> Manufacturer: </span> <span class="bodytext"> {{P.Manufacturer}} </span>
+                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Location of Manufacturer : </span> <span class="bodytext"> {{P.ManuLoc}} </span> <br> <br> <br>  
+          
+                <span class="Largetext"> Length: </span> <span class="bodytext"> {{P.Length}} </span> 
+                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Cost: </span> <span class="bodytext"> ${{P.Cost}} </span>
+                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Gross Weight: </span> <span class="bodytext"> {{P.GrossWeight}} </span> <br> <br> <br>
+                <span class="Largetext"> Color: </span> <span class="bodytext"> {{P.Color}} </span>
+                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Measurement : </span> <span class="bodytext"> {{P.Measurement}} </span> <br> <br> <br>
+                <span class="Largetext"> Contact: </span> <span class="bodytext"> {{P.Contact}} </span>
+            </div> <br><br>
+             
+
+            <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
+        </div>
+        <br>
     {% endif %}
     <br><br<br>
     <script>
@@ -90,6 +104,15 @@
         
         .container > span:not('.bodytext.desc'){
             margin-left: 4vw;
+        }
+
+        #basic > .Largetext{
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        #basic > .bodytext{
+            margin-left: -1vw;
         }
 
         #buts > *{
