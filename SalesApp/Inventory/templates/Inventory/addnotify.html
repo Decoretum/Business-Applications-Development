@@ -1,0 +1,84 @@
+{% extends 'Inventory/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <br><br>
+    {% if edit == False %}
+    <form method="POST" action="{% url 'addnotify' %}" enctype="multipart/form-data">{% csrf_token %}
+        <div class="container">
+                {% for m in messages %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span style="color: red;" {% if m.tag == 'info' %} {% endif %}> {{m}} </span> {% endif %}
+                {% endfor %}
+            <div class="Largetext" style="font-size: 30px;"> Add a Notify Party </div> 
+
+            <div class="Largetext"> Name </div> 
+            <input type="text" class="forminput" name="name" id="name">
+
+            <div class="Largetext"> Street </div>
+            <input type="text" class="forminput" name="street" id="street">
+
+            <div class="Largetext"> City </div>
+            <input type="text" class="forminput" name="city" id="city">
+
+            <div class="Largetext"> State </div>
+            <input type="text" class="forminput" name="state" id="state">
+
+            <br><br>
+
+
+            <div style="display: inline-flex; margin-left: 2vw; margin-top: 5vh;">
+            <button class="Button" type="submit"> Add Notify Party </button>
+            <button class="Button" href="{% url 'addnotify' %}" value="More" name="More" style="margin-left: 2vw;"> Submit and Add again </button>
+            <a class="Button" href="{% url 'shownotify' %}" style="margin-left: 2vw;"> Back to Notify Parties </a>
+            </div>
+            <br><br>
+        </div>
+    </form>
+
+    {% else %}
+    <form method="POST" action="{% url 'editnotify' pk=chosen.pk %}" enctype="multipart/form-data">{% csrf_token %}
+        <div class="container">
+                {% for m in messages %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span style="color: red;" {% if m.tag == 'info' %} {% endif %}> {{m}} </span> {% endif %}
+                {% endfor %}
+            <div class="Largetext" style="font-size: 30px;"> Edit Notify Party </div> 
+
+            <div class="Largetext"> Name </div> 
+            <input type="text" class="forminput" name="name" id="name" value="{{chosen.Name}}">
+
+            <div class="Largetext"> Street </div>
+            <input type="text" class="forminput" name="street" id="street" value="{{chosen.Street}}">
+
+            <div class="Largetext"> City </div>
+            <input type="text" class="forminput" name="city" id="city" value="{{chosen.City}}">
+
+            <div class="Largetext"> State </div>
+            <input type="text" class="forminput" name="state" id="state" value="{{chosen.State}}">
+
+            <br><br>
+
+
+            <div style="display: inline-flex; margin-left: 2vw; margin-top: 5vh;">
+            <button class="Button" type="submit"> Submit changes </button>
+            <a class="Button" href="{% url 'shownotify' %}" style="margin-left: 2vw;"> Back to Notify Parties </a>           
+            </div>
+            <br><br>
+        </div>
+    </form>
+
+
+
+    {% endif %}
+    <br><br>
+    {% endblock %}
+</body>
+</html>

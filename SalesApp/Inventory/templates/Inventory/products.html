@@ -76,13 +76,50 @@
         <div class="container">
             <div class="Largetext"><b> Order {{o.pk}} </b></div>
             <div class="bodytext" id="done"> 
-                <span> Order ID: {{o.Verification}} </span> <br><br>
-                <span> Order Total Cost: ${{o.TotalCost}} </span> <br><br>
+                <span> Order ID: {{o.Verification}} </span> 
+                <span style="margin-left: 4.5vw;"> Order Total Cost: ${{o.TotalCost}} </span> <br><br>
                 <span> Order Place and Date of Issue: {{o.PlaceDate}} </span> <br><br>
                 <span> Consignee: {{o.BL.Name}} </span> <br><br>
                 <span> Consignee ID: {{o.BL.BL}} </span> <br><br>
-                <span> Port of Discharge: {{o.BL.PortDischarge}} </span> <br><br>
+                <span> Shipper Company: {{o.ShipperName}} </span> <br><br>
+
+                {% if o.OceanVessel != "" %}
+                <span> Ocean Vessel: {{o.OceanVessel}} </span> <br><br>
+                {% endif %}
+                {% if o.LocalVessel != "" %}
+                <span> Local Vessel: {{o.LocalVessel}} </span> <br><br>
+                {% endif %}
+                {% if o.LocalVesselOrigin != "" %}
+                <span> Local Vessel Origin: {{o.LocalVesselOrigin}} </span> <br><br>
+                {% endif %}
+
+                <span> Port of Loading: {{o.Portload}} </span> <br><br>
+                <span> Port of Discharge: {{o.Portdis}} </span> <br><br>
                 <span> Number of B/L: {{o.NumOfBL}} </span> <br><br>
+
+                <span> Notify Party: {{o.NotifyName.Name}} </span> <br><br>
+                <span> Notify Party Address: {{o.NotifyName.Address}} </span> <br><br>
+
+                {% if o.PayAt != "" %}
+                <span> Payable At: {{o.PayAt}} </span> <br><br>
+                {% endif %}
+                {% if o.Charges != 0 %}
+                <span> Charges: ${{o.Charges}} </span> <br><br>
+                {% endif %}
+                {% if o.RevTons != "" %}
+                <span> Revenue Tons: {{o.RevTons}} </span> <br><br>
+                {% endif %}
+                {% if o.Rate != 0 %}
+                <span> Rate: ${{o.Rate}} </span> <br><br>
+                {% endif %}
+
+                {% if o.Prepaid == "Yes" %}
+                <span> Prepaid: {{o.Prepaid}} </span> <br><br>
+                {% else %}
+                <span> Collect: {{o.Collect}} </span> <br><br>
+                {% endif %}
+
+
             </div>
             {% for p in Ord %}
                 {% if p.OrderID == o %}
@@ -118,10 +155,13 @@
             background-color: rgb(244, 244, 4);
         }
 
+  
         #done > span{
             font-size: 20px;
             font-weight:200;
             margin-left: 0.5vw;
+            max-width: 100%;
+            height: 20vh;
         }
         
         #sub{

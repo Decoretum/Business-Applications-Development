@@ -4,19 +4,6 @@ from PIL import Image
 from django.conf.urls.static import static
 from decimal import Decimal
 
-'''
-Models that are active for confirmation of order:
-    Company, Notify Party, Consignee
-
-    Ordered Product will update its voyage number
-
-'''
-class Company(models.Model):
-    ShipperName = models.CharField(max_length=30)
-    OceanVessel = models.CharField(max_length=50)
-    LocalVessel =  models.CharField(max_length=50, null=True)
-    LocalVesselOrigin = models.CharField(max_length=50, null=True)
-    objects = models.Manager()
 
 class NotifyParty(models.Model):
     Name = models.CharField(max_length=50, unique=True)
@@ -34,7 +21,6 @@ class NotifyParty(models.Model):
 class Consignee(models.Model):
     BL = models.CharField(max_length=20, default='', unique=True)
     Name = models.CharField(max_length=100)
-    PortDischarge = models.CharField(max_length=100, default='', blank=True)
 
 
 class Product(models.Model): #Steels, not food 
@@ -99,25 +85,31 @@ class Userperson(models.Model):
 
 
 #Create a model that is created upon "Add to Cart" button press designated for a user
+#Null = True
+#Shipper, NotifyName, PayAt, Charges, RevTons, Rate, Prepaid, Collect
+#portload, portdis, transhto, FinalDest, Voyage
 class FinalOrder(models.Model):
+    ShipperName = models.CharField(max_length=100, default='', blank=True)
+    OceanVessel = models.CharField(max_length=50, null=True, default='')
+    LocalVessel =  models.CharField(max_length=50, null=True, default='')
+    LocalVesselOrigin = models.CharField(max_length=50, null=True, default='')
+
     TotalCost = models.DecimalField(default=0, validators=[DecimalValidator(10,2)], decimal_places=2, max_digits=10) 
-    ProductInfo = models.CharField(max_length=400, blank=True,default='')
     Finished = models.BooleanField(default=False) #confirmed or not
     OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)
 
     Verification = models.CharField(default='',unique=True, max_length=13, null=True, blank=True) #Orderid -> verification
     BL = models.ForeignKey(Consignee, null=False, blank=True, on_delete=models.CASCADE)
 
-    Shipper = models.ForeignKey(Company, on_delete=models.CASCADE, default=None, null=True, blank=True)
     NotifyName = models.ForeignKey(NotifyParty, default=None, on_delete=models.CASCADE, null=True, blank=True)
     NumOfBL = models.IntegerField(default=3, null=True, blank=True)
     PayAt = models.CharField(default='', max_length=70, null=True, blank=True)
     Place = models.CharField(default="Kaohsiung, Taiwan", max_length=70, null=False)
     PlaceDate = models.CharField(default='', max_length=100, blank=True)
 
-    Charges = models.DecimalField(default=None, max_length=11, validators=[MinValueValidator(Decimal('0.01'))], null=True, blank=True, decimal_places=2, max_digits=8)
+    Charges = models.DecimalField(default=0.0, max_length=11, validators=[MinValueValidator(Decimal('0.01'))], null=True, blank=True, decimal_places=2, max_digits=8)
     RevTons = models.CharField(max_length=1000, default='', null=True, blank=True)
-    Rate = models.DecimalField(default=None, null=True, blank=True, validators=[MinValueValidator(Decimal('0.01'))], decimal_places=2, max_digits=8)
+    Rate = models.DecimalField(default=0.0, null=True, blank=True, validators=[MinValueValidator(Decimal('0.01'))], decimal_places=2, max_digits=8)
     Prepaid = models.CharField(max_length=20, default='', blank=True)
     Collect = models.CharField(max_length=20, default='', blank=True)
     
@@ -125,7 +117,7 @@ class FinalOrder(models.Model):
     Portdis = models.CharField(max_length=255, default='', blank=True)
     TranshTo = models.CharField(max_length=50, default='', null=True, blank=True)
     FinalDest = models.CharField(max_length=255, default='', null=True, blank=True)
-    Voyage = models.SmallIntegerField(default=0, null=False, blank=True)
+    Voyage = models.SmallIntegerField(default=0, blank=True)
 
     def PD(self): #call this when confirming the order
         self.PlaceDate = str(self.Place) + ", " + str(self.OrderDate)

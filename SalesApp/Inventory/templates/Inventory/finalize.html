@@ -1,0 +1,106 @@
+{% extends 'Inventory/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    
+    <br><br>
+    <form method="POST" action="{% url 'completeorder' pk=n %}">{% csrf_token %}
+        <div class="container">
+            <div class="Largetext"> <b> Finalize Order </b> </div>
+            <div class="bodytext" style="margin-left: 2vw;"> Note: Fields could be null except for <i> Port of Loading, Port of Discharge, Notify Party, Shipper, and Voyage.</i> Either <i>Prepaid or Collect</i> must be at least "Yes". </div>
+            <br>
+            <div class="Largetext"> <i>Shipping Information</i> </div>
+            <div class="Largetext"> Shipper Company </div> 
+            <input class="forminput" type="text" name="shipper" id="shipper"> <br><br>
+
+            <div class="Largetext"> Ocean Vessel </div> 
+            <input class="forminput" type="text" name="ocean" id="ocean"> <br><br>
+
+            <div class="Largetext"> Local Vessel </div> 
+            <input class="forminput" type="text" name="local" id="local"> <br><br>
+
+            <div class="Largetext"> Local Vessel Origin </div> 
+            <input class="forminput" type="text" name="localorigin" id="localorigin"> <br><br>
+
+            <div class="Largetext"> Notify Party </div> 
+            <select type="text" name="notify" id="notify" style="margin-left: 2vw;">
+                <option selected> Select a Notify Party </option>
+                {% for p in parties %}
+                    <option type="text" id="val" name="val"> {{p.Name}}</option>
+                {% endfor %}
+            </select> 
+            {% for m in messages %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <span class="label" style="display:inline; float: right; margin-right: 1vw; color: red;">
+                    {{ m }}
+                </span>
+                {% endif %}
+            {% endfor %}
+            <br><br>
+            
+            <div class="Largetext"> Port of Loading </div> 
+            <input class="forminput" type="text" name="portload" id="portload"> 
+
+            <div class="Largetext"> Port of Discharge </div> 
+            <input class="forminput" type="text" name="portdis" id="portdis"> 
+
+            <div class="Largetext"> Transhipment To </div> 
+            <input class="forminput" type="text" name="transhto" id="transhto">
+
+            <div class="Largetext"> Final Destination </div> 
+            <input class="forminput" type="text" name="finaldest" id="finaldest">
+
+            <div class="Largetext"> Voyage </div> 
+            <input class="forminput" type="number" name="voyage" id="voyage"> <br><br><br>
+
+            <div class="Largetext"> <i>Quantitative Details</i> </div>
+            <div class="Largetext"> Rate </div> 
+            <input class="forminput" type="number" name="rate" id="rate" step="any">
+
+            <div class="Largetext"> Prepaid </div> 
+            {% for m in messages %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                <span class="label" style="display:inline; color: red; font-size: 15px; margin-left: 1.5vw;">
+                    {{ m }}
+                </span>
+                {% endif %}
+            {% endfor %}
+            <input class="forminput" type="text" name="prepaid" id="prepaid">
+
+            <div class="Largetext"> Collect </div> 
+            <input class="forminput" type="text" name="collect" id="collect">
+
+            <div class="Largetext"> Charges </div> 
+            <input class="forminput" type="number" name="charges" id="charges" step="any">
+
+            <div class="Largetext"> Revenue Tons </div> 
+            <input class="forminput" type="text" name="revtons" id="revtons">
+
+            <div class="Largetext"> Rate </div> 
+            <input class="forminput" type="number" name="rate" id="rate" step="any">
+
+            <div class="Largetext"> Payable at </div> 
+            <input class="forminput" type="text" name="payat" id="payat">
+            
+            <div style="display: inline-flex; margin-left: 1.5vw; margin-top: 5vh;">
+                <button class="Button" id="submit" type="submit">  Add Notify Party </button> <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'Products' %}" style="margin-left: 2vw;"> Go Back to Products </a> <br>
+            </div>
+            <br><br>
+            </div>
+    </form>
+    <br><br>
+
+    {% endblock %}
+    
+    
+</body>
+</html>

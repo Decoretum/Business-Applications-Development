@@ -1,0 +1,36 @@
+{% extends 'Inventory/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <br><br>
+        {% if many == True %}
+            {% for p in P %}
+                <div class="container" style="position: relative; max-width: 100%;">
+                    <span class="bodytext"><b>Name:</b> {{p.Name}}</span> <br>
+                    <span class="bodytext" style="max-width: 100%; margin-right: 10vw; white-space:pre-wrap;"><b>Address: </b>{{p.Address}}</span>
+                    <a class="Button" href="{% url 'editnotify' pk=p.pk %}" style="background-color: rgb(40, 155, 64); position: absolute; right:1vw;"> Edit Notify Party </a>
+                    <br><br>
+                </div><br>
+            {% endfor %}
+            <a class="Button" href="{% url 'addnotify' %}" style="background-color: yellow; float: right; margin-right: 25vw; margin-bottom: 4vh; position: relative;"> Add a Notify Party </a>
+            <br><br>
+        {% else %}
+            <div class="container">
+                <span class="bodytext">You have no Notify parties yet! Click the button below to add!</span> <br><br>
+                <a class="Button" href="{% url 'addnotify' %}" style="background-color: yellow;"> Add a Notify Party </a>
+            </div>
+        {% endif %}
+    {% endblock %}
+ 
+    
+</body>
+</html>

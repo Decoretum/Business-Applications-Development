@@ -591,7 +591,7 @@ a{
 }
 
 .header{
-  width: 80vw;
+  width: 90vw;
   max-width: 100%;
   border: transparent;
   box-shadow: 9px 9px rgb(18, 85, 124);
@@ -614,15 +614,20 @@ a{
   font-size: 17px;
   margin: auto;
   margin-left: 3vw;
-  border-radius: 9px;
+  margin-top: 2vh;
   padding: 5px;
   width: 10vw;
   align-self: center;
+  border-top: solid rgb(31, 44, 72);
  
 }
 
 .header > a:hover{
   cursor: pointer;
+}
+
+.header > a:nth-child(7){
+  margin-top: 5vh;
 }
 
 .unfinished.header{

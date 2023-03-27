@@ -14,6 +14,7 @@
     <br><br>
     <form method="POST" action="{% url 'addproduct' %}" enctype="multipart/form-data">{% csrf_token %}
         <div class="container">
+            <div class="Largetext" style="font-size: 30px;"> Add a Product </div> 
             <div class="Largetext"> Image </div>
             <input type="file" name="Image" id="Image"/> 
                 {% for m in messages %}

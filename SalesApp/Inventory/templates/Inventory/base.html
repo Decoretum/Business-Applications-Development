@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> DecoreManufacturing </title>
-    <link rel="stylesheet" type="text/css" href="{%  static '/css/output.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/output.css' %}">
 
 </head>
 <body>
@@ -17,11 +17,12 @@
             {% if C == True %}
             <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"> Home </a>
             <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> View Steel Inventory </a>
-            <a class="About {% if request.path == '/Developer' %}active{% endif %}" href="{% url 'Developer' %}"> About the Developer </a>
             <a class="User {% if request.path == '/PendingOrders' %}active{% endif %}" href="{% url 'Products2' %}"> Pending Orders </a>
             <a class="User {% if request.path == '/ClerkPage' %}active{% endif %}" href="{% url 'clerk' %}"> Clerk Page </a>          
+            <a class="User {% if request.path == '/NotifyParties' %}active{% endif %}" href="{% url 'shownotify' %}"> Notify Parties </a>
             <a class="User {% if request.path == '/ConfirmedOrders' %}active{% endif %}" href="{% url 'doneorders' %}"> Confirmed orders </a>
-   
+            
+
             {% elif C == False %}
             
             <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"> Home </a>

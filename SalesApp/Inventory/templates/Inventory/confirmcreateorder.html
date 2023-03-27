@@ -30,9 +30,6 @@
         
                 <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 5vw;" value="Type new Consignee Name"> 
                 
-                <div class="Largetext"> Port of Discharge: </div>
-                <input type="text" class="forminput" name="Port" id="Poirt" style="margin-left: 5vw;" value="Type new Port of Discharge">
-
                 {% else %}
                 
                 <div class="Largetext"> Consignee Name: </div>
@@ -40,11 +37,6 @@
                 <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 5vw;" value="{{Order.BL.Name}}" readonly> 
                 {% endif %}
 
-                
-                <div class="Largetext"> Port of Discharge: </div>
-                {% if fetch != "New" %}
-                <input type="text" class="forminput" name="Port" id="Poirt" style="margin-left: 5vw;" value="{{Order.BL.PortDischarge}}" readonly>
-                {% endif %}
 
                 {% endif %}
 
@@ -55,7 +47,7 @@
                         {% endfor %}
                     </select>
                 <div class="Largetext"> Total Cost </div>
-                <input type="text" class="forminput" name="totalcost" id="totalcost" value="${{OrderedP.Cost}}" style="margin-left: 5vw;"> 
+                <input type="text" class="forminput" name="totalcost" id="totalcost" value="${{OrderedP.Cost}}" style="margin-left: 5vw;" readonly> 
                 <div class="Largetext"> Remarks </div>
                 <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 5vw;"> {{Rem}} </textarea><br><br><br>
 

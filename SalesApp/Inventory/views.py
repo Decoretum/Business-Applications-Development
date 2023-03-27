@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Userperson, Product, OrderedProduct, FinalOrder, NotifyParty, Company, Consignee
+from .models import Userperson, Product, OrderedProduct, FinalOrder, NotifyParty, Consignee
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User, auth
 from django.template import loader
@@ -73,6 +73,79 @@ def isDigit(request,num):
         return True
     except ValueError:
         return False
+    
+def showNotify(request):
+    condition = True
+    parties = NotifyParty.objects.all()
+    many = len(parties) > 0
+
+    return render(request, 'Inventory/notifyparties.html',{
+        'C' : condition,
+        'P' : parties,
+        'many' : many
+    })
+
+def AddNotify(request):
+    condition = True
+    edit = False
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        street = request.POST.get('street')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        if name.strip() == "" or street.strip() == "" or city.strip() == "" or state.strip() == "":
+            messages.info(request, 'No fields must be left blank')
+            return redirect('addnotify')
+        if request.POST.get('More') == 'More':
+            party = NotifyParty.objects.create(
+                Name = name,
+                Street = street,
+                City = city,
+                State = state
+            )
+            party.Ad()
+            return redirect('addnotify')
+        else:
+            party = NotifyParty.objects.create(
+                Name = name,
+                Street = street,
+                City = city,
+                State = state
+            )
+            party.Ad()
+            return redirect('shownotify')
+        
+    else:
+        return render(request, 'Inventory/addnotify.html',{
+            'C' : condition,
+            'edit' : edit
+        })
+
+def EditNotify(request, pk):
+    condition = True
+    edit = True
+    chosen = get_object_or_404(NotifyParty, pk=pk)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        street = request.POST.get('street')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        if name.strip() == "" or street.strip() == "" or city.strip() == "" or state.strip() == "":
+            messages.info(request, 'No fields must be left blank')
+            return redirect('shownotify', pk)
+        else:
+            chosen.Name = name
+            chosen.Street = street
+            chosen.City = city
+            chosen.State = state
+            chosen.Ad()
+            return redirect('shownotify')
+    else:
+        return render(request, 'Inventory/addnotify.html',{
+            'C' : condition,
+            'edit' : edit,
+            'chosen' : chosen
+        })
  
 def AddProduct(request):
     condition = ""
@@ -499,10 +572,9 @@ def ConfirmOrder(request,pk):
             Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
             OrderNum = request.POST.get('Order')
             Person = request.POST.get('Person')
-            Port = request.POST.get('Port')
 
-            if str(Person).strip() == '' or str(Port).strip() == '' or str(Person).strip() == "Type new Consignee Name" or str(Port).strip() == "Type new Port of Discharge":
-                messages.info(request,"No proper fields for either Consignee or Port of Discharge")
+            if str(Person).strip() == '' or str(Person).strip() == "Type new Consignee Name":
+                messages.info(request,"No proper fields for either Consignee")
                 return redirect('confirmcreateorder', pk)
 
           
@@ -515,7 +587,6 @@ def ConfirmOrder(request,pk):
                 NewConsign = Consignee.objects.create(
                     BL = VerifBL(request),
                     Name = Person,
-                    PortDischarge = Port
                 )
                 NewConsign.save()
 
@@ -572,18 +643,83 @@ def ConfirmOrder(request,pk):
         
 
 def CompleteOrder(request,pk):
+    condition = True
+    parties = NotifyParty.objects.all()
+    num = pk
     OrderDone = get_object_or_404(FinalOrder, pk=pk)
-    OrderDone.Finished = True
+    if request.method == 'POST':
+        shipper = request.POST.get('shipper')
+        ocean = request.POST.get('ocean')
+        local = request.POST.get('local')
+        localorigin = request.POST.get('localorigin')
 
-    OrderedProds = OrderedProduct.objects.filter(OrderID = OrderDone)
-    for item in OrderedProds:
-        item.Marks.Stock -= item.quantity
-        item.Marks.save()
-        item.save()
+        notify = request.POST.get('notify')
+        portload = request.POST.get('portload')
+        portdis = request.POST.get('portdis')
+        transhto = request.POST.get('transhto')
+        finaldest = request.POST.get('finaldest')
+        voyage = request.POST.get('voyage')
 
-    OrderDone.save()
-    print(OrderDone.pk)
-    return redirect('Products2')
+        prepaid = request.POST.get('prepaid')
+        collect = request.POST.get('collect')
+        charges = request.POST.get('charges')
+        revtons = request.POST.get('revtons')
+        rate = request.POST.get('rate')
+        payat = request.POST.get('payat')
+
+        if (charges == ""):
+            charges = 0
+        if (rate == ""):
+            rate = 0
+
+        if notify == "Select a Notify Party":
+            messages.info(request, 'Select a valid Notify Party')
+            return redirect('completeorder', pk)
+        elif portload.strip() == "" or portdis.strip() == "" or voyage.strip() == "":
+            messages.info(request, 'Port of Loading, Port of Discharge, or Voyage cannot be left blank')
+            return redirect('completeorder', pk)
+        elif (prepaid.strip() == "" and collect.strip() == ""):
+            messages.warning(request, 'Both Prepaid and Collect cannot be null, one field must not be null')
+            return redirect('completeorder',pk)
+
+        else:
+            notifobject = get_object_or_404(NotifyParty, Name = notify)
+            OrderDone.Portdis = portdis
+            OrderDone.Portload = portload
+            OrderDone.ShipperName = shipper
+            OrderDone.OceanVessel = ocean
+            OrderDone.LocalVessel = local
+            OrderDone.LocalVesselOrigin = localorigin
+            OrderDone.NotifyName = notifobject
+            OrderDone.TranshTo = transhto
+            OrderDone.FinalDest = finaldest
+            OrderDone.Voyage = voyage
+
+            OrderDone.Prepaid = prepaid
+            OrderDone.Collect = collect
+            OrderDone.Charges = charges
+            OrderDone.RevTons = revtons
+            OrderDone.Rate = rate
+            OrderDone.PayAt = payat
+
+            
+            OrderDone.Finished = True
+
+            OrderedProds = OrderedProduct.objects.filter(OrderID = OrderDone)
+            for item in OrderedProds:
+                item.Marks.Stock -= item.quantity
+                item.Marks.save()
+                item.save()
+
+            OrderDone.save()
+            print(OrderDone.pk)
+            return redirect('Products2')
+    else:
+        return render(request, 'Inventory/finalize.html',{
+            'C' : condition,
+            'parties' : parties,
+            'n' : num
+        })
 
 def ShowComplete(request):
     condition = True

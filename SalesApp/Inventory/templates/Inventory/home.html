@@ -7,38 +7,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Home </title> 
-    <link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static '/css/form.css' %}">
 </head>
 <body>
 
         {% block content %}
     <br><br>
     <div class="container">
-            <div class="Largetext"> <i> We advance the world through Technology. </i> </div>
-           
-
-            <div class="Largetext" style="display: inline;"> DecoreManufacturing </div>
-            <div class="shape2"> </div>
-            <div class="bodytext"> 
-                DecoreManufacturing is a company created and programmed by Gael Estrera to digitally 
-                create and manufacture products using Nano Technology. Using Nanotech and Java, Gael was able
-                to construct powerful technology to sell to people.
-            </div>
+            <div class="Largetext" style="font-size: 30px;"> Web Inventory Order Management Software </div><br>
 
             <div class="Largetext" style="display: inline;"> Purpose </div>
-            <div class="shape1"> </div>
-            <div class="bodytext">
-                Nanotech manufactured by DecoreManufacturing will have several brands which leads to 
-                several types and varieties of products within the Nanotech context.
+            <div class="shape2"> </div>
+            <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;"> 
+                This software was created to create and manage product transactions for China Global Steel Trading. It could
+                confirm orders and would store and present data in a manner that could be used for the letter of credit and manufacturing order. 
             </div>
 
-            <div class="Largetext" style="display: inline;"> What is this website? </div>
+            <br><br>
+
+            <div class="Largetext" style="display: inline;"> Technical Specifications </div>
+            <div class="shape1"> </div>
+            <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;">
+                In order to develop this software, Django (Python), SQL, and Javascript were used.
+            </div>
+            <br><br>    
+
+            <div class="Largetext" style="font-size: 28px;"> Some Reminders about Database Logic </div><br><br>
+
+            <div class="Largetext" style="display: inline;"> Notify Party </div>
             <img class="shape3" src="{% static '/pic/wizard.png' %}">
-            <div class="bodytext">
-                This is the DecoreManufacturing Website which is an online web application utilizing
-                Javascript and Django for the purpose of creating online digital orders of available
-                inventories. As inventories are purchased by several Users, the inventory stock decreases as well.
+            <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;">
+                Every shipment containing multiple orders would require a Notify Party. The Notify
+                Party would be notified when the shipment arrives at the destination. During the process of 
+                confirming an order, there would be a list of choices for available notify parties. <br><br>
+
+                In order to be more efficient, Notify parties will be added in the database of the application
+                in order to save the information regarding these Notify Parties for future use.
             </div>
     </div>
     <br><br>
