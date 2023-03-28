@@ -34,9 +34,8 @@
             </div> <br>
              
             <div style="margin-left: 2vw; display: inline-flex; margin-bottom: 2vh;" id="buts"> 
-                <a class="Button w-auto" href="{% url 'edit' pk=P.pk %}"> Edit Info </a>
                 <a class="Button" id="edittemp" style="margin-left: 1vw;"> Delete Product </a>
-                <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
+                <a class="Button" href="{% url 'Products' %}" id="browse"> Back </a> <br> <br>
             </div>
         </div>
         <br>
@@ -55,7 +54,7 @@
             <div id="basic">
                
                 <span class="Largetext" > Description: </span> <span class="bodytext" style="margin-left: 0.5vw; display: flex; flex-wrap: wrap; word-break: break-word;">{{P.Description}}</span> <br><br>
-                <span class="Largetext"> Manufacturer: </span> <span class="bodytext"> {{P.Manufacturer}} </span>
+                <span class="Largetext"> Manufacturer: </span> <span class="bodytext"> {{P.Manufacturer}} </span> 
                 <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Location of Manufacturer : </span> <span class="bodytext"> {{P.ManuLoc}} </span> <br> <br> <br>  
           
                 <span class="Largetext"> Length: </span> <span class="bodytext"> {{P.Length}} </span> 
