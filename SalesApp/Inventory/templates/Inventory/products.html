@@ -17,7 +17,7 @@
             {% if C == True %}
             <br>
             <div style="margin-left: -1vw;" id="options"> 
-                <a class="Button w-auto" href="{% url 'createorder' %}" style="margin-left:10vw; position: relative;"> Create Transaction </a>
+                <a class="Button w-auto" href="{% url 'createorder' %}" style="margin-left:10vw; position: relative;"> Create Order </a>
                 <a class="Button" style="margin-left: 10px;" href="{% url 'addproduct' %}"> Add A Product </a>
             </div>
             {% endif %}
@@ -74,53 +74,84 @@
 
         {% for o in O %}
         <div class="container">
-            <div class="Largetext"><b> Order {{o.pk}} </b></div>
-            <div class="bodytext" id="done"> 
-                <span> <span style="font-weight:bold"> Order ID:</span> {{o.Verification}} </span> 
-                <span style="margin-left: 4.5vw;"> <span style="font-weight:bold"> Order Total Cost:</span> ${{o.TotalCost}} </span> <br><br><br>
-                <span> <span style="font-weight:bold"> Order Place & Date of Issue:</span> {{o.PlaceDate}} </span> <br><br><br>
-                <span> <span style="font-weight:bold"> Consignee:</span> {{o.BL.Name}} </span> 
-                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Consignee ID:</span> {{o.BL.BL}} </span> <br><br><br>
-                <span> <span style="font-weight:bold"> Shipper Company:</span> {{o.ShipperName}} </span>
-
+            <div class="Largetext"> Order {{o.pk}} </div>
+            <table id="tab" style="text-align: center; width: 45vw; max-width: 100%; margin-right: 1vw; word-break: break-word;">
+                <tr>
+                    <th> <b>Order ID</b>: {{o.Verification}} </th>
+                    <th> <b>Order Total Cost</b>: {{o.TotalCost}} </th> 
+                </tr>
+                <tr>
+                    <th> <b>Order Place & Date of Issue</b>: {{o.PlaceDate}} </th>
+                    <th> <b>Number of B/L</b>: {{o.NumOfBL}} </th>
+                </tr>
+                <tr>
+                    <th> <b>Consignee</b>: {{o.BL.Name}} </th>
+                    <th> <b>Consignee ID</b>: {{o.BL.BL}} </th>
+                </tr>
+                <tr>
+                    <th> <b>Shipper Company</b>: {{o.ShipperName}} </th>
+                    {% if o.Prepaid == 'Yes' %}
+                    <th> <b>Prepaid</b>: Yes </th>
+                    {% else %}
+                    <th> <b>Collect</b>: Yes </th>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th> <b>Port of Loading</b>: {{o.Portload}} </th>
+                    <th> <b>Port of Discharge</b>: {{o.Portdis}} </th>
+                </tr>
+                <tr>
+                    <th> <b>Notify Party</b>: {{o.NotifyName.Name}} </th>
+                    <th> <b>Notify Party Address</b>: {{o.NotifyName.Address}} </th>
+                </tr>
+            
+                <tr>
+                    <th class="last" style="padding-top: 50px;"> Additional Information: </th>
+                </tr>
                 {% if o.OceanVessel != "" %}
-                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Ocean Vessel:</span> {{o.OceanVessel}} </span> <br><br><br>
+                <tr class="last">
+                    <th class="last"> <b>Ocean Vessel</b>: {{o.OceanVessel}} </th>
+                </tr>
                 {% endif %}
+
                 {% if o.LocalVessel != "" %}
-                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Local Vessel:</span> {{o.LocalVessel}} </span> <br><br><br>
+                <tr class="last">
+                    <th class="last"> <b>Local Vessel</b>: {{o.LocalVessel}} </th>
+                </tr>
                 {% endif %}
+
                 {% if o.LocalVesselOrigin != "" %}
-                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Local Vessel Origin:</span> {{o.LocalVesselOrigin}} </span> <br><br><br>
+                <tr class="last">
+                    <th class="last"> <b>Ocean Vessel</b>: {{o.LocalVesselOrigin}} </th>
+                </tr>
                 {% endif %}
-
-                <span> <span style="font-weight:bold"> Port of Loading:</span> {{o.Portload}} </span> 
-                <span  style="margin-left: 2vw;"> <span style="font-weight:bold"> Port of Discharge:</span> {{o.Portdis}} </span> <br><br><br>
-                <span style="margin-left: 2vw;"> <span style="font-weight:bold"> Number of B/L:</span> {{o.NumOfBL}} </span> <br><br><br>
-
-                <span> <span style="font-weight:bold"> Notify Party:</span> {{o.NotifyName.Name}} </span> <br><br><br>
-                <span class="bodytext" style="margin-left: 0.1vw; display: flex; flex-wrap: wrap; word-break: break-word;"> <span style="font-weight:bold"> Notify Party Address:</span> {{o.NotifyName.Address}}</span> <br><br>
 
                 {% if o.PayAt != "" %}
-                <span> <span style="font-weight:bold"> Payable At:</span> {{o.PayAt}} </span> 
+                <tr class="last">
+                    <th class="last"> <b>Payable At</b>: {{o.PayAt}} </th>
+                </tr>
                 {% endif %}
-                {% if o.Charges != 0 %}
-                <span> <span style="font-weight:bold"> Charges:</span> ${{o.Charges}} </span>
+
+                {% if o.Charges != "" %}
+                <tr>
+                    <th class="last"> <b>Charges</b>: {{o.Charges}} </th>
+                </tr>
                 {% endif %}
+
                 {% if o.RevTons != "" %}
-                <span> <span style="font-weight:bold"> Revenue Tons:</span> {{o.RevTons}} </span> 
-                {% endif %}
-                {% if o.Rate != 0 %}
-                <span> <span style="font-weight:bold"> Rate:</span> ${{o.Rate}} </span> 
-                {% endif %}
-
-                {% if o.Prepaid == "Yes" %}
-                <span> <span style="font-weight:bold"> Prepaid:</span> {{o.Prepaid}} </span> <br><br>
-                {% else %}
-                <span> <span style="font-weight:bold"> Collect:</span> {{o.Collect}} </span> <br><br>
+                <tr class="last">
+                    <th class="last"> <b>Revenue Tons</b>: {{o.RevTons}} </th>
+                </tr>
                 {% endif %}
 
+                {% if o.Rate != "" %}
+                <tr class="last">
+                    <th class="last"> <b>Rate</b>: {{o.Rate}} </th>
+                </tr>
+                {% endif %}
 
-            </div>
+            </table> <br><br>
+
             {% for p in Ord %}
                 {% if p.OrderID == o %}
                 <div class="container" id="sub" style="display: relative; max-height: fit-content;">
@@ -138,6 +169,17 @@
                 {% endif %}
             {% endfor %}
         </div> <br><br>
+        <style>
+            tr > th{
+                max-width: 100%;
+                width: 38vw;
+                word-wrap: break-word;
+                margin-top: 5vh;
+                font-weight: 200;
+                border: solid 2px;
+                padding: 15px;
+            }
+        </style>
         {% endfor %}
 
         {% endif %}
@@ -166,7 +208,21 @@
             margin: auto;
         }
 
+        .last{
+            border: none;
+            text-align: left;
+        }
     </style>
+
+ <script>
+    /*let tables = document.getElementsByTagName('table');
+    let rows = document.getElementsByTagName('tr');
+    let lastrow = document.querySelector('last')
+    for (let i = 0; i < tables.length; i++){
+        let len = tables.childNodes[1].childNodes.length
+        tables[i].childNodes[1].childNodes[len-2].childNodes[2].nodeValue = "Additional Information"
+   }*/
+</script>
     <br><br>
     {% endblock %}
 

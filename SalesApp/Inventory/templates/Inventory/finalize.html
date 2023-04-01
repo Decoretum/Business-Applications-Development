@@ -16,7 +16,7 @@
     <form method="POST" action="{% url 'completeorder' pk=n %}">{% csrf_token %}
         <div class="container">
             <div class="Largetext"> <b> Finalize Order </b> </div>
-            <div class="bodytext" style="margin-left: 2vw;"> Note: Fields could be null except for <i> Port of Loading, Port of Discharge, Notify Party, Shipper, and Voyage.</i> Either <i>Prepaid or Collect</i> must be at least "Yes". </div>
+            <div class="bodytext" style="margin-left: 2vw;"> Note: Fields could be null except for <i> Port of Loading, Port of Discharge, Notify Party, Shipper Company, and Voyage.</i> Either <i>Prepaid or Collect</i> must be at least "Yes". </div>
             <br>
             <div class="Largetext"> <i>Shipping Information</i> </div>
             <div class="Largetext"> Shipper Company </div> 
@@ -89,10 +89,10 @@
             <input class="forminput" type="number" name="rate" id="rate" step="any">
 
             <div class="Largetext"> Payable at </div> 
-            <input class="forminput" type="text" name="payat" id="payat">
+            <input class="forminput" type="text" name="payat" id="payat"> <br>
             
             <div style="display: inline-flex; margin-left: 1.5vw; margin-top: 5vh;">
-                <button class="Button" id="submit" type="submit">  Add Notify Party </button> <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'shownotify' %}" style="margin-left: 2vw;"> Back to Notify Parties </a> <br>
+                <button class="Button" id="submit" type="submit">  Submit </button> <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'shownotify' %}" style="margin-left: 2vw;"> Back </a> <br>
             </div>
             <br><br>
             </div>

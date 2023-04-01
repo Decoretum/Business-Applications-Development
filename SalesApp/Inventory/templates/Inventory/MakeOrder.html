@@ -11,6 +11,7 @@
 </head>
 <body>
     {% block content %}
+    {% if status == '' %}
     <br><br>
     <form method="POST" action="{% url 'createorder' %}">{% csrf_token %}
         <div class="container">
@@ -27,24 +28,48 @@
                     <option type="text" id="product" name="product"> {{p.Name}} </option>
                 {% endfor %}
             </select> 
-
-            <div class="Largetext"> Order Number </div>
-                    <select type="text" id="Order" name="Order" style="display:inline; margin-left: 2vw;">
-                        <option value=""> Select Order Number </option>
-                        {% for o in O %}
-                            <option type="text" id="Order" name="Order"> {{o.pk}} </option>
-                        {% endfor %}
-                        <option type="text" id ="New" name="New"> New Order </option>
-                    </select>
             
             <div class="Largetext"> Remarks </div>
             <textarea type="text" class="forminput" name="remark" id="remark" rows="8" style="margin-left: 2vw;">  </textarea>
             <div style="display: inline-flex; margin-left: 5vw;">
-                <button class="Button" id="submit" type="submit">  Next </button> <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'Products' %}" style="margin-left: 2vw;"> Go Back to Products </a> <br>
+                <button class="Button" id="submit" type="submit">  Next </button> 
+                <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'Products' %}" style="margin-left: 2vw;"> Back </a> <br>
             </div>
             </div>
     </form>
     <br><br>
+    {% else %}
+        <br><br><br>
+        <form method="POST" action="">{% csrf_token %}
+            <div class="container">
+                {% for m in messages %}
+                    <div class="label" style="position: absolute; right: -3vw; margin-top: 1vh; font-size: 20px; color: red;">
+                        {{m}}
+                    </div>
+                {% endfor %}
+                
+                <div class="Largetext"> Add Product to Order {{pk}} </div> 
+
+                <span class="Largetext"> Product: </span>
+                <select type="text" id="prod" name="prod" style="display:inline; margin-left: 1vw;">
+                    <option type="text"> Choose a product: </option>
+                    {% for x in prods %}
+                        <option type="text"> {{x.Name}} </option>
+                    {% endfor %}
+                </select>
+
+                <div class="Largetext"> Remarks </div>
+                <textarea type="text" class="forminput" name="rem" id="rem" rows="8" style="margin-left: 2vw;">  </textarea>
+                <div style="display: inline-flex; margin-left: 5vw;">
+                    <button class="Button" id="submit" type="submit">  Next </button> <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'UnfTrans' pk=pk %}" style="margin-left: 2vw;"> Back </a> <br>
+                </div>
+    
+            </div>
+        </form>
+        <br><br>
+        {% endif %}
+
+
 
     {% endblock %}
     

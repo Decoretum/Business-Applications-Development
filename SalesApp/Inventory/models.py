@@ -42,7 +42,7 @@ class Product(models.Model): #Steels, not food
         super(Product,self).save() 
     
     Length = models.CharField(max_length=20)
-    Cost = models.DecimalField(default=0, validators=[DecimalValidator(5,2)], decimal_places=2, max_digits=7) #declared value USD
+    Cost = models.DecimalField(default=0, validators=[DecimalValidator(7,2)], decimal_places=2, max_digits=7) #declared value USD
     Stock = models.BigIntegerField(default=0)
     Contact = models.CharField(max_length=500)
     

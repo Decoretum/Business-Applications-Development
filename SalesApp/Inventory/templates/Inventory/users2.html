@@ -10,7 +10,7 @@
     <title>Document</title>
     {% block content %}
     <br><br>
-    <table style="font-style: normal; font-weight: normal;" class="Frame">
+    <table style="font-style: normal;" class="Frame">
         <tr class="identify"> 
             <th style="border-top-left-radius: 9px;"> Order No. </th>
             <th> Order Information </th>
@@ -19,7 +19,7 @@
         </tr>
 
         {% for o in Orders %}
-        <tr class="Header" id="main">
+        <tr class="Header" id="main" style="font-weight: 100; font-family: Helvetica;">
             <th id="firsty"> 
                 Order <b>{{o.pk}}</b> <br><br>
             </th>
@@ -42,14 +42,14 @@
     <br><br>
     <style>
         #main > *:not(#firsty,#lasty){
-            border-right: solid 1px rgb(141, 126, 126);
-            border-top: solid 1px rgb(141, 126, 126);
+            border-right: solid 1.9px rgb(141, 126, 126);
+            border-top: solid 1.9px rgb(141, 126, 126);
 
         }
 
         #firsty, #lasty{
-            border-top: solid 1px rgb(141, 126, 126);
-            border-right: solid 1px rgb(141, 126, 126);
+            border-top: solid 1.9px rgb(141, 126, 126);
+            border-right: solid 1.9px rgb(141, 126, 126);
         }
 
         #lasty{
@@ -65,6 +65,11 @@
             display: flex;
             flex-wrap: nowrap;
             margin: auto;
+        }
+
+        th{
+            font-family: Helvetica;
+            font-weight: 100;
         }
        
     </style>

@@ -11,56 +11,127 @@
 </head>
 <body>
     {% block content %}
+    {% if status == 'confirming' %}
+    <br><br><br>
+    <form method="POST" action="">{% csrf_token %}
+        <div class="container">
+            <img src="{{ OrderedP.Image.url }}" class="image" style="float:left; margin: 10px;">
+            <span class="Largetext"> New Order {{Order.pk}}</span> <br><br><br><br><br><br>
+
+            <table style="text-align: left;"> 
+                <tr>
+                    <th> <span class="Largetext"> Product: {{OrderedP.Name}} </span> </th>
+                </tr>
+                <tr>
+                    <th> <span class="Largetext"> Product Price: {{OrderedP.Cost}} </span> </th>
+                </tr>
+                <tr>
+                    <th> <span class="Largetext"> Consignee Name: </span> 
+                        {% for m in messages %}
+                            <div class="label" style="float: right; font-size: 20px; color: red;">
+                                {{m}}
+                            </div>
+                        {% endfor %}
+                        <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 1vw; margin-top: 1vh;" value="Type new Consignee Name">      
+                    </th>   
+                </tr>
+                <tr>
+                    <th> <span class="Largetext"> Quantity </span>            
+                            <select type="text" id="drop" name="drop">
+                                {% for x in stocka %}
+                                    <option type="text"> {{x}} </option>
+                                {% endfor %}
+                            </select>                    
+                    </th>
+                </tr>
+                <tr>
+                    <th> <span class="Largetext"> Total Cost </span>
+                        <input type="text" class="forminput" name="totalcost" id="totalcost" value="${{OrderedP.Cost}}" style="margin-left: 0vw;" readonly> 
+                    </th>   
+
+                </tr>
+            </table>
+                
+            <div class="Largetext"> Remarks </div>
+            <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> </textarea><br><br><br>
+
+            <div style="display: flex; margin-left: 2vw;">
+                <button class="Button" type="submit" style="width: 10vw;"> Submit </button>
+                <button class="Button ml-20"  type="submit" name="More" value="More" style="position:relative; margin-left: 1vw; width: 10vw;"> Submit and Order Again  </button>
+                <button class="Button ml-20"  type="submit" name="Back" value="Back" style="position:relative; margin-left: 1vw; width: 10vw;"> Back </button>  
+            </div>
+            <br>
+        </div>
+    </form>
+    <br><br>
+
+        {% else %}
         <br><br><br>
         <form method="POST" action="">{% csrf_token %}
             <div class="container">
                 <img src="{{ OrderedP.Image.url }}" class="image" style="float:left; margin: 10px;">
+                <span class="Largetext"> Add Product to Order {{Order.pk}}</span> <br><br><br><br><br><br>
+
+                <table style="text-align: left;"> 
+                    <tr>
+                        <th> <span class="Largetext"> Product: {{OrderedP.Name}} </span> </th>
+                    </tr>
+                    <tr>
+                        <th> <span class="Largetext"> Product Price: {{OrderedP.Cost}} </span> </th>
+                    </tr>
+                    <tr>
+                        <th> <span class="Largetext"> Consignee Name: </span>
+                            <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 1vw; margin-top: 1vh;" value="{{Order.BL.Name}}" readonly>      
+                        </th>   
+                    </tr>
+                    <tr>
+                        <th> <span class="Largetext"> Quantity </span>            
+                                <select type="text" id="drop" name="drop">
+                                    {% for x in stocka %}
+                                        <option type="text"> {{x}} </option>
+                                    {% endfor %}
+                                </select>                    
+                        </th>
+                    </tr>
+                    <tr>
+                        <th> <span class="Largetext"> Total Cost </span>
+                            <input type="text" class="forminput" name="totalcost" id="totalcost" value="${{OrderedP.Cost}}" style="margin-left: 0vw;" readonly> 
+                        </th>   
+
+                    </tr>
+                </table>
+                
                 {% for m in messages %}
                     <div class="label" style="float: right; font-size: 20px; color: red;">
                         {{m}}
                     </div>
                 {% endfor %}
-                
-                <br><br><br><br><br><br><br><br><br>
-                <div class="Largetext"> Product: <span id ='productname'>{{OrderedP.Name}}</span> </div>
-                <div class="Largetext"> Product Price: <span id ='productcost'>${{OrderedP.Cost}}</span> </div>
-                
-                {% if Order == "" %}
-                <div class="Largetext"> Consignee Name: </div>
-        
-                <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 5vw;" value="Type new Consignee Name"> 
-                
-                {% else %}
-                
-                <div class="Largetext"> Consignee Name: </div>
-                {% if fetch != "New" %}
-                <input type="text" class="forminput" name="Person" id="Person" style="margin-left: 5vw;" value="{{Order.BL.Name}}" readonly> 
-                {% endif %}
-
-
-                {% endif %}
-
-                    <div class="Largetext"> Quantity </div>
-                    <select type="text" id="drop" name="drop" style="display:inline; margin-left: 5vw;">
-                        {% for x in stocka %}
-                            <option type="text" id="num" name="num"> {{x}} </option>
-                        {% endfor %}
-                    </select>
-                <div class="Largetext"> Total Cost </div>
-                <input type="text" class="forminput" name="totalcost" id="totalcost" value="${{OrderedP.Cost}}" style="margin-left: 5vw;" readonly> 
+                    
                 <div class="Largetext"> Remarks </div>
-                <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 5vw;"> {{Rem}} </textarea><br><br><br>
+                <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> </textarea><br><br><br>
 
                 <div style="display: flex; margin-left: 2vw;">
-                    <button class="Button" type="submit" style="width: 10vw;"> Submit Order </button>
-                    <button class="Button ml-20"  type="submit" name="More" value="More" style="position:relative; margin-left: 1vw; width: 10vw;"> Submit and Make New Transaction </button>
-                    <button class="Button ml-20"  type="submit" name="Back" value="Back" style="position:relative; margin-left: 1vw;"> Go back </button>  
+                    <button class="Button" type="submit" style="width: 10vw;"> Submit </button>
+                    <button class="Button ml-20"  type="submit" name="More" value="More" style="position:relative; margin-left: 1vw; width: 10vw;"> Submit and Order Again  </button>
+                    <button class="Button ml-20"  type="submit" name="Back" value="Back" style="position:relative; margin-left: 1vw; width: 10vw;"> Back </button>  
                 </div>
                 <br>
             </div>
         </form>
         <br><br>
-            
+        {% endif %}
+    
+    <style>
+         tr > th{
+            max-width: 100%;
+            width: 48vw;
+            display: block;
+            word-wrap: break-word;
+            margin-top: 5vh;
+            font-weight: 200;
+        }
+
+    </style>
     <script>
         let cost = "{{OrderedP.Cost}}";
         let chosen = document.getElementById('drop');

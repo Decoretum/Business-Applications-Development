@@ -26,6 +26,7 @@ def home(request):
             request.session['OrderPname'] = None
             request.session['manufacturer'] = None
             request.session['Order'] = None
+            request.session['addedproduct'] = None
 
         request.session['NAVIGATE'] = "home"
         return render(request, 'Inventory/home.html', {
@@ -53,6 +54,7 @@ def Clerk(request):
             request.session['OrderPname'] = None
             request.session['manufacturer'] = None
             request.session['Order'] = None
+            request.session['addedproduct'] = None
         return render(
             request,'Inventory/clerk.html',{
                 'C' : condition,
@@ -301,6 +303,7 @@ def Products(request):
             request.session['OrderPname'] = None
             request.session['manufacturer'] = None
             request.session['Order'] = None
+            request.session['addedproduct'] = None
 
         request.session['NAVIGATE'] = "products"
 
@@ -395,6 +398,7 @@ def ShowProds(request):
             request.session['OrderPname'] = None
             request.session['manufacturer'] = None
             request.session['Order'] = None
+            request.session['addedproduct'] = None
 
         request.session['NAVIGATE'] = "users"
 
@@ -437,6 +441,7 @@ def Info(request,pk):
             request.session['OrderPname'] = None
             request.session['manufacturer'] = None
             request.session['Order'] = None
+            request.session['addedproduct'] = None
 
         request.session['NAVIGATE'] = "info"
         return render(request, 'Inventory/Info.html',{
@@ -464,6 +469,7 @@ def Edit(request,pk):
             request.session['OrderPname'] = None
             request.session['manufacturer'] = None
             request.session['Order'] = None
+            request.session['addedproduct'] = None
 
         return render(request,'Inventory/edit.html',{
             'C' : condition
@@ -507,6 +513,7 @@ At this point, Creating an order and an ordered product will cause the following
 
 def CreateOrder(request):
     condition = ""
+    status = ""
     if request.user.is_authenticated:
         condition = True
         Orders = FinalOrder.objects.filter(Finished = False)
@@ -516,13 +523,6 @@ def CreateOrder(request):
             OrderNum = request.POST.get('Order')
             if request.POST.get('proddrop') == "":
                 messages.info(request,"Choose a product!")
-                return redirect('createorder')
-            
-            if OrderNum == "New Order":
-                OrderNum = "New"
-  
-            if OrderNum == "":
-                messages.info(request,"No Order Selected!")
                 return redirect('createorder')
             
             
@@ -538,108 +538,177 @@ def CreateOrder(request):
             return render(request,'Inventory/MakeOrder.html',{ 
                 'O' : Orders,
                 'P' : Products,
-                'C' : condition
+                'C' : condition,
+                'status' : status
             })
+        
+def AddtoOrder(request,pk):
+    condition = True
+    status = 'adding'
+    Order = get_object_or_404(FinalOrder, pk=pk)
+    Prods = Product.objects.filter(Stock__gte = 1).filter(Status = True)
+    request.session['NAVIGATE'] = 'confirmorder'
+    if request.method == 'POST':
+        prod = request.POST.get('prod')
+        rem = request.POST.get('rem')
+        if str(prod).strip() == "" or str(prod).strip() == "Choose a product:":
+            messages.warning(request,'You must choose a product')
+            return redirect('addtoorder', pk)
+        
+        request.session['prod'] = prod
+        request.session['rem'] = rem
+        product = get_object_or_404(Product, Name = prod)
+        request.session['addedproduct'] = 'addedproduct'
+        request.session['pk'] = Order.pk
+        return redirect('confirmcreateorder', pk=product.pk)
+    
+    else:
+        return render(request,'Inventory/Makeorder.html',{
+            'C' : condition,
+            'status' : status,
+            'prods' : Prods,
+            'pk' : Order.pk
+        })
+    
+
 
 def ConfirmOrder(request,pk):
     remarks = request.session.get('Remarks') #remarks
-    fetch = request.session.get('Order')
     ChosenProduct = get_object_or_404(Product, pk=pk) #product
-    
-    if fetch != "New":
-        ChosenOrder = get_object_or_404(FinalOrder, pk=fetch)
-        #ChosenConsignee = get_object_or_404(Consignee, Name=ChosenOrder.BL.Name)
-    else:
-        ChosenOrder = ""
-
     stock = ChosenProduct.Stock
     stocka = []
     condition = ""
+
     for i in range(1,stock+1):
         stocka.append(i)
     if request.user.is_authenticated:
         condition = True
         request.session['NAVIGATE'] = "confirmorder"
-        if request.method == "POST":
-            if request.POST.get('Back') == "Back":
-                print('GOING BACK')
-                request.session['Order'] = None
-                request.session['productname'] = None
-                return redirect('createorder')
 
-            order = "" #placeholder
-            q = request.POST.get('drop')
-            Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
-            OrderNum = request.POST.get('Order')
-            Person = request.POST.get('Person')
+        #If coming from adding a product to an order
+        if request.session.get('addedproduct') == 'addedproduct':
+            status = 'adding'
+            order = request.session.get('pk')
+            ChosenOrder = get_object_or_404(FinalOrder, pk=order)
+            if request.method == 'POST':
+                if request.POST.get('Back') == "Back":
+                    print('GOING BACK')
+                    return redirect('addtoorder', pk=order)
+                
+                q = request.POST.get('drop')
+                Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
+                Cost = Decimal(Cost)
+                rem = request.POST.get('Description')
 
-            if str(Person).strip() == '' or str(Person).strip() == "Type new Consignee Name":
-                messages.info(request,"No proper fields for either Consignee")
-                return redirect('confirmcreateorder', pk)
+                if str(rem).strip() == "":
+                    remarks = "No remarks"
+                else:
+                    remarks = rem
 
-          
-            Cost = Decimal(Cost)
+                NewOrderProduct = OrderedProduct.objects.create(
+                    OrderedProductID = VerifID(request),
+                    OrderID = ChosenOrder,
+                    Marks = ChosenProduct, 
+                    remarks = remarks, 
+                    quantity = q, 
+                    totalcost = Cost, 
+                    )
+                
+                NewOrderProduct.save()
+
+                ChosenOrder.TotalCost += Cost
+                ChosenOrder.save()
+
+                if request.POST.get('More') == "More":
+                    print('MORE')
+                    return redirect('addtoorder', pk=order)
+                    
+                else:
+                    return redirect('UnfTrans', pk=order)
+
+
+
+            else:
+                return render(request, 'Inventory/confirmcreateorder.html',{
+                    'C' : condition,
+                    'status' : status,
+                    'OrderedP' : ChosenProduct,
+                    'stocka' : stocka,
+                    'Order' : ChosenOrder
+
+                })
+        
+        #Coming from confirming a new order
+        else:
+            status = 'confirming'
+            if request.method == "POST":
+                if request.POST.get('Back') == "Back":
+                    print('GOING BACK')
+                    request.session['Order'] = None
+                    request.session['productname'] = None
+                    return redirect('createorder')
+
+                q = request.POST.get('drop')
+                Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
+                Person = request.POST.get('Person')
+
+                if str(Person).strip() == '' or str(Person).strip() == "Type new Consignee Name":
+                    messages.info(request,"No proper fields for Consignee")
+                    return redirect('confirmcreateorder', pk)
 
             
-            #Final Order Section
-            if fetch == "New":
+                Cost = Decimal(Cost)
             
+                #Final Order Section         
                 NewConsign = Consignee.objects.create(
-                    BL = VerifBL(request),
-                    Name = Person,
-                )
+                        BL = VerifBL(request),
+                        Name = Person,
+                    )
                 NewConsign.save()
 
                 NewOrder = FinalOrder.objects.create(
-                    Verification = VerifID(request),
-                    BL = NewConsign,
-                    NumOfBL = 3,
-                )
+                        Verification = VerifID(request),
+                        BL = NewConsign,
+                        NumOfBL = 3,
+                    )
 
                 NewOrder.TotalCost += Cost
                 NewOrder.PD()
                 ChosenOrder = NewOrder
-            
-            else:
-                ChosenOrder.TotalCost += Cost
-                ChosenOrder.save()
+                    
+                #Ordered Product Section
+                remarks = request.POST.get('Description')
 
-            
-            #Ordered Product Section
-            remarks = request.POST.get('Description')
+                if str(remarks).strip() == "":
+                    remarks = "No remarks"
 
-            if str(remarks).strip() == "":
-                remarks = "No remarks"
-
-            NewOrderProduct = OrderedProduct.objects.create(
-                OrderedProductID = VerifID(request),
-                OrderID = ChosenOrder,
-                Marks = ChosenProduct, 
-                remarks = remarks, 
-                quantity = q, 
-                totalcost = Cost, 
-                )
-            
-            #ChosenTrans.Order.Stock -= int(q) no removing yet since order is not confirmed, just edited
-            NewOrderProduct.save()
-
-            if request.POST.get('More') == "More":
-                print('MORE')
-                return redirect('createorder')
+                NewOrderProduct = OrderedProduct.objects.create(
+                    OrderedProductID = VerifID(request),
+                    OrderID = ChosenOrder,
+                    Marks = ChosenProduct, 
+                    remarks = remarks, 
+                    quantity = q, 
+                    totalcost = Cost, 
+                    )
                 
-            else:
-                return redirect('Products')
+                NewOrderProduct.save()
+
+                if request.POST.get('More') == "More":
+                    print('MORE')
+                    return redirect('createorder')
+                    
+                else:
+                    return redirect('Products')
 
         
-        else:
-            return render(request,'Inventory/confirmcreateorder.html',{
-                'OrderedP' : ChosenProduct,
-                'Order' : ChosenOrder,
-                'C' : condition,
-                'stocka' : stocka,
-                'Rem' : remarks,
-                'fetch' : fetch
-            })
+            else:
+                return render(request,'Inventory/confirmcreateorder.html',{
+                    'OrderedP' : ChosenProduct,
+                    'C' : condition,
+                    'stocka' : stocka,
+                    'Rem' : remarks,
+                    'status' : status
+                    })
         
 
 def CompleteOrder(request,pk):
@@ -813,7 +882,6 @@ def ChangeTrans(request,pk):
 
 
 def ConfirmTrans(request,pk):
-    state = request.session.get('state')
     ChosenTrans = get_object_or_404(OrderedProduct, pk=request.session.get('OrderedPRem')) #Orderedproduct
     orderprodname = request.session.get('OrderPname') #Orderedproductpk
     remarks = request.session.get('Remarks') #remarks
@@ -874,6 +942,7 @@ def Developer(request):
             request.session['OrderPname'] = None
             request.session['manufacturer'] = None
             request.session['Order'] = None
+            request.session['addedproduct'] = None
 
         return render(request,'Inventory/programmer.html',{
             'C' : condition

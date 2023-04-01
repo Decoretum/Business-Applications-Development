@@ -541,7 +541,7 @@ html > *:not(.image){
   width: 5vw;
   height: 5vw;
   background: rgb(20, 161, 44);
-  border-radius: 50%
+  border-radius: 50% 
 }
 
 .shape3{
@@ -714,6 +714,8 @@ a{
   text-align: center;
   border-radius: 9px;
   position: relative;
+  font-family: Helvetica;
+  font-weight:100;
 }
 
 .Button > *{
@@ -779,6 +781,7 @@ a{
   font-weight: 100;
   border-width: 1px;
   font-family: Helvetica;
+  font-weight: 100;
 }
 
 .Header{
@@ -792,7 +795,7 @@ border-radius: 9px;
   padding: 9px;
   max-width: 100%;
   width: 13vw;
-  font-weight: normal;
+  font-weight: 100;
 
 }
 
