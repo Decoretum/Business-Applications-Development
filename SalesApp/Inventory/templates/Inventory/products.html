@@ -105,8 +105,8 @@
                     <th> <b>Notify Party Address</b>: {{o.NotifyName.Address}} </th>
                 </tr>
             
-                <tr>
-                    <th class="last" style="padding-top: 50px;"> Additional Information: </th>
+                <tr class="last">
+                    <th class="last" style="padding-top: 50px; background-color: transparent;"> Additional Information: </th>
                 </tr>
                 {% if o.OceanVessel != "" %}
                 <tr class="last">
@@ -133,7 +133,7 @@
                 {% endif %}
 
                 {% if o.Charges != "" %}
-                <tr>
+                <tr class="last">
                     <th class="last"> <b>Charges</b>: {{o.Charges}} </th>
                 </tr>
                 {% endif %}
@@ -179,6 +179,19 @@
                 border: solid 2px;
                 padding: 15px;
             }
+
+            .last{
+            border: none;
+            text-align: left;
+            }
+
+            tr:nth-child(odd):not(.last){
+                background-color: rgb(133, 88, 111);
+            }
+
+            tr:nth-child(even):not(.last){
+                background-color: rgb(248, 237, 227);
+            }
         </style>
         {% endfor %}
 
@@ -187,15 +200,6 @@
 
 
     <style>
-        #options > a{
-            background-color: rgb(209, 209, 54);
-        }
-
-        #options > a:hover{
-            background-color: rgb(244, 244, 4);
-        }
-
-  
         #done > span{
             font-size: 20px;
             font-weight:200;
@@ -204,9 +208,11 @@
         }
         
         #sub{
-            background-color: rgb(238, 176, 135);
+            background-color: rgb(248, 237, 227);
             margin: auto;
         }
+
+
 
         .last{
             border: none;

@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, DecimalValidator
 from PIL import Image
 from django.conf.urls.static import static
 from decimal import Decimal
+from django.utils import timezone
 
 
 class NotifyParty(models.Model):
@@ -97,6 +98,7 @@ class FinalOrder(models.Model):
     TotalCost = models.DecimalField(default=0, validators=[DecimalValidator(10,2)], decimal_places=2, max_digits=10) 
     Finished = models.BooleanField(default=False) #confirmed or not
     OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)
+    Time = models.TimeField(default=timezone.now()) 
 
     Verification = models.CharField(default='',unique=True, max_length=13, null=True, blank=True) #Orderid -> verification
     BL = models.ForeignKey(Consignee, null=False, blank=True, on_delete=models.CASCADE)

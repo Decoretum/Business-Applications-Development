@@ -33,8 +33,8 @@
                 </div>
                 <br>
                 {% endfor %}
-                <a class="Button" href="{% url 'Products2' %}" style=" float: right; margin-right: 25vw; margin-top:1vh; background-color: yellow; position: relative;"> Back to Pending Orders </a>
-                <a class="Button" href="{% url 'addtoorder' pk=p %}" style=" float: left; margin-left: 42vw; margin-top:1vh; background-color: yellow; position: relative;"> Add Product to Order </a>
+                <a class="Button" href="{% url 'Products2' %}" style="background-color: rgb(133, 88, 111); float: right; margin-right: 25vw; margin-top:1vh;  position: relative;"> Back to Pending Orders </a>
+                <a class="Button" href="{% url 'addtoorder' pk=p %}" style=" background-color: rgb(133, 88, 111); float: left; margin-left: 42vw; margin-top:1vh; position: relative;"> Add Product to Order </a>
                 <br>
         {% endif %}
     <br><br>

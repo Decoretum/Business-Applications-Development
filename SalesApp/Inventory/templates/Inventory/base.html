@@ -12,23 +12,29 @@
 </head>
 <body>
     {% block header %}
-    <br>
         <div class="header">
             {% if C == True %}
-            <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"> Home </a>
-            <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> View Steel Inventory </a>
-            <a class="User {% if request.path == '/PendingOrders' %}active{% endif %}" href="{% url 'Products2' %}"> Pending Orders </a>
-            <a class="User {% if request.path == '/ClerkPage' %}active{% endif %}" href="{% url 'clerk' %}"> Clerk Page </a>          
-            <a class="User {% if request.path == '/NotifyParties' %}active{% endif %}" href="{% url 'shownotify' %}"> Notify Parties </a>
-            <a class="User {% if request.path == '/ConfirmedOrders' %}active{% endif %}" href="{% url 'doneorders' %}"> Confirmed orders </a>
+            <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"> <span>Home</span> </a>
+            <div class="justin"> </div>
+            <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> <span>View Steel Inventory</span> </a>
+            <div class="justin"> </div>
+            <a class="User {% if request.path == '/PendingOrders' %}active{% endif %}" href="{% url 'Products2' %}"> <span>Pending Orders</span> </a>
+            <div class="justin"> </div>
+            <a class="User {% if request.path == '/ClerkPage' %}active{% endif %}" href="{% url 'clerk' %}"> <span>Clerk Page</span> </a>          
+            <div class="justin"> </div>
+            <a class="User {% if request.path == '/NotifyParties' %}active{% endif %}" href="{% url 'shownotify' %}"> <span>Notify Parties</span> </a>
+            <div class="justin"> </div>
+            <a class="User {% if request.path == '/ConfirmedOrders' %}active{% endif %}" href="{% url 'doneorders' %}"> <span>Confirmed orders</span> </a>
             
 
             {% elif C == False %}
             
             <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"> Home </a>
+            <div class="justin"> </div>
             <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> View Steel Inventory </a>
-            <a class="About {% if request.path == '/Developer' %}active{% endif %}" href="{% url 'Developer' %}"> About the Developer </a>
+            <div class="justin"> </div>
             <a class="User {% if request.path == '/ClerkPage' %}active{% endif %}" href="{% url 'Signup' %}"> Signup/Login </a>
+            <div class="justin"> </div>
             {% endif %}
             <input id="hide" name="hide" type="hidden" value="">  
         </div>
@@ -42,6 +48,7 @@
             input1.value = "DEAD";
         })
     </script>
+
     {% endblock %}
 
     {% block content %}

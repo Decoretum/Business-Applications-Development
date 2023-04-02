@@ -17,16 +17,16 @@
                 <div class="container" style="position: relative; max-width: 100%;">
                     <span class="bodytext"><b>Name:</b> {{p.Name}}</span> <br>
                     <span class="bodytext" style="max-width: 100%; display: flex; flex-wrap: wrap; word-break: break-word;"><b>Address:&nbsp;</b> {{p.Address}} </span>
-                    <a class="Button" href="{% url 'editnotify' pk=p.pk %}" style="background-color: rgb(40, 155, 64); position: absolute; right:1vw;"> Edit Notify Party </a>
+                    <a class="Button" href="{% url 'editnotify' pk=p.pk %}" style="position: absolute; right:1vw;"> Edit Notify Party </a>
                     <br><br>
                 </div><br>
             {% endfor %} 
-            <a class="Button" href="{% url 'addnotify' %}" style="background-color: yellow; float: right; margin-right: 25vw; margin-bottom: 4vh; position: relative;"> Add a Notify Party </a>
+            <a class="Button" href="{% url 'addnotify' %}" style="float: right; margin-right: 25vw; margin-bottom: 4vh; position: relative; background-color: rgb(133, 88, 111);"> Add a Notify Party </a>
             <br><br>
         {% else %}
             <div class="container">
                 <span class="bodytext">You have no Notify parties yet! Click the button below to add!</span> <br><br>
-                <a class="Button" href="{% url 'addnotify' %}" style="background-color: yellow;"> Add a Notify Party </a>
+                <a class="Button" style="background-color: rgb(133, 88, 111);" href="{% url 'addnotify' %}"> Add a Notify Party </a>
             </div>
         {% endif %}
     {% endblock %}

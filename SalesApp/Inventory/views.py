@@ -7,10 +7,11 @@ from django.template import loader
 from django.templatetags.static import static
 from django.http import HttpResponse
 from django.conf import settings
+from django.utils import timezone
 from decimal import Decimal
 import random
 import string
-
+import zoneinfo
 
 def home(request):
     condition = ''
@@ -666,10 +667,13 @@ def ConfirmOrder(request,pk):
                     )
                 NewConsign.save()
 
+                timezone.activate('Asia/Taipei')
+
                 NewOrder = FinalOrder.objects.create(
                         Verification = VerifID(request),
                         BL = NewConsign,
                         NumOfBL = 3,
+                        Time = timezone.localtime()
                     )
 
                 NewOrder.TotalCost += Cost

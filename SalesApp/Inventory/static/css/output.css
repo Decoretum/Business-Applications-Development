@@ -514,11 +514,16 @@ video {
 }
 html > *:not(.image){
   max-width: 100%;
-  /*background: rgb(143,193,203);
-  background: linear-gradient(90deg, rgba(143,193,203,1) 4%, rgba(202,204,208,1) 55%, rgba(174,174,203,1) 84%);*/
-  background: rgb(70,103,154);
-  background: linear-gradient(90deg, rgba(70,103,154,1) 11%, rgba(61,144,159,1) 52%, rgba(39,111,181,1) 60%);
+  /*background: rgb(70,103,154);
+  background: linear-gradient(90deg, rgba(70,103,154,1) 11%, rgba(61,144,159,1) 52%, rgba(39,111,181,1) 60%);*/
+  /*background-image: url('../pic/backy.jpeg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;*/
+  background-color: rgb(248, 237, 227);
+
 }
+
 
 .Largetext{
   font-size: 25px;
@@ -571,7 +576,7 @@ a{
 .container{
   padding: 10px;
   font-family: Helvetica;
-  background-color: rgb(212, 203, 191);
+  background-color: rgb(208, 184, 168);
   border: transparent;
   border-radius: 9px;
   box-shadow: 10px 10px rgb(180, 155, 125);
@@ -591,12 +596,11 @@ a{
 }
 
 .header{
-  width: 90vw;
+  width: 100%;
   max-width: 100%;
   border: transparent;
-  box-shadow: 9px 9px rgb(18, 85, 124);
-  background-color: cadetblue;
-  border-radius: 9px;
+  /*box-shadow: 9px 9px rgb(18, 85, 124);*/
+  background-color: rgb(133, 88, 111);
   margin: auto;
   display: flex;
   padding: 10px;
@@ -604,31 +608,43 @@ a{
   flex-wrap: wrap;
 }
 
+
+
 .active{
   color: azure;
 }
 
-.header > a{
+.header > *{
+  text-align:center;
+  display: table-cell;
+  vertical-align:middle;
+  padding: 0px;
+  max-width: 100%;
   font-family:Helvetica;
   font-weight: 300;
   font-size: 17px;
   margin: auto;
-  margin-left: 3vw;
-  margin-top: 2vh;
-  padding: 5px;
-  width: 10vw;
-  align-self: center;
-  border-top: solid rgb(31, 44, 72);
- 
+  width: 10%;
+}
+
+
+
+
+.justin{
+  min-height: 10vh;
+  max-height: 10vh;
+  width: 2px;
+  background-color:black;
+  
 }
 
 .header > a:hover{
   cursor: pointer;
 }
 
-.header > a:nth-child(7){
+/*.header > a:nth-child(7){
   margin-top: 5vh;
-}
+}*/
 
 .unfinished.header{
   margin: auto;
@@ -647,7 +663,7 @@ a{
   border: transparent;
   border-radius: 9px;
   width: 50%;
-  box-shadow: 10px 10px rgb(189, 163, 130);
+  box-shadow: 10px 10px rgb(89, 87, 85);
   background-color: rgb(210, 174, 127);
 }
 
@@ -667,9 +683,11 @@ a{
 .forminput{
   padding: 10px;
   max-width: 100%;
-  width: 60%;
+  width: 55%;
   margin: auto;
   border-radius: 9px;
+  border-color: #9ca3af;
+  background-color: #feffff;
 }
 
 .forminput:focus{
@@ -707,7 +725,7 @@ a{
 
 .Button{
   text-decoration: none;
-  background-color: rgb(48, 162, 88);
+  background-color: rgb(223, 211, 195);
   padding: 10px;
   max-width: 100%;
   width: fit-content;
@@ -724,7 +742,7 @@ a{
 
 .Button:hover{
   cursor:pointer;
-  background-color: rgb(56, 209, 110);
+  background-color: rgb(181, 181, 108);
   transform: translateY(5px);
 }
 
@@ -760,7 +778,7 @@ a{
 }
 
 .LOGOUT:hover{
-  background-color: aquamarine;
+  background-color:cornsilk;
   cursor: pointer;
   transform: translateY(5px);
 }
@@ -800,7 +818,7 @@ border-radius: 9px;
 }
 
 .identify > *{
-  background-color: rgb(223, 230, 132);
+  background-color: rgb(208, 184, 168);
   margin: auto;
   padding: 9px;
   max-width: 100%;
@@ -818,19 +836,15 @@ border-radius: 9px;
 }
 
 .actions > * {
-  background-color: rgb(20, 145, 30);
   position: relative;
   width: 5vw;
   margin-top: 1vh;
 }
 
-.actions > *:hover{ 
-  background-color: rgb(55, 231, 69);
-}
-
 .image{
   max-width: 20vw;
   max-height: 20vh;
+  border-radius: 9px;
   margin: auto;
 }
 

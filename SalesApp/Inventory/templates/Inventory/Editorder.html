@@ -15,7 +15,7 @@
     <br><br><br>
     <form method="POST" action="{% url 'editorder' pk=K.pk %}">{% csrf_token %}
         <div class="container" style="position: relative;">
-            <img src="{{K.Marks.Image.url}}" class="image" style=" margin-top: 2vh; margin-left: 2vw;"><br>
+            <img src="{{K.Marks.Image.url}}" class="image" style=" margin-top: 2vh; margin-left: 2vw; border-radius: 9px;"><br>
             <div class="Largetext"> Ordered Product ID: {{K.OrderedProductID}}</div>     
             <div class="Largetext"> Product Name </div>
             <select type="text" id="proddrop" name="proddrop" style=" margin-left: 2vw;">

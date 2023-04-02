@@ -15,59 +15,82 @@
     {% if C == True %}
     <br>
         <div class="container">
-            <img class="image" style="float: left; margin: 10px;" src="{{P.Image.url}}"> <!-- <br><br><br><br><br><br><br><br><br> -->
-            <span class="Largetext"> Product Name : {{P.Name}}</span><br><br><br>
-            <span class="Largetext"> Product Marks: </span> <span class="bodytext" style="margin-left: -1vw;"> {{ P.Marks }} </span><br><br><br><br><br>
-
-            <div id="basic">
-               
-                <span class="Largetext" > Description: </span> <span class="bodytext" style="margin-left: 0.5vw; display: flex; flex-wrap: wrap; word-break: break-word;">{{P.Description}}</span> <br><br>
-                <span class="Largetext"> Manufacturer: </span> <span class="bodytext"> {{P.Manufacturer}} </span>
-                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Location of Manufacturer : </span> <span class="bodytext"> {{P.ManuLoc}} </span> <br> <br> <br>  
-          
-                <span class="Largetext"> Length: </span> <span class="bodytext"> {{P.Length}} </span> 
-                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Cost: </span> <span class="bodytext"> ${{P.Cost}} </span>
-                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Gross Weight: </span> <span class="bodytext"> {{P.GrossWeight}} </span> <br> <br> <br>
-                <span class="Largetext"> Color: </span> <span class="bodytext"> {{P.Color}} </span>
-                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Measurement : </span> <span class="bodytext"> {{P.Measurement}} </span> <br> <br> <br>
-                <span class="Largetext"> Contact: </span> <span class="bodytext"> {{P.Contact}} </span>
-            </div> <br>
+            <img class="image" style="float: left; margin: 10px; border-radius: 9px;" src="{{P.Image.url}}"> <!-- <br><br><br><br><br><br><br><br><br> -->
+            <div class="Largetext" style="margin-left: 12vw; word-break: break-word; max-width: 100%; width: 38vw;"> Product: {{P.Name}} </div>
+            <table id="tab" style="text-align: center; width: 45vw; max-width: 100%; margin-right: 1vw; word-break: break-word;">
+                <tr>
+                    <th colspan="3" style="background-color: rgb(133, 88, 111);"> <b>Description</b>: {{P.Description}} </th>
+                </tr>
+                <tr>
+                    <th rowspan="2"><b>Product Marks</b>: {{P.Marks}}</th>
+                    <th><b>Measurement:</b> {{P.Measurement}} </th>
+                    <th> <b>Manufacturer</b>: {{P.Manufacturer}} </th>
+                </tr>
+                <tr>
+                    <th> <b>Manufacturer Location</b>: {{P.ManuLoc}} </th>
+                    <th> <b>Cost</b>: ${{P.Cost}} </th>
+                </tr>
+                <tr>
+                    <th> <b>Length</b>: {{P.Length}}  </th>
+                    <th><b>Gross Weight:</b> {{P.GrossWeight}} </th>
+                    <th><b>Color:</b> {{P.Color}} </th>
+                </tr>
+                <tr>
+                    <th><b>Measurement:</b> {{P.Measurement}} </th>
+                    <th><b>Contact</b>: {{P.Contact}} </th>
+                    <th><b>Stock</b>: {{P.Stock}} </th>
+                </tr>
+            </table>
              
+            <br><br>
             <div style="margin-left: 2vw; display: inline-flex; margin-bottom: 2vh;" id="buts"> 
                 <a class="Button" id="edittemp" style="margin-left: 1vw;"> Delete Product </a>
                 <a class="Button" href="{% url 'Products' %}" id="browse"> Back </a> <br> <br>
             </div>
         </div>
         <br>
-        <div class="container" id="tempbox">
-            <div class="Largetext"> Are you sure you sure you want to delete product: {{P.Name}}? </div>
+        <div class="container" id="tempbox" style="word-wrap: break-word; max-width: 100%; background-color:rgb(218, 198, 171);">
+            <div class="Largetext" style="font-family: Helvetica; font-weight: 200;"> Are you sure you sure you want to delete product: {{P.Name}}? </div>
             <a class="Button" type="submit" id="temp" href="{% url 'deleteproduct' pk=P.pk %}"> Yes </a>
             <a class="Button" id="hideme"> No </a>
         </div>
     {% elif C == False %}
     <br>
-        <div class="container">
-            <img class="image" style="float: left; margin: 10px;" src="{{P.Image.url}}"> <!-- <br><br><br><br><br><br><br><br><br> -->
-            <span class="Largetext"> Product Name : {{P.Name}}</span><br><br><br>
-            <span class="Largetext"> Product Marks: </span> <span class="bodytext" style="margin-left: -1vw;"> {{ P.Marks }} </span><br><br><br><br><br>
-
-            <div id="basic">
-               
-                <span class="Largetext" > Description: </span> <span class="bodytext" style="margin-left: 0.5vw; display: flex; flex-wrap: wrap; word-break: break-word;">{{P.Description}}</span> <br><br>
-                <span class="Largetext"> Manufacturer: </span> <span class="bodytext"> {{P.Manufacturer}} </span> 
-                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Location of Manufacturer : </span> <span class="bodytext"> {{P.ManuLoc}} </span> <br> <br> <br>  
-          
-                <span class="Largetext"> Length: </span> <span class="bodytext"> {{P.Length}} </span> 
-                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Cost: </span> <span class="bodytext"> ${{P.Cost}} </span>
-                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Gross Weight: </span> <span class="bodytext"> {{P.GrossWeight}} </span> <br> <br> <br>
-                <span class="Largetext"> Color: </span> <span class="bodytext"> {{P.Color}} </span>
-                <span class="Largetext" style="margin-left: 2vw; border-left: solid 2px;"> Measurement : </span> <span class="bodytext"> {{P.Measurement}} </span> <br> <br> <br>
-                <span class="Largetext"> Contact: </span> <span class="bodytext"> {{P.Contact}} </span>
-            </div> <br><br>
+    <div class="container" style="background-color:azure;">
+        <img class="image" style="float: left; margin: 10px; border-radius: 9px;" src="{{P.Image.url}}"> <!-- <br><br><br><br><br><br><br><br><br> -->
+        <div class="Largetext" style="margin-left: 12vw; word-break: break-word; max-width: 100%; width: 38vw;"> Product: {{P.Name}} </div>
+        <table id="tab" style="text-align: center; width: 45vw; max-width: 100%; margin-right: 1vw; word-break: break-word;">
+            <tr>
+                <th colspan="3" style="background-color: rgb(77, 119, 187);"> <b>Description</b>: {{P.Description}} </th>
+            </tr>
+            <tr>
+                <th rowspan="2"><b>Product Marks</b>: {{P.Marks}}</th>
+                <th><b>Measurement:</b> {{P.Measurement}} </th>
+                <th> <b>Manufacturer</b>: {{P.Manufacturer}} </th>
+            </tr>
+            <tr>
+                <th> <b>Manufacturer Location</b>: {{P.ManuLoc}} </th>
+                <th> <b>Cost</b>: ${{P.Cost}} </th>
+            </tr>
+            <tr>
+                <th> <b>Length</b>: {{P.Length}}  </th>
+                <th><b>Gross Weight:</b> {{P.GrossWeight}} </th>
+                <th><b>Color:</b> {{P.Color}} </th>
+            </tr>
+            <tr>
+                <th><b>Measurement:</b> {{P.Measurement}} </th>
+                <th><b>Contact</b>: {{P.Contact}} </th>
+                <th><b>Stock</b>: {{P.Stock}} </th>
+            </tr>
+        </table>
+         
+        <br><br>
+        <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
+    </div>
+    <br>
              
 
-            <a class="Button" href="{% url 'Products' %}" id="browse"> Browse Products </a> <br> <br>
-        </div>
+            
         <br>
     {% endif %}
     <br><br<br>
@@ -98,7 +121,6 @@
             right: 24.5vw;
             display: none;
             height: fit-content;
-            background-color: rgb(53, 192, 213);
         }
         
         .container > span:not('.bodytext.desc'){
@@ -120,14 +142,6 @@
             align-content: center;
         }
 
-        #temp{
-            background-color: azure;
-            
-        }
-
-        #hideme{
-            background-color: azure;
-        }
 
         .showme{
             display: inline;
@@ -137,6 +151,23 @@
             margin-left: 1vw;
             margin-bottom: 1vh;
         }
+
+        tr > th{
+                max-width: 100%;
+                width: 38vw;
+                word-wrap: break-word;
+                margin-top: 5vh;
+                font-weight: 200;
+                border: solid 2px;
+                padding: 15px;
+                background-color: white;
+            }
+
+            .last{
+            border: none;
+            text-align: left;
+        }
+        
     </style>
     {% endblock %}
 </body>
