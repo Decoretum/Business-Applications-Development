@@ -11,7 +11,7 @@ from django.utils import timezone
 from decimal import Decimal
 import random
 import string
-import zoneinfo
+
 
 def home(request):
     condition = ''
@@ -647,6 +647,7 @@ def ConfirmOrder(request,pk):
                     print('GOING BACK')
                     request.session['Order'] = None
                     request.session['productname'] = None
+                    request.session['Remarks'] = None
                     return redirect('createorder')
 
                 q = request.POST.get('drop')
