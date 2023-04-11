@@ -514,6 +514,7 @@ video {
 }
 html > *:not(.image){
   max-width: 100%;
+  word-wrap: break-word;
   /*background: rgb(70,103,154);
   background: linear-gradient(90deg, rgba(70,103,154,1) 11%, rgba(61,144,159,1) 52%, rgba(39,111,181,1) 60%);*/
   /*background-image: url('../pic/backy.jpeg');
@@ -576,7 +577,8 @@ a{
 .container{
   padding: 10px;
   font-family: Helvetica;
-  background-color: rgb(208, 184, 168);
+  /*background-color: rgb(208, 184, 168);*/
+  background-color: rgb(232, 213, 196);
   border: transparent;
   border-radius: 9px;
   box-shadow: 10px 10px rgb(180, 155, 125);
@@ -600,7 +602,7 @@ a{
   max-width: 100%;
   border: transparent;
   /*box-shadow: 9px 9px rgb(18, 85, 124);*/
-  background-color: rgb(133, 88, 111);
+  background-color: rgb(58, 152, 185);
   margin: auto;
   display: flex;
   padding: 10px;
@@ -681,7 +683,7 @@ a{
 }
 
 .forminput{
-  padding: 10px;
+  padding: 7.5px;
   max-width: 100%;
   width: 55%;
   margin: auto;
@@ -725,7 +727,7 @@ a{
 
 .Button{
   text-decoration: none;
-  background-color: rgb(223, 211, 195);
+  background-color: rgb(181, 181, 108);
   padding: 10px;
   max-width: 100%;
   width: fit-content;
@@ -742,7 +744,7 @@ a{
 
 .Button:hover{
   cursor:pointer;
-  background-color: rgb(181, 181, 108);
+  background-color: rgb(221, 207, 80);
   transform: translateY(5px);
 }
 
@@ -818,7 +820,7 @@ border-radius: 9px;
 }
 
 .identify > *{
-  background-color: rgb(208, 184, 168);
+  background-color: rgb(232, 213, 196);
   margin: auto;
   padding: 9px;
   max-width: 100%;

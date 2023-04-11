@@ -30,8 +30,8 @@
                 Consignee BL Number: {{o.BL.BL}} <br><br> 
                 Total Cost: ${{o.TotalCost}}
             </th>
-            <th> <a class="Button" href="{% url 'UnfTrans' pk=o.pk %}" style="background-color:rgb(133, 88, 111);" id="ViewProds"> View & Edit </a> </th>
-            <th id="lasty"> <a class="Button" style="width: 20vw; background-color:rgb(133, 88, 111);" href="{% url 'completeorder' pk=o.pk %}"> Confirm Order </a>
+            <th> <a class="Button" href="{% url 'UnfTrans' pk=o.pk %}" id="ViewProds"> View & Edit </a> </th>
+            <th id="lasty"> <a class="Button" style="width: 20vw;" href="{% url 'completeorder' pk=o.pk %}"> Confirm Order </a>
             </th>
         </tr>
         {% endfor %}

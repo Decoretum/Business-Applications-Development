@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Userperson, Product, OrderedProduct, FinalOrder, NotifyParty, Consignee
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User, auth
 from django.template import loader
@@ -528,7 +530,7 @@ def CreateOrder(request):
             
             
             request.session['Order'] = OrderNum
-            request.session['Remarks'] = request.POST.get('remark')
+            request.session['rem'] = request.POST.get('rem')
             request.session['productname'] = request.POST.get('proddrop')
             ChosenProduct = get_object_or_404(Product, Name = request.session['productname'])
             return redirect('confirmcreateorder', pk=ChosenProduct.pk)
@@ -635,8 +637,7 @@ def ConfirmOrder(request,pk):
                     'status' : status,
                     'OrderedP' : ChosenProduct,
                     'stocka' : stocka,
-                    'Order' : ChosenOrder
-
+                    'Order' : ChosenOrder,
                 })
         
         #Coming from confirming a new order
@@ -751,11 +752,51 @@ def CompleteOrder(request,pk):
         elif portload.strip() == "" or portdis.strip() == "" or voyage.strip() == "":
             messages.info(request, 'Port of Loading, Port of Discharge, or Voyage cannot be left blank')
             return redirect('completeorder', pk)
-        elif (prepaid.strip() == "" and collect.strip() == ""):
+        elif (prepaid.strip() != "Yes" and collect.strip() != "Yes"):
             messages.warning(request, 'Both Prepaid and Collect cannot be null, one field must not be null')
             return redirect('completeorder',pk)
 
         else:
+            outcome = True
+            OrderedProds = OrderedProduct.objects.filter(OrderID = OrderDone)
+            i = 0
+            sum = 0
+            hashmap = {}
+
+            # O(n) algorithm as worst case 
+
+            while i < len(OrderedProds):
+                prod = OrderedProds[i]
+                if prod.Marks.Name in hashmap:
+                    ''' If the product name exists in the hashmap, then we will simply update their value,
+                    but we will retain the old value in order to update'''
+                    old = hashmap[prod.Marks.Name]
+                    hashmap.update({prod.Marks.Name: old - prod.quantity})
+                else:
+                    ''' If product name doesn't exist yet in the hashmap, then we will
+                    create a new key-value for it '''
+                    hashmap.update({prod.Marks.Name: prod.Marks.Stock - prod.quantity })
+
+                i = i + 1
+
+            for val in hashmap.values():
+                if val < 0:
+                    outcome = False
+
+            if outcome == False:
+                print(hashmap)
+                request.session['HM'] = hashmap #Hashmap Data
+                request.session['PK'] = pk #Primary Key of Final Order
+                return redirect('UnfTrans', pk)
+        
+         
+            else:
+                #O(n) algorithm
+                for item in OrderedProds:
+                    item.Marks.Stock -= item.quantity
+                    item.Marks.save()
+                    item.save()
+
             notifobject = get_object_or_404(NotifyParty, Name = notify)
             OrderDone.Portdis = portdis
             OrderDone.Portload = portload
@@ -778,12 +819,6 @@ def CompleteOrder(request,pk):
             
             OrderDone.Finished = True
 
-            OrderedProds = OrderedProduct.objects.filter(OrderID = OrderDone)
-            for item in OrderedProds:
-                item.Marks.Stock -= item.quantity
-                item.Marks.save()
-                item.save()
-
             OrderDone.save()
             print(OrderDone.pk)
             return redirect('Products2')
@@ -797,7 +832,7 @@ def CompleteOrder(request,pk):
 def ShowComplete(request):
     condition = True
     use = 'complete'
-    DoneOrders = FinalOrder.objects.filter(Finished = True)
+    DoneOrders = FinalOrder.objects.filter(Finished = True).order_by('-pk')
     OrderedP = OrderedProduct.objects.all()
     if request.user.is_authenticated:
         pass
@@ -831,14 +866,35 @@ def EditTrans(request, pk):
     Order = get_object_or_404(FinalOrder, pk=pk)
     Products = OrderedProduct.objects.filter(OrderID = Order).order_by('-totalcost')
     if request.user.is_authenticated:
+        error = request.session.get('HM')
+        finalorderkey = request.session.get('PK')
+
         condition = True
         empty = len(Products) == 0
-        return render(request,'Inventory/cart.html',{ 
+
+        if error != None:
+            array = []
+            #O(n)
+            for item in error.keys():
+                if error[item] < 0:
+                    array.append((item, error[item]))
+                    
+            return render(request,'Inventory/cart.html',{ 
                     'C' : condition,
                     'Products' : Products,
                     'p' : pk,
-                    'e' : empty
+                    'e' : empty,
+                    'array' : array,
+                    'orderkey' : finalorderkey
+
                 })
+        else:
+            return render(request,'Inventory/cart.html',{ 
+                        'C' : condition,
+                        'Products' : Products,
+                        'p' : pk,
+                        'e' : empty
+                    })
    
 
 #This will lead to the confirm order page, where quantity, product price, and others will be updated to confirm change in transaction
@@ -913,13 +969,13 @@ def ConfirmTrans(request,pk):
             Order.save()
             
             ChosenTrans.quantity = int(q)
+
             ChosenTrans.Marks = get_object_or_404(Product, Name=orderprodname)
             ChosenTrans.remarks = Newremarks
             ChosenTrans.save()
             return redirect('UnfTrans', pk=ChosenTrans.OrderID.pk)
 
         elif request.GET.get('Next') == "Next":
-            print('GOT IT')
             request.session['OrderPRem'] = None
             return redirect('editorder', pk)
 

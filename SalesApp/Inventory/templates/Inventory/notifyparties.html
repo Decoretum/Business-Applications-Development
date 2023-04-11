@@ -21,14 +21,19 @@
                     <br><br>
                 </div><br>
             {% endfor %} 
-            <a class="Button" href="{% url 'addnotify' %}" style="float: right; margin-right: 25vw; margin-bottom: 4vh; position: relative; background-color: rgb(133, 88, 111);"> Add a Notify Party </a>
+            <a class="Button" id="B1" href="{% url 'addnotify' %}" style="float: right; margin-right: 25vw; margin-bottom: 4vh; position: relative;"> Add a Notify Party </a>
             <br><br>
         {% else %}
             <div class="container">
                 <span class="bodytext">You have no Notify parties yet! Click the button below to add!</span> <br><br>
-                <a class="Button" style="background-color: rgb(133, 88, 111);" href="{% url 'addnotify' %}"> Add a Notify Party </a>
+                <a class="Button" id="B1" href="{% url 'addnotify' %}"> Add a Notify Party </a>
             </div>
         {% endif %}
+        <style>
+            #B1{
+                background-color: #3A98B9;
+            }
+        </style>
     {% endblock %}
  
     
