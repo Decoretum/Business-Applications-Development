@@ -19,7 +19,7 @@ https://app.diagrams.net/#G1PZlwUNpmm8cHGGkcCigoE5KhDCgxFYLc
 
 <br>
 <h1> Running the Server </h1>
-Create a Python virtual environment within the directory but outside the "SalesApp", and run it as follows: <br>
+Create a Python virtual environment within the directory but outside the "SalesApp", then activate it. After activation, run it as follows: <br>
 pip install -r requirements.txt <br><br>
 Once Django is installed in the machine, go within the "SalesApp" directory and type: <br>
 python manage.py runserver OR python3 manage.py runserver <br>
