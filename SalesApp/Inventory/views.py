@@ -761,7 +761,6 @@ def CompleteOrder(request,pk):
             outcome = True
             OrderedProds = OrderedProduct.objects.filter(OrderID = OrderDone)
             i = 0
-            sum = 0
             hashmap = {}
 
             # O(n) algorithm as worst case 
@@ -785,7 +784,6 @@ def CompleteOrder(request,pk):
                     outcome = False
 
             if outcome == False:
-                print(hashmap)
                 request.session['HM'] = hashmap #Hashmap Data
                 request.session['PK'] = pk #Primary Key of Final Order
                 return redirect('UnfTrans', pk)
@@ -879,7 +877,7 @@ def EditTrans(request, pk):
             for item in error.keys():
                 if error[item] < 0:
                     array.append((item, error[item]))
-                    
+            print(error)
             return render(request,'Inventory/cart.html',{ 
                     'C' : condition,
                     'Products' : Products,
