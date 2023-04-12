@@ -19,10 +19,17 @@
             <div style="margin-left: -1vw;" id="options"> 
                 <a class="Button w-auto" href="{% url 'createorder' %}" style="margin-left:10vw; position: relative;"> Create Order </a>
                 <a class="Button" style="margin-left: 10px;" href="{% url 'addproduct' %}"> Add A Product </a>
+                <input type="text" style="margin-right: 9vw; float: right; padding: 5px;" id="searchbar" onkeyup="myFunction()" placeholder="Search for Product">
             </div>
+
+            {% else %}
+            <br>
+            <input type="text" style="margin-right: 9vw; float: right; padding: 5px;" id="searchbar" onkeyup="myFunction()" placeholder="Search for Product">
+            <br>
+
             {% endif %}
         
-        <table style="font-style: normal; font-weight: normal;" class="Frame">
+        <table style="font-style: normal; font-weight: normal;" class="Frame" id="products">
             <tr class="identify"> 
                 <th style="border-top-left-radius: 9px;"> Image </th>
                 <th> Product </th>
@@ -34,7 +41,7 @@
             
                 {% for p in P %}
                     {% if C == True %}
-                    <tr class="Header"> 
+                    <tr class="Header" id="Listed"> 
                         <th> <img class="image" src="{{ p.Image.url }}"> </th>
                         <th> {{ p.Name }} </th>
                         <th> {{ p.Length }} </th>
@@ -200,6 +207,16 @@
 
 
     <style>
+
+        #searchbar{
+            font-family: Helvetica;
+            font-weight: 100;
+        }
+
+        #searchbar:focus{
+            outline-color: transparent;
+        }
+
         #done > span{
             font-size: 20px;
             font-weight:200;
@@ -212,11 +229,18 @@
             margin: auto;
         }
 
-
-
         .last{
             border: none;
             text-align: left;
+        }
+
+        .identify.headerreveal{
+            padding: 10px;
+            margin: auto;
+            width: 50vw;
+            text-align: center;
+            border-radius: 9px;
+            background-color: azure;
         }
     </style>
 
@@ -228,6 +252,44 @@
         let len = tables.childNodes[1].childNodes.length
         tables[i].childNodes[1].childNodes[len-2].childNodes[2].nodeValue = "Additional Information"
    }*/
+   function myFunction(){
+    let list, filtered, header;
+    
+    let products = document.getElementsByTagName('tr');
+    let search = document.getElementById('searchbar');
+    let tbody = document.getElementById('products');
+    let sum = 0;
+    let coveredsum = 0;
+    header = document.querySelector('.identify');
+    filtered = search.value.toUpperCase();
+    for (let i = 1; i < products.length; i++){
+        let text = products[i].childNodes[3].textContent;
+        if (text.toUpperCase().indexOf(filtered) > -1){
+            products[i].style.display = "";
+        }
+        else{
+            products[i].style.display = "none";
+            coveredsum += 1;
+        }
+        sum += 1;
+    }
+
+    if (coveredsum === sum){
+        //console.log(tbody.childNodes[1])
+        console.log(header.childNodes)
+        tbody.style.borderRadius = "9px";
+        tbody.childNodes[1].style.borderRadius = "9px";
+        header.innerHTML = "<div style='background-color : azure;'> No results! </div>";
+        header.classList.add("headerreveal");
+    }
+
+    else{
+        header.classList.remove("headerreveal");
+        //header.childNodes.style.backgroundColor = "rgb(232, 213, 196)"; 
+        header.innerHTML = "<tr class='identify'> <th style='border-top-left-radius: 9px;'> Image </th> <th> Product </th><th> Length </th> <th> Manufacturer Name </th> <th> Quantity </th> <th style='border-top-right-radius: 9px;''> Action </th> </tr>"
+    }
+
+   }
 </script>
     <br><br>
     {% endblock %}
