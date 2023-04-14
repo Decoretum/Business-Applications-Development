@@ -5,7 +5,6 @@ from . import views
 
 urlpatterns=[
 path('',views.home, name='home'),
-#path('Ordered Products/<int:pk>/',views.ProdsinOrder, name='Products3'),
 
 #displaying
 path('ClerkPage',views.Clerk, name='clerk'),
@@ -41,6 +40,8 @@ path('Order/<int:pk>/', views.EditTrans, name='UnfTrans'),
 path('editorder/<int:pk>/', views.ChangeTrans, name='editorder'),
 path('confirmorder/<int:pk>/', views.ConfirmTrans, name='confirmorder'),
 path('DeleteTrans/<int:pk>/', views.DeleteTrans, name='deltrans'),
+
+#path('Ordered Products/<int:pk>/',views.ProdsinOrder, name='Products3'),
 #path('UserAdded', views.AddOrder, name='OrderAdded'),
 
 

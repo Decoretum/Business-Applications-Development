@@ -18,10 +18,35 @@ SQL will be integrated with the SQLITE3 database in the future.
 https://app.diagrams.net/#G1PZlwUNpmm8cHGGkcCigoE5KhDCgxFYLc
 
 <br>
+<h1> Install Python </h1>
+Install Python 3.9.5 in Windows or Mac. <br>
+Install Python for MacOS: <br>
+https://www.dataquest.io/blog/installing-python-on-mac/ <br><br>
+
+Install Python for Windows: <br>
+https://www.tomshardware.com/how-to/install-python-on-windows-10-and-11 <br><br>
+
+<h1> Python Virtual Environment   </h1> <br>
+The purpose of a Python virtual environment is to create an isolated virtual space where you could freely <br>
+install packages and depencies for a <b> certain </b> project without worrying if these packages and depencies will <br>
+conflict with your global packages! <br>
+
+Open up the directory of the project, but be sure you're outside of the "SalesApp" directory. Once you're in this directory, type: <br>
+python3 -m venv EnvironmentName <br>
+wherein "EnvironmentName" could be any name you want. <br>
+
+
 <h1> Running the Server </h1>
-Create a Python virtual environment within the directory but outside the "SalesApp", then activate it. After activation, run it as follows: <br>
+Enter the directory of the virtual environment folder that you've created. <br>
+Activate the Pyton virtual environment by typing: <br>
+source/bin/activate (for macOS devices) <br>
+Scripts/activate (for Windows devices greater than 7 and 8)
+
+After activation, run it as follows: <br>
 pip install -r requirements.txt <br><br>
 Once Django is installed in the machine, go within the "SalesApp" directory and type: <br>
 python manage.py runserver OR python3 manage.py runserver <br>
+
+
 
 

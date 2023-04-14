@@ -71,9 +71,11 @@ def Clerk(request):
             }
         )
 
-''' A very efficient way to check if a field is a Decimal or not
+''' 
+A very efficient way to check if a field is a Decimal or not
 Decimal was used instead of float due to the precision of Decimal, providing precise and accurate values
-in compensation for some performance '''
+in compensation for some performance 
+'''
 def isDigit(request,num):
     try:
         Decimal(num)
