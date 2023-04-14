@@ -4,3 +4,4 @@ SalesApp/SalesApp/__pycache__/
 SalesApp/node_modules
 sqlite3
 SalesApp/db.sqlite3
+SalesApp/.DS_Store
