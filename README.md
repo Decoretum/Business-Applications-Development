@@ -42,7 +42,9 @@ wherein "EnvironmentName" could be any name you want. <br>
 <h1> Running the Server </h1>
 Enter the directory of the virtual environment folder that you've created. <br>
 Activate the Pyton virtual environment by typing: <br>
-For MacOS devices: <br>
+For MacOS devices: 
+<br>
+
 ```bash
 source/bin/activate 
 ``` 
