@@ -45,13 +45,14 @@ Activate the Pyton virtual environment by typing: <br>
 For MacOS devices: <br>
 ```bash
 source/bin/activate 
-``` <br>
+``` 
+<br>
 
 ```bash
 Scripts/activate
 ``` 
 <br>
-for Windows devices greater than 7 and 8)
+for Windows devices greater than 7 and 8
 
 After activation, run it as follows: <br>
 pip install -r requirements.txt <br><br>
