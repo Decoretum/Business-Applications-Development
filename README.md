@@ -17,7 +17,7 @@ SQL will be integrated with the SQLITE3 database in the future.
 <h1> Database Architecture </h1>
 https://app.diagrams.net/#G1PZlwUNpmm8cHGGkcCigoE5KhDCgxFYLc
 
-<br>
+<br><br>
 <h1> Install Python </h1>
 Install Python 3.9.5 in Windows or Mac. <br>
 Install Python for MacOS: <br>
@@ -35,29 +35,33 @@ Open up the directory of the project, but be sure you're outside of the "SalesAp
 ```bash
 python3 -m venv EnvironmentName 
 ``` 
-<br>
-wherein "EnvironmentName" could be any name you want. <br>
+wherein "EnvironmentName" could be any name you want. <br><br>
 
 
 <h1> Running the Server </h1>
 Enter the directory of the virtual environment folder that you've created. <br>
-Activate the Pyton virtual environment by typing: <br>
+Activate the Python virtual environment: <br><br>
 For MacOS devices: 
 <br>
 
 ```bash
-source/bin/activate 
+source bin/activate 
 ``` 
+<br>
+
+For Windows devices greater than 7 and 8:
 <br>
 
 ```bash
 Scripts/activate
 ``` 
 <br>
-for Windows devices greater than 7 and 8
 
-After activation, run it as follows: <br>
-pip install -r requirements.txt <br><br>
+
+After activation, move out of the virtual environment directory, and run the commond below to install packages dedicated to your virtual environment: <br>
+```bash
+pip install -r requirements.txt 
+```
 Once Django is installed in the machine, go within the "SalesApp" directory and type: <br>
 python manage.py runserver OR python3 manage.py runserver <br>
 
