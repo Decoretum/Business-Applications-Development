@@ -39,7 +39,7 @@
             <input type="text" class="forminput" name="Cost" id="Cost">
 
             {% for m in messages %}
-                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span style="color: red;" {% if m.tags %} class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <br><span style="color: red; margin-left: 2vw;" {% if m.tags %} class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
             {% endfor %}
 
             <br><br>

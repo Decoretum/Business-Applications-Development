@@ -51,7 +51,7 @@
                         <th>
                             <div class="actions">
                             <a class="Button w-auto" href="{% url 'view' pk=p.pk %}"> View </a> 
-                            <a class="Button w-auto" href="{% url 'edit' pk=p.pk %}"> Edit </a> 
+                            <a class="Button w-auto" href="{% url 'editproduct' pk=p.pk %}"> Edit </a> 
                             </div>
                         </th> 
                     </tr>
@@ -260,12 +260,12 @@
     let tbody = document.getElementById('products');
     let sum = 0;
     let coveredsum = 0;
-    header = document.querySelector('.identify');
+    header = document.querySelector('.identify');   
     filtered = search.value.toUpperCase();
     for (let i = 1; i < products.length; i++){
         let text = products[i].childNodes[3].textContent;
         if (text.toUpperCase().indexOf(filtered) > -1){
-            products[i].style.display = "";
+            products[i].style.display = ""; 
         }
         else{
             products[i].style.display = "none";

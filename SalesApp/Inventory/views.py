@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import Userperson, Product, OrderedProduct, FinalOrder, NotifyParty, Consignee
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.models import User, auth
 from django.template import loader
 from django.templatetags.static import static
@@ -18,9 +18,13 @@ import string
 def home(request):
     condition = ''
     use = "home"
-    if request.user.is_authenticated:
+    #This state checks if there is a user logged in for the application
+    if request.user.is_authenticated: 
         condition = True
         
+        '''This is something will be seen in a lot of views functions
+        This ensures that server data during the filling up of forms will be reset in case you navigate to another
+        page'''
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
             print('DELETED CACHE')
             request.session['Remarks'] = None
@@ -45,22 +49,18 @@ def home(request):
             })
 
 def Clerk(request):
-    condition = ""
-    print(request.path)
-    if request.user.is_authenticated:
-        condition = True
-        if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
-            print('DELETED CACHE')
-            request.session['Remarks'] = None
-            request.session['productname'] = None
-            request.session['OrderedPRem'] = None
-            request.session['OrderPname'] = None
-            request.session['manufacturer'] = None
-            request.session['Order'] = None
-            request.session['addedproduct'] = None
-        return render(
+    if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
+        print('DELETED CACHE')
+        request.session['Remarks'] = None
+        request.session['productname'] = None
+        request.session['OrderedPRem'] = None
+        request.session['OrderPname'] = None
+        request.session['manufacturer'] = None
+        request.session['Order'] = None
+        request.session['addedproduct'] = None
+    return render(
             request,'Inventory/clerk.html',{
-                'C' : condition,
+                'C' : True,
                 'username' : request.session['user'],
                 'userid' : request.session['userid'],
                 'password' : request.session['password'],
@@ -71,7 +71,9 @@ def Clerk(request):
             }
         )
 
-
+''' A very efficient way to check if a field is a Decimal or not
+Decimal was used instead of float due to the precision of Decimal, providing precise and accurate values
+in compensation for some performance '''
 def isDigit(request,num):
     try:
         Decimal(num)
@@ -79,19 +81,20 @@ def isDigit(request,num):
     except ValueError:
         return False
     
+
+#Notify Party section
+    
 def showNotify(request):
-    condition = True
     parties = NotifyParty.objects.all()
     many = len(parties) > 0
 
     return render(request, 'Inventory/notifyparties.html',{
-        'C' : condition,
+        'C' : True,
         'P' : parties,
         'many' : many
     })
 
 def AddNotify(request):
-    condition = True
     edit = False
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -108,7 +111,7 @@ def AddNotify(request):
                 City = city,
                 State = state
             )
-            party.Ad()
+            party.Ad() #model function to create a derived value
             return redirect('addnotify')
         else:
             party = NotifyParty.objects.create(
@@ -122,12 +125,11 @@ def AddNotify(request):
         
     else:
         return render(request, 'Inventory/addnotify.html',{
-            'C' : condition,
+            'C' : True,
             'edit' : edit
         })
 
 def EditNotify(request, pk):
-    condition = True
     edit = True
     chosen = get_object_or_404(NotifyParty, pk=pk)
     if request.method == 'POST':
@@ -147,47 +149,47 @@ def EditNotify(request, pk):
             return redirect('shownotify')
     else:
         return render(request, 'Inventory/addnotify.html',{
-            'C' : condition,
+            'C' : True,
             'edit' : edit,
             'chosen' : chosen
         })
+    
+
+#Products Section    
  
 def AddProduct(request):
-    condition = ""
-    if request.user.is_authenticated:
-        condition = True
-        if request.method == "POST":
-            imgfile = request.FILES.get('Image')               
-            name = request.POST.get('Name')
-            length = request.POST.get('Length')
-            manufacturer = request.POST.get('Manufacturer')
-            manuloc = request.POST.get('Location')
-            color = request.POST.get('Color')
-            cost = request.POST.get('Cost')
-            stock = request.POST.get('Stock')
-            desc = request.POST.get('Description')
-            contact = request.POST.get('Contact')
-            meas = request.POST.get('Measurement')
-            weight = request.POST.get('Weight')
+    if request.method == "POST":
+        imgfile = request.FILES.get('Image')               
+        name = request.POST.get('Name')
+        length = request.POST.get('Length')
+        manufacturer = request.POST.get('Manufacturer')
+        manuloc = request.POST.get('Location')
+        color = request.POST.get('Color')
+        cost = request.POST.get('Cost')
+        stock = request.POST.get('Stock')
+        desc = request.POST.get('Description')
+        contact = request.POST.get('Contact')
+        meas = request.POST.get('Measurement')
+        weight = request.POST.get('Weight')
 
-            if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
-                messages.info(request, 'You must fill out all the fields')
-                return redirect('addproduct')
+        if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
+            messages.info(request, 'You must fill out all the fields')
+            return redirect('addproduct')
 
-            elif isDigit(request,num = str(cost[0:])) == False:
-                messages.warning(request,"Input cost was not a number")
-                return redirect('addproduct')
+        elif isDigit(request,num = str(cost[0:])) == False:
+            messages.warning(request,"Input cost was not a number")
+            return redirect('addproduct')
 
 
-            elif Decimal(cost[slice(0,len(cost))]) <= 0:
-                messages.warning(request,"No negative costs or costs equal to 0")
-                return redirect('addproduct')
+        elif Decimal(cost[slice(0,len(cost))]) <= 0:
+            messages.warning(request,"No negative costs or costs equal to 0")
+            return redirect('addproduct')
  
-            elif stock == "" or stock == None or "." in stock or int(stock) <= 0:
-                messages.error(request, 'Stock must not be blank, a decimal, or less than 0')
-                return redirect('addproduct')
+        elif stock == "" or stock == None or "." in stock or type(stock) == str or int(stock) <= 0:
+            messages.error(request, 'Stock must not be blank, a decimal, or less than 0, or a string')
+            return redirect('addproduct')
             
-            New = Product.objects.create(
+        New = Product.objects.create(
                 Name = name,
                 Manufacturer = manufacturer,
                 ManuLoc = manuloc,
@@ -201,85 +203,82 @@ def AddProduct(request):
                 Contact = contact,
             )
 
-            if imgfile == None:
-                New.MakeMark()
-            else:
-                New.Image = imgfile
-                New.MakeMark()
+        '''If the image field wasn't filled up by the user, then there will be a default image field
+         if it is filled up by the user, then file from HTML field will be image field  '''
+        if imgfile != None:
+            New.Image = imgfile
 
-
-            return redirect ('Products')
-        else:
-            return render(
-                request, 'Inventory/AddProd.html',{
-                'C' : condition
+        New.MakeMark()
+        return redirect ('Products')
+    
+    else:
+        return render(
+            request, 'Inventory/AddProd.html',{
+            'C' : True
                 }
             )
-        
-    else:
-        pass
 
 def EditProduct(request,pk):
-    condition = ""
-    if request.user.is_authenticated:
-        condition = True
-        Existing = get_object_or_404(Product, pk=pk)
+    Existing = get_object_or_404(Product, pk=pk)
+    if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
+        request.session['Remarks'] = None
+        request.session['productname'] = None
+        request.session['OrderedPRem'] = None
+        request.session['OrderPname'] = None
+        request.session['manufacturer'] = None
+        request.session['Order'] = None
+        request.session['addedproduct'] = None
 
-        if request.method == "POST":
-            imgfile = request.FILES.get('Image')
-            name = request.POST.get('Name')
-            length = request.POST.get('Length')
-            manufacturer = request.POST.get('Manufacturer')
-            manuloc = request.POST.get('Location')
-            color = request.POST.get('Color')
-            cost = request.POST.get('Cost')
-            contact = request.POST.get('Contact')
+    if request.method == "POST":
+        imgfile = request.FILES.get('Image')
+        name = request.POST.get('Name')
+        length = request.POST.get('Length')
+        manufacturer = request.POST.get('Manufacturer')
+        manuloc = request.POST.get('Location')
+        color = request.POST.get('Color')
+        cost = request.POST.get('Cost')
+        contact = request.POST.get('Contact')
 
-            desc = request.POST.get('Description')
-            meas = request.POST.get('Measurement')
-            weight = request.POST.get('Weight')
+        desc = request.POST.get('Description')
+        meas = request.POST.get('Measurement')
+        weight = request.POST.get('Weight')
 
-            if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
-                messages.info(request, 'You must fill out all the fields')
-                return redirect('editproduct',pk)
+        if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
+            messages.info(request, 'You must fill out all the fields')
+            return redirect('editproduct',pk)
 
-            elif isDigit(request,num = str(cost[0:])) == False:
-                messages.warning(request,"Input cost was not a number")
-                return redirect('editproduct', pk)
+        elif isDigit(request,num = str(cost[0:])) == False:
+            messages.warning(request,"Input cost was not a number")
+            return redirect('editproduct', pk)
 
-            elif Decimal(cost[slice(0,len(cost))]) <= 0:
-                messages.warning(request,"No negative costs or costs equal to 0")
-                return redirect('editproduct', pk)
+        elif Decimal(cost[slice(0,len(cost))]) <= 0:
+            messages.warning(request,"No negative costs or costs equal to 0")
+            return redirect('editproduct', pk)
 
+        Existing.Name = name
 
-            Existing.Name = name
-            if imgfile == None:
-                pass
-            else:
-                Existing.Image = imgfile
+        if imgfile != None:
+            Existing.Image = imgfile
             
-            Existing.Measurement = meas
-            Existing.GrossWeight = weight
-            Existing.Manufacturer = manufacturer
-            Existing.ManuLoc = manuloc
-            Existing.Color = color
-            Existing.Length = length
-            Existing.Cost = cost
-            Existing.Description = desc
-            Existing.Contact = contact
-            Existing.MakeMark()
-            return redirect ('view',pk)
-        
-        else:
-            return render(
-                request, 'Inventory/edit.html',{
-                'C' : condition,
-                'Prod' : Existing
-                }
-            )
+        Existing.Measurement = meas
+        Existing.GrossWeight = weight
+        Existing.Manufacturer = manufacturer
+        Existing.ManuLoc = manuloc
+        Existing.Color = color
+        Existing.Length = length
+        Existing.Cost = cost
+        Existing.Description = desc
+        Existing.Contact = contact
+        Existing.MakeMark()
+        return redirect ('view',pk)
         
     else:
-        pass
+        return render(
+            request, 'Inventory/edit.html',{
+            'C' : True,
+            'Prod' : Existing
+                }
+            )
 
 def delProduct(request,pk):
     Deleted = get_object_or_404(Product, pk=pk)
@@ -289,17 +288,13 @@ def delProduct(request,pk):
         return redirect('Products')
 
 
-
-
 def Products(request):
     use = 'home'
-    condition = ""
     User = Userperson.objects.all()
     P = Product.objects.filter(Stock__gte = 1).filter(Status = True).order_by('-Stock')
     if request.user.is_authenticated:
         condition = True
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
-            print('DELETED CACHE')
             request.session['Remarks'] = None
             request.session['productname'] = None
             request.session['OrderedPRem'] = None
@@ -323,9 +318,14 @@ def Products(request):
             'C' : condition,
             'P':P, 
             'User':User,
-            'url':settings.MEDIA_URL,
+            #'url':settings.MEDIA_URL,
             'use' : use
             })
+    
+
+
+
+#Authentication Section
 
 def Signup(request):
     if request.method == 'POST':
@@ -389,46 +389,64 @@ def Login(request):
     else:
         return render(request,'Inventory/Login.html')
 
+'''
+According to Django documentation:
+When you call logout(), the session data for the current request is completely cleaned out. 
+All existing data is removed. This is to prevent another person from using the same web browser to log in 
+and have access to the previous user’s session data. 
+If you want to put anything into the session that will be available 
+to the user immediately after logging out, do that after calling django.contrib.auth.logout().
+'''
+def logoutuser(request):
+    logout(request)
+    return redirect('Login')
+    
+
+
+#Displaying Section
+
 def ShowProds(request):
-    condition = ""
-    if request.user.is_authenticated:
-        condition = True
-        if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
-            print('DELETED CACHE')
-            request.session['Remarks'] = None
-            request.session['productname'] = None
-            request.session['OrderedPRem'] = None
-            request.session['OrderPname'] = None
-            request.session['manufacturer'] = None
-            request.session['Order'] = None
-            request.session['addedproduct'] = None
+    if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
+        request.session['Remarks'] = None
+        request.session['productname'] = None
+        request.session['OrderedPRem'] = None
+        request.session['OrderPname'] = None
+        request.session['manufacturer'] = None
+        request.session['Order'] = None
+        request.session['addedproduct'] = None
 
-        request.session['NAVIGATE'] = "users"
+    request.session['NAVIGATE'] = "users"
 
-        AllOrders = FinalOrder.objects.filter(Finished = False)
+    AllOrders = FinalOrder.objects.filter(Finished = False)
 
-        return render(request, 'Inventory/users2.html',{
-            'C' : condition,
+    return render(request, 'Inventory/users2.html',{
+            'C' : True,
             'Orders' : AllOrders,
         })
 
-def ProdsinOrder(request, pk):
-    condition = True
+'''def ProdsinOrder(request, pk):
     Ordered = OrderedProduct.objects.filter(OrderID = pk)
     empty = len(Ordered) == 0
     return render(request, 'Inventory/ProductsinOrder.html',{
-        'C' : condition,
+        'C' : True,
         'Ordered' : Ordered,
         'e' : empty
-    })
+    })'''
 
+def ShowComplete(request):
+    condition = True
+    use = 'complete'
+    DoneOrders = FinalOrder.objects.filter(Finished = True).order_by('-pk')
+    OrderedP = OrderedProduct.objects.all()
+    if request.user.is_authenticated:
+        pass
+        return render(request, 'Inventory/products.html',{
+            'use' : use,
+            'C' : condition,
+            'O' : DoneOrders,
+            'Ord' : OrderedP
+        })
 
-
-
-def logout(request):
-    print('logout')
-    auth.logout(request)
-    return redirect('Login')
 
 def Info(request,pk):
     condition = ""
@@ -459,8 +477,13 @@ def Info(request,pk):
             'P' : CurrentProd
 
         })
-def Edit(request,pk):
-    condition = ""
+    
+
+'''
+Information about the App or related
+'''
+def Developer(request):
+    condition = ''
     if request.user.is_authenticated:
         condition = True
 
@@ -474,11 +497,21 @@ def Edit(request,pk):
             request.session['Order'] = None
             request.session['addedproduct'] = None
 
-        return render(request,'Inventory/edit.html',{
+        return render(request,'Inventory/programmer.html',{
             'C' : condition
         })
+    else:
+        condition = False
+        return render(request,'Inventory/programmer.html',{
+            'C' : condition
+        })
+    
 
-def VerifID(request): #use for both FinalOrder and OrderedProduct, tanggalin letters
+    
+#Data Generation Section
+
+#Creates a randomized ID with a length of 13 consisting of letters and integers
+def VerifID(request): 
     ID = []
     for x in range(13):
         chooser = random.randint(1,2)
@@ -494,7 +527,8 @@ def VerifID(request): #use for both FinalOrder and OrderedProduct, tanggalin let
     word = ''.join(ID)
     return word
 
-def VerifBL(request): #use for both FinalOrder and OrderedProduct
+#Similar to VerifID, but the length is 20
+def VerifBL(request): 
     ID = []
     for x in range(20):
         chooser = random.randint(1,2)
@@ -510,41 +544,52 @@ def VerifBL(request): #use for both FinalOrder and OrderedProduct
     word = ''.join(ID)
     return word
 
-'''
-At this point, Creating an order and an ordered product will cause the following:
-'''
 
+
+# Order Management Section
+'''
+First phase of Order creation
+- This contains the user's input for Product and remarks that will be available so that the next
+phase of order creation will display data based on the the first phase's input
+
+- Request data are initialized for the second phase to adapt to the request data
+'''
 def CreateOrder(request):
-    condition = ""
     status = ""
-    if request.user.is_authenticated:
-        condition = True
-        Orders = FinalOrder.objects.filter(Finished = False)
-        Products = Product.objects.filter(Stock__gte = 1).filter(Status = True)
-   
-        if request.method == "POST":
-            OrderNum = request.POST.get('Order')
-            if request.POST.get('proddrop') == "":
-                messages.info(request,"Choose a product!")
-                return redirect('createorder')
-            
-            
-            request.session['Order'] = OrderNum
-            request.session['rem'] = request.POST.get('rem')
-            request.session['productname'] = request.POST.get('proddrop')
-            ChosenProduct = get_object_or_404(Product, Name = request.session['productname'])
-            return redirect('confirmcreateorder', pk=ChosenProduct.pk)
-            
-            
+    condition = True
+    Orders = FinalOrder.objects.filter(Finished = False)
+    Products = Product.objects.filter(Stock__gte = 1).filter(Status = True)
 
-        else:
-            return render(request,'Inventory/MakeOrder.html',{ 
-                'O' : Orders,
-                'P' : Products,
-                'C' : condition,
-                'status' : status
-            })
+    if request.method == "POST":
+        OrderNum = request.POST.get('Order')
+        if request.POST.get('proddrop') == "":
+            messages.info(request,"Choose a product!")
+            return redirect('createorder')
         
+        
+        request.session['Order'] = OrderNum
+        request.session['rem'] = request.POST.get('rem')
+        request.session['productname'] = request.POST.get('proddrop')
+        ChosenProduct = get_object_or_404(Product, Name = request.session['productname'])
+        print(request.session['rem'])
+        return redirect('confirmcreateorder', pk=ChosenProduct.pk)
+        
+        
+
+    else:
+        return render(request,'Inventory/MakeOrder.html',{ 
+            'O' : Orders,
+            'P' : Products,
+            'C' : condition,
+            'status' : status
+        })
+    
+'''
+This is the alternative of the first phase of order creation
+- This function will occur if you're adding a product to an existing order 
+(Adding OrderedProduct object to FinalOrder object)
+- Identical functionalities and fields as the CreateOrder() function
+'''
 def AddtoOrder(request,pk):
     condition = True
     status = 'adding'
@@ -572,151 +617,178 @@ def AddtoOrder(request,pk):
             'prods' : Prods,
             'pk' : Order.pk
         })
-    
 
+'''
+This is the second phase of Order Creation
+- Data is queried based on the request data and primary key of the 1st order creation phase
+- This is where the OrderedProduct and Final Order will be initialized
+- 2 Scenarios:
+    1. Confirming an Order creation from a brand new order (Final Order object)
+    2. Adding an OrderedProduct to an already existing Final Order
 
+- if scenario is 1, then:
+    - HTML will automatically detect that the clerk is confirming a brand new order
+    - You will see that the Chosen product and its price will appear
+    - Quantity available to be chosen will be based on the database's query on available stock of the product
+    - Fields for Consignee name, quantity to be ordered, and remarks will appear
+    - Timezone will be set to Taipei/Asia so that the Final Order object's time will be based on that
+    - You will have to fill up Consignee name since this is a brand new order
+
+- if scenario is 2, then:
+    - Data displayed will be the same as scenario 1, but you cannot edit Consignee name since the order
+    has already been initialized
+    - When submitting this, the ordered product will be created and will be added under the order that you're
+    adding an ordered product with
+'''
 def ConfirmOrder(request,pk):
-    remarks = request.session.get('Remarks') #remarks
+    remarks = request.session.get('rem') #remarks
     ChosenProduct = get_object_or_404(Product, pk=pk) #product
     stock = ChosenProduct.Stock
     stocka = []
-    condition = ""
 
     for i in range(1,stock+1):
         stocka.append(i)
-    if request.user.is_authenticated:
-        condition = True
-        request.session['NAVIGATE'] = "confirmorder"
 
-        #If coming from adding a product to an order
-        if request.session.get('addedproduct') == 'addedproduct':
-            status = 'adding'
-            order = request.session.get('pk')
-            ChosenOrder = get_object_or_404(FinalOrder, pk=order)
-            if request.method == 'POST':
-                if request.POST.get('Back') == "Back":
-                    print('GOING BACK')
-                    return redirect('addtoorder', pk=order)
-                
-                q = request.POST.get('drop')
-                Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
-                Cost = Decimal(Cost)
-                rem = request.POST.get('Description')
+    request.session['NAVIGATE'] = "confirmorder"
 
-                if str(rem).strip() == "":
-                    remarks = "No remarks"
-                else:
-                    remarks = rem
+    #If coming from adding a product to an order, scenario 2
+    if request.session.get('addedproduct') == 'addedproduct':
+        status = 'adding'
+        order = request.session.get('pk')
+        ChosenOrder = get_object_or_404(FinalOrder, pk=order)
+        if request.method == 'POST':
+            if request.POST.get('Back') == "Back":
+                print('GOING BACK')
+                return redirect('addtoorder', pk=order)
+            
+            q = request.POST.get('drop')
+            Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
+            Cost = Decimal(Cost)
+            rem = request.POST.get('Description')
 
-                NewOrderProduct = OrderedProduct.objects.create(
-                    OrderedProductID = VerifID(request),
-                    OrderID = ChosenOrder,
-                    Marks = ChosenProduct, 
-                    remarks = remarks, 
-                    quantity = q, 
-                    totalcost = Cost, 
-                    )
-                
-                NewOrderProduct.save()
-
-                ChosenOrder.TotalCost += Cost
-                ChosenOrder.save()
-
-                if request.POST.get('More') == "More":
-                    print('MORE')
-                    return redirect('addtoorder', pk=order)
-                    
-                else:
-                    return redirect('UnfTrans', pk=order)
-
-
-
+            if str(rem).strip() == "":
+                remarks = "No remarks"
             else:
-                return render(request, 'Inventory/confirmcreateorder.html',{
-                    'C' : condition,
-                    'status' : status,
-                    'OrderedP' : ChosenProduct,
-                    'stocka' : stocka,
-                    'Order' : ChosenOrder,
-                })
-        
-        #Coming from confirming a new order
+                remarks = rem
+
+            NewOrderProduct = OrderedProduct.objects.create(
+                OrderedProductID = VerifID(request),
+                OrderID = ChosenOrder,
+                Marks = ChosenProduct, 
+                remarks = remarks, 
+                quantity = q, 
+                totalcost = Cost, 
+                )
+            
+            NewOrderProduct.save()
+
+            ChosenOrder.TotalCost += Cost
+            ChosenOrder.save()
+
+            if request.POST.get('More') == "More":
+                print('MORE')
+                return redirect('addtoorder', pk=order)
+                
+            else:
+                return redirect('UnfTrans', pk=order)
+
+
+
         else:
-            status = 'confirming'
-            if request.method == "POST":
-                if request.POST.get('Back') == "Back":
-                    print('GOING BACK')
-                    request.session['Order'] = None
-                    request.session['productname'] = None
-                    request.session['Remarks'] = None
-                    return redirect('createorder')
+            return render(request, 'Inventory/confirmcreateorder.html',{
+                'C' : True,
+                'status' : status,
+                'OrderedP' : ChosenProduct,
+                'stocka' : stocka,
+                'Order' : ChosenOrder,
+                'remarks' : remarks
+            })
+    
+    #Coming from confirming a new order, or Scenario 1
+    else:
+        status = 'confirming'
+        if request.method == "POST":
+            if request.POST.get('Back') == "Back":
+                print('GOING BACK')
+                request.session['Order'] = None
+                request.session['productname'] = None
+                request.session['Remarks'] = None
+                return redirect('createorder')
 
-                q = request.POST.get('drop')
-                Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
-                Person = request.POST.get('Person')
+            q = request.POST.get('drop')
+            Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
+            Person = request.POST.get('Person')
 
-                if str(Person).strip() == '' or str(Person).strip() == "Type new Consignee Name":
-                    messages.info(request,"No proper fields for Consignee")
-                    return redirect('confirmcreateorder', pk)
+            if str(Person).strip() == '' or str(Person).strip() == "Type new Consignee Name":
+                messages.info(request,"No proper fields for Consignee")
+                return redirect('confirmcreateorder', pk)
 
-            
-                Cost = Decimal(Cost)
-            
-                #Final Order Section         
-                NewConsign = Consignee.objects.create(
-                        BL = VerifBL(request),
-                        Name = Person,
-                    )
-                NewConsign.save()
+        
+            Cost = Decimal(Cost)
+        
+            #Final Order Section         
+            NewConsign = Consignee.objects.create(
+                    BL = VerifBL(request),
+                    Name = Person,
+                )
+            NewConsign.save()
 
-                timezone.activate('Asia/Taipei')
+            timezone.activate('Asia/Taipei')
 
-                NewOrder = FinalOrder.objects.create(
-                        Verification = VerifID(request),
-                        BL = NewConsign,
-                        NumOfBL = 3,
-                        Time = timezone.localtime()
-                    )
+            NewOrder = FinalOrder.objects.create(
+                    Verification = VerifID(request),
+                    BL = NewConsign,
+                    NumOfBL = 3,
+                    Time = timezone.localtime()
+                )
 
-                NewOrder.TotalCost += Cost
-                NewOrder.PD()
-                ChosenOrder = NewOrder
-                    
-                #Ordered Product Section
-                remarks = request.POST.get('Description')
-
-                if str(remarks).strip() == "":
-                    remarks = "No remarks"
-
-                NewOrderProduct = OrderedProduct.objects.create(
-                    OrderedProductID = VerifID(request),
-                    OrderID = ChosenOrder,
-                    Marks = ChosenProduct, 
-                    remarks = remarks, 
-                    quantity = q, 
-                    totalcost = Cost, 
-                    )
+            NewOrder.TotalCost += Cost
+            NewOrder.PD()
+            ChosenOrder = NewOrder
                 
-                NewOrderProduct.save()
+            #Ordered Product Section
+            remarks = request.POST.get('Description')
 
-                if request.POST.get('More') == "More":
-                    print('MORE')
-                    return redirect('createorder')
-                    
-                else:
-                    return redirect('Products')
+            if str(remarks).strip() == "":
+                remarks = "No remarks"
 
-        
+            NewOrderProduct = OrderedProduct.objects.create(
+                OrderedProductID = VerifID(request),
+                OrderID = ChosenOrder,
+                Marks = ChosenProduct, 
+                remarks = remarks, 
+                quantity = q, 
+                totalcost = Cost, 
+                )
+            
+            NewOrderProduct.save()
+
+            if request.POST.get('More') == "More":
+                print('MORE')
+                return redirect('createorder')
+                
             else:
-                return render(request,'Inventory/confirmcreateorder.html',{
-                    'OrderedP' : ChosenProduct,
-                    'C' : condition,
-                    'stocka' : stocka,
-                    'Rem' : remarks,
-                    'status' : status
-                    })
-        
+                return redirect('Products')
 
+    
+        else:
+            remarks = request.session.get('rem')
+            return render(request,'Inventory/confirmcreateorder.html',{
+                'OrderedP' : ChosenProduct,
+                'C' : True,
+                'stocka' : stocka,
+                'remarks' : remarks,
+                'status' : status
+                })
+    
+        
+'''
+Completing phase of an order
+- This will confirm the order (FinalOrder object), including the OrderedProduct objects within the order
+- certain fields can be null, but not all can be null
+- If the OrderedProducts of a FinalOrder has a quantity sum greater than the available stock of a certain
+product, then an error will pop up, and it will show in the view/edit section of an order in "Pending Orders"
+'''
 def CompleteOrder(request,pk):
     condition = True
     parties = NotifyParty.objects.all()
@@ -764,6 +836,7 @@ def CompleteOrder(request,pk):
             hashmap = {}
 
             # O(n) algorithm as worst case 
+            # Hashmap will be used
 
             while i < len(OrderedProds):
                 prod = OrderedProds[i]
@@ -828,30 +901,11 @@ def CompleteOrder(request,pk):
             'n' : num
         })
 
-def ShowComplete(request):
-    condition = True
-    use = 'complete'
-    DoneOrders = FinalOrder.objects.filter(Finished = True).order_by('-pk')
-    OrderedP = OrderedProduct.objects.all()
-    if request.user.is_authenticated:
-        pass
-        return render(request, 'Inventory/products.html',{
-            'use' : use,
-            'C' : condition,
-            'O' : DoneOrders,
-            'Ord' : OrderedP
-        })
 
-def AddOrder(request):
-    if request.user.is_authenticated:
-        Order = FinalOrder.objects.create(
-            Verification = VerifID(request),
-            )
-        Order.PlaceDate = str(Order.Place) + ", " + str(Order.OrderDate) 
-        Order.save()
-        return Order
+
+#OrderedProduct Section
     
-    
+# Deleting of OrderedProduct obejct
 def DeleteTrans(request,pk):
     TobeDel = get_object_or_404(OrderedProduct, pk=pk)
     Order = get_object_or_404(FinalOrder, pk=TobeDel.OrderID.pk)
@@ -860,6 +914,14 @@ def DeleteTrans(request,pk):
     TobeDel.delete()
     return redirect('UnfTrans', pk=Order.pk)
 
+'''
+Interface to show the OrderedProducts within a order (FinalOrder)
+- if you came from confirming an order, but an error has been caused due to the the 
+OrderedProducts having a higher total sum quantity than a product/s's available stock, then
+you will see an error
+
+- Array was used to store data for a product and an integer that represents its error on quantity 
+'''
 def EditTrans(request, pk):
     condition = ""
     Order = get_object_or_404(FinalOrder, pk=pk)
@@ -896,8 +958,13 @@ def EditTrans(request, pk):
                     })
    
 
-#This will lead to the confirm order page, where quantity, product price, and others will be updated to confirm change in transaction
-#Ito para sa akin yung pinakamahirap na ginawa ko so far for this project. I needed to simulate a UX case na walang pipiliing dropdown option ang user.
+'''
+First phase of editing an OrderedProduct
+- Similar to first phase of Order creation, fields for this phase will be used to get user data
+that will determine what data will be displayed on the second phase
+- The OrderedProduct to be edited is already determined
+- We get the data for Product name and remarks
+'''
 def ChangeTrans(request,pk):
     condition = ""
     ChosenTrans = get_object_or_404(OrderedProduct, pk=pk)
@@ -940,6 +1007,12 @@ def ChangeTrans(request,pk):
             })
 
 
+'''
+Second phase of editing an OrderedProduct
+- Similar to how orders are confirmed, the data from the first phase of editing an orderedproduct
+will be fetched from the database to be displayed on this second phase
+
+'''
 def ConfirmTrans(request,pk):
     ChosenTrans = get_object_or_404(OrderedProduct, pk=request.session.get('OrderedPRem')) #Orderedproduct
     orderprodname = request.session.get('OrderPname') #Orderedproductpk
@@ -987,30 +1060,8 @@ def ConfirmTrans(request,pk):
                 'Rem' : remarks,
             })
           
-    
-def Developer(request):
-    condition = ''
-    if request.user.is_authenticated:
-        condition = True
 
-        if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
-            print('DELETED CACHE')
-            request.session['Remarks'] = None
-            request.session['productname'] = None
-            request.session['OrderedPRem'] = None
-            request.session['OrderPname'] = None
-            request.session['manufacturer'] = None
-            request.session['Order'] = None
-            request.session['addedproduct'] = None
 
-        return render(request,'Inventory/programmer.html',{
-            'C' : condition
-        })
-    else:
-        condition = False
-        return render(request,'Inventory/programmer.html',{
-            'C' : condition
-        })
 
 
     
