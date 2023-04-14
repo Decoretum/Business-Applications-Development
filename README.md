@@ -32,15 +32,25 @@ install packages and depencies for a <b> certain </b> project without worrying i
 conflict with your global packages! <br>
 
 Open up the directory of the project, but be sure you're outside of the "SalesApp" directory. Once you're in this directory, type: <br>
-python3 -m venv EnvironmentName <br>
+```bash
+python3 -m venv EnvironmentName 
+``` 
+<br>
 wherein "EnvironmentName" could be any name you want. <br>
 
 
 <h1> Running the Server </h1>
 Enter the directory of the virtual environment folder that you've created. <br>
 Activate the Pyton virtual environment by typing: <br>
-source/bin/activate (for macOS devices) <br>
-Scripts/activate (for Windows devices greater than 7 and 8)
+For MacOS devices: <br>
+```bash
+source/bin/activate <br>
+``` <br>
+
+```bash
+Scripts/activate
+``` <br>
+for Windows devices greater than 7 and 8)
 
 After activation, run it as follows: <br>
 pip install -r requirements.txt <br><br>
