@@ -44,12 +44,13 @@ Enter the directory of the virtual environment folder that you've created. <br>
 Activate the Pyton virtual environment by typing: <br>
 For MacOS devices: <br>
 ```bash
-source/bin/activate <br>
+source/bin/activate 
 ``` <br>
 
 ```bash
 Scripts/activate
-``` <br>
+``` 
+<br>
 for Windows devices greater than 7 and 8)
 
 After activation, run it as follows: <br>
