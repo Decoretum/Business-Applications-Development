@@ -82,7 +82,7 @@
         {% for o in O %}
         <div class="container">
             <div class="Largetext"> Order {{o.pk}} </div>
-            <table id="tab" style="text-align: center; width: 45vw; max-width: 100%; margin-right: 1vw; word-break: break-word;">
+            <table id="tab" style="text-align: center; width: 45vw; max-width: 100%; border-width: 2px; margin-right: 1vw; word-break: break-word;">
                 <tr>
                     <th> <b>Order ID</b>: {{o.Verification}} </th>
                     <th> <b>Order Total Cost</b>: {{o.TotalCost}} </th> 
@@ -108,8 +108,8 @@
                     <th> <b>Port of Discharge</b>: {{o.Portdis}} </th>
                 </tr>
                 <tr>
-                    <th> <b>Notify Party</b>: {{o.NotifyName.Name}} </th>
-                    <th> <b>Notify Party Address</b>: {{o.NotifyName.Address}} </th>
+                    <th style="border-bottom-left-radius: 9px;"> <b>Notify Party</b>: {{o.NotifyName.Name}} </th>
+                    <th style="border-bottom-right-radius: 9px;"> <b>Notify Party Address</b>: {{o.NotifyName.Address}} </th>
                 </tr>
             
                 <tr class="last">
@@ -161,7 +161,7 @@
 
             {% for p in Ord %}
                 {% if p.OrderID == o %}
-                <div class="container" id="sub" style="display: relative; max-height: fit-content;">
+                <div class="container" id="sub" style="display: relative; max-height: fit-content; box-shadow: none;">
                     <img src="{{p.Marks.Image.url}}" class="image" style="padding: 20px; max-width: 100%; position: absolute; right: 0vw; top: -0.3vh; border-radius: 9px; border: solid aliceblue; background-color: aliceblue;">
                     <div class="bodytext">
                         <span><b> Ordered Product ID: {{p.OrderedProductID}} </b></span> <br>
@@ -177,14 +177,18 @@
             {% endfor %}
         </div> <br><br>
         <style>
+
             tr > th{
                 max-width: 100%;
                 width: 38vw;
                 word-wrap: break-word;
                 margin-top: 5vh;
                 font-weight: 200;
-                border: solid 2px;
                 padding: 15px;
+            }
+
+            tr > th:nth-child(2){
+                border-left: solid 1px;
             }
 
             .last{
@@ -198,6 +202,14 @@
 
             tr:nth-child(even):not(.last){
                 background-color: rgb(248, 237, 227);
+            }
+
+            tr:first-child th:first-child{
+                border-top-left-radius: 9px;
+            }
+
+            tr:first-child th:nth-child(2){
+                border-top-right-radius: 9px;
             }
         </style>
         {% endfor %}
@@ -225,7 +237,7 @@
         }
         
         #sub{
-            background-color: rgb(248, 237, 227);
+            background-color: rgb(238, 238, 238);
             margin: auto;
         }
 
@@ -276,7 +288,7 @@
 
     if (coveredsum === sum){
         //console.log(tbody.childNodes[1])
-        console.log(header.childNodes)
+        //console.log(header.childNodes)
         tbody.style.borderRadius = "9px";
         tbody.childNodes[1].style.borderRadius = "9px";
         header.innerHTML = "<div style='background-color : azure;'> No results! </div>";

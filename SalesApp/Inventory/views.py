@@ -837,8 +837,11 @@ def CompleteOrder(request,pk):
             i = 0
             hashmap = {}
 
-            # O(n) algorithm as worst case 
-            # Hashmap will be used
+            '''
+            O(n) algorithm as worst case 
+            Hashmap will be used in order to store data for every specific product
+            that OrderedProducts would contain, no matter how few or many OrderedProducts there is
+            '''
 
             while i < len(OrderedProds):
                 prod = OrderedProds[i]
@@ -854,6 +857,12 @@ def CompleteOrder(request,pk):
 
                 i = i + 1
 
+            '''
+            A negative value in a hashmap would mean that the total quantity sum of a product in
+            the entirety of a FinalOrder is greater than number of Stock available for that product 
+            ''' 
+
+            #O(n) algorithm
             for val in hashmap.values():
                 if val < 0:
                     outcome = False
