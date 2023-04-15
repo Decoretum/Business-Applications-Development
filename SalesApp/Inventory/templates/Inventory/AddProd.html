@@ -44,10 +44,10 @@
 
             <br><br>
 
-            <span class="Largetext"> Stock </span> <span class="bodytext" id="stocknote"> </span> 
+            <span class="Largetext"> Stock </span> <span class="bodytext" id="stocknote" name="stocknote"> </span> 
             <br><br>
             
-            <input type="number" class="forminput" name="Stock" id="Stock"> 
+            <input type="text" class="forminput" name="Stock" id="Stock"> 
                {% for m in messages %}
                     {% if m.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <p style="color: red;" {% if m.tag == 'error' %} class="{{m.tags}}" {% endif %}> {{m}}</p> {% endif %}
                 {% endfor %}
@@ -89,13 +89,15 @@
         let s = document.getElementById('Stock')
         let snote = document.getElementById('stocknote');
         s.addEventListener('keyup',(e)=>{
-            if (Number(s.value) <= 0){
+
+            if (!Number.isInteger(Number(s.value)) || Number(s.value) === NaN || s.value.includes(".")){
+                snote.innerHTML = "Not an integer!";
+            }
+
+            else if (Number(s.value) <= 0 && s.value !== ""){
                 snote.innerHTML = "Stock cannot be less than 0!";
             }
 
-            else if (!Number.isInteger(Number(s.value)) || s.value.includes(".")){
-                snote.innerHTML = "Not an integer!";
-            }
 
             else{
                 snote.innerHTML = "";
@@ -111,14 +113,13 @@
                 cnote.innerHTML = "";
             }
 
-            else if (isNaN(c.value.slice(0))){
+            else if (isNaN(c.value)){
                 cnote.innerHTML = "Not an integer/float"
-            }
+            }   
 
-            else if (Number(c.value.slice(0)) <= 0){
+            else if (Number(c.value) <= 0){
                 cnote.innerHTML = "Stock cannot be less than or equal to 0!";
             }
-
 
             else{
                 cnote.innerHTML = "";
