@@ -28,6 +28,8 @@
             <br>
 
             {% endif %}
+
+        {% if L > 0 %}
         
         <table style="font-style: normal; font-weight: normal;" class="Frame" id="products">
             <tr class="identify"> 
@@ -74,110 +76,117 @@
             </table>
             <br><br>
 
+        {% else %}
+            {% if C == True %}
+                <div class="container" style="padding: 20px; margin-top: 5vh;"> No products registered. &nbsp Add Products now! </div>
+            {% elif C == False %}
+                <div class="container" style="padding: 20px; margin-top: 5vh;"> No products registered &nbsp  Login to add Products! </div>
+            {% endif %}
+        {% endif %}
+
     {% elif use == 'complete' %}
         {% if C == True %}
 
         <br><br><br>
-
+        {% if L > 0%}
         {% for o in O %}
-        <div class="container">
-            <div class="Largetext"> Order {{o.pk}} </div>
-            <table id="tab" style="text-align: center; width: 45vw; max-width: 100%; border-width: 2px; margin-right: 1vw; word-break: break-word;">
-                <tr>
-                    <th> <b>Order ID</b>: {{o.Verification}} </th>
-                    <th> <b>Order Total Cost</b>: {{o.TotalCost}} </th> 
-                </tr>
-                <tr>
-                    <th> <b>Order Place & Date of Issue</b>: {{o.PlaceDate}} </th>
-                    <th> <b>Number of B/L</b>: {{o.NumOfBL}} </th>
-                </tr>
-                <tr>
-                    <th> <b>Consignee</b>: {{o.BL.Name}} </th>
-                    <th> <b>Consignee ID</b>: {{o.BL.BL}} </th>
-                </tr>
-                <tr>
-                    <th> <b>Shipper Company</b>: {{o.ShipperName}} </th>
-                    {% if o.Prepaid == 'Yes' %}
-                    <th> <b>Prepaid</b>: Yes </th>
-                    {% else %}
-                    <th> <b>Collect</b>: Yes </th>
+            <div class="container">
+                <div class="Largetext"> Order {{o.pk}} </div>
+                <table id="tab" style="text-align: center; width: 45vw; max-width: 100%; border-width: 2px; margin-right: 1vw; word-break: break-word;">
+                    <tr>
+                        <th> <b>Order ID</b>: {{o.Verification}} </th>
+                        <th> <b>Order Total Cost</b>: {{o.TotalCost}} </th> 
+                    </tr>
+                    <tr>
+                        <th> <b>Order Place & Date of Issue</b>: {{o.PlaceDate}} </th>
+                        <th> <b>Number of B/L</b>: {{o.NumOfBL}} </th>
+                    </tr>
+                    <tr>
+                        <th> <b>Consignee</b>: {{o.BL.Name}} </th>
+                        <th> <b>Consignee ID</b>: {{o.BL.BL}} </th>
+                    </tr>
+                    <tr>
+                        <th> <b>Shipper Company</b>: {{o.ShipperName}} </th>
+                        {% if o.Prepaid == 'Yes' %}
+                        <th> <b>Prepaid</b>: Yes </th>
+                        {% else %}
+                        <th> <b>Collect</b>: Yes </th>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <th> <b>Port of Loading</b>: {{o.Portload}} </th>
+                        <th> <b>Port of Discharge</b>: {{o.Portdis}} </th>
+                    </tr>
+                    <tr>
+                        <th style="border-bottom-left-radius: 9px;"> <b>Notify Party</b>: {{o.NotifyName.Name}} </th>
+                        <th style="border-bottom-right-radius: 9px;"> <b>Notify Party Address</b>: {{o.NotifyName.Address}} </th>
+                    </tr>
+                
+                    <tr class="last">
+                        <th class="last" style="padding-top: 50px; background-color: transparent;"> Additional Information: </th>
+                    </tr>
+                    {% if o.OceanVessel != "" %}
+                    <tr class="last">
+                        <th class="last"> <b>Ocean Vessel</b>: {{o.OceanVessel}} </th>
+                    </tr>
                     {% endif %}
-                </tr>
-                <tr>
-                    <th> <b>Port of Loading</b>: {{o.Portload}} </th>
-                    <th> <b>Port of Discharge</b>: {{o.Portdis}} </th>
-                </tr>
-                <tr>
-                    <th style="border-bottom-left-radius: 9px;"> <b>Notify Party</b>: {{o.NotifyName.Name}} </th>
-                    <th style="border-bottom-right-radius: 9px;"> <b>Notify Party Address</b>: {{o.NotifyName.Address}} </th>
-                </tr>
-            
-                <tr class="last">
-                    <th class="last" style="padding-top: 50px; background-color: transparent;"> Additional Information: </th>
-                </tr>
-                {% if o.OceanVessel != "" %}
-                <tr class="last">
-                    <th class="last"> <b>Ocean Vessel</b>: {{o.OceanVessel}} </th>
-                </tr>
-                {% endif %}
 
-                {% if o.LocalVessel != "" %}
-                <tr class="last">
-                    <th class="last"> <b>Local Vessel</b>: {{o.LocalVessel}} </th>
-                </tr>
-                {% endif %}
+                    {% if o.LocalVessel != "" %}
+                    <tr class="last">
+                        <th class="last"> <b>Local Vessel</b>: {{o.LocalVessel}} </th>
+                    </tr>
+                    {% endif %}
 
-                {% if o.LocalVesselOrigin != "" %}
-                <tr class="last">
-                    <th class="last"> <b>Ocean Vessel</b>: {{o.LocalVesselOrigin}} </th>
-                </tr>
-                {% endif %}
+                    {% if o.LocalVesselOrigin != "" %}
+                    <tr class="last">
+                        <th class="last"> <b>Ocean Vessel</b>: {{o.LocalVesselOrigin}} </th>
+                    </tr>
+                    {% endif %}
 
-                {% if o.PayAt != "" %}
-                <tr class="last">
-                    <th class="last"> <b>Payable At</b>: {{o.PayAt}} </th>
-                </tr>
-                {% endif %}
+                    {% if o.PayAt != "" %}
+                    <tr class="last">
+                        <th class="last"> <b>Payable At</b>: {{o.PayAt}} </th>
+                    </tr>
+                    {% endif %}
 
-                {% if o.Charges != "" %}
-                <tr class="last">
-                    <th class="last"> <b>Charges</b>: {{o.Charges}} </th>
-                </tr>
-                {% endif %}
+                    {% if o.Charges != "" %}
+                    <tr class="last">
+                        <th class="last"> <b>Charges</b>: {{o.Charges}} </th>
+                    </tr>
+                    {% endif %}
 
-                {% if o.RevTons != "" %}
-                <tr class="last">
-                    <th class="last"> <b>Revenue Tons</b>: {{o.RevTons}} </th>
-                </tr>
-                {% endif %}
+                    {% if o.RevTons != "" %}
+                    <tr class="last">
+                        <th class="last"> <b>Revenue Tons</b>: {{o.RevTons}} </th>
+                    </tr>
+                    {% endif %}
 
-                {% if o.Rate != "" %}
-                <tr class="last">
-                    <th class="last"> <b>Rate</b>: {{o.Rate}} </th>
-                </tr>
-                {% endif %}
+                    {% if o.Rate != "" %}
+                    <tr class="last">
+                        <th class="last"> <b>Rate</b>: {{o.Rate}} </th>
+                    </tr>
+                    {% endif %}
 
-            </table> <br><br>
+                </table> <br><br>
 
-            {% for p in Ord %}
-                {% if p.OrderID == o %}
-                <div class="container" id="sub" style="display: relative; max-height: fit-content; box-shadow: none;">
-                    <img src="{{p.Marks.Image.url}}" class="image" style="padding: 20px; max-width: 100%; position: absolute; right: 0vw; top: -0.3vh; border-radius: 9px; border: solid aliceblue; background-color: aliceblue;">
-                    <div class="bodytext">
-                        <span><b> Ordered Product ID: {{p.OrderedProductID}} </b></span> <br>
-                        <span> Product Name: {{p.Marks.Name}} </span><br>
-                        <span> Quantity: {{p.quantity}} </span><br>
-                        <span> Total Cost: ${{p.totalcost}} </span><br>
-                        <span style="display: flex; flex-wrap: wrap; word-break: break-word; max-width: 30vw;"> Remarks: {{p.remarks}} </span>
+                {% for p in Ord %}
+                    {% if p.OrderID == o %}
+                    <div class="container" id="sub" style="display: relative; max-height: fit-content; box-shadow: none;">
+                        <img src="{{p.Marks.Image.url}}" class="image" style="padding: 20px; max-width: 100%; position: absolute; right: 0vw; top: -0.3vh; border-radius: 9px; border: solid aliceblue; background-color: aliceblue;">
+                        <div class="bodytext">
+                            <span><b> Ordered Product ID: {{p.OrderedProductID}} </b></span> <br>
+                            <span> Product Name: {{p.Marks.Name}} </span><br>
+                            <span> Quantity: {{p.quantity}} </span><br>
+                            <span> Total Cost: ${{p.totalcost}} </span><br>
+                            <span style="display: flex; flex-wrap: wrap; word-break: break-word; max-width: 30vw;"> Remarks: {{p.remarks}} </span>
+                        </div>
+                        
                     </div>
-                    
-                </div>
-                <br>
-                {% endif %}
-            {% endfor %}
-        </div> <br><br>
+                    <br>
+                    {% endif %}
+                {% endfor %}
+            </div> <br><br>
         <style>
-
             tr > th{
                 max-width: 100%;
                 width: 38vw;
@@ -213,7 +222,9 @@
             }
         </style>
         {% endfor %}
-
+        {% else %}
+            <div class="container" style="padding: 20px;"> No confirmed orders yet</div>
+        {% endif %}
         {% endif %}
     {% endif %}
 

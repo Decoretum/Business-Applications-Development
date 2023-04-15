@@ -10,32 +10,39 @@
     <title>Document</title>
     {% block content %}
     <br><br>
-    <table style="font-style: normal;" class="Frame">
-        <tr class="identify"> 
-            <th style="border-top-left-radius: 9px;"> Order No. </th>
-            <th> Order Information </th>
-            <th> Products in Order </th>
-            <th style="border-top-right-radius: 9px;"> Confirm Order </th>
-        </tr>
+    {% if L > 0 %}
+        <table style="font-style: normal;" class="Frame">
+            <tr class="identify"> 
+                <th style="border-top-left-radius: 9px;"> Order No. </th>
+                <th> Order Information </th>
+                <th> Products in Order </th>
+                <th style="border-top-right-radius: 9px;"> Confirm Order </th>
+            </tr>
 
-        {% for o in Orders %}
-        <tr class="Header" id="main" style="font-weight: 100; font-family: Helvetica;">
-            <th id="firsty"> 
-                Order <b>{{o.pk}}</b> <br><br>
-            </th>
-            <th> Order ID: {{o.Verification}} <br><br>
-                Time of Issue: {{o.Time}} <br><br>
-                Place & Date of Issue: {{o.PlaceDate}} <br><br>
-                Consignee: {{o.BL.Name}} <br><br>
-                Consignee BL Number: {{o.BL.BL}} <br><br> 
-                Total Cost: ${{o.TotalCost}}
-            </th>
-            <th> <a class="Button" href="{% url 'UnfTrans' pk=o.pk %}" id="ViewProds"> View & Edit </a> </th>
-            <th id="lasty"> <a class="Button" style="width: 20vw;" href="{% url 'completeorder' pk=o.pk %}"> Confirm Order </a>
-            </th>
-        </tr>
-        {% endfor %}
-    </table>
+            {% for o in Orders %}
+            <tr class="Header" id="main" style="font-weight: 100; font-family: Helvetica;">
+                <th id="firsty"> 
+                    Order <b>{{o.pk}}</b> <br><br>
+                </th>
+                <th> Order ID: {{o.Verification}} <br><br>
+                    Time of Issue: {{o.Time}} <br><br>
+                    Place & Date of Issue: {{o.PlaceDate}} <br><br>
+                    Consignee: {{o.BL.Name}} <br><br>
+                    Consignee BL Number: {{o.BL.BL}} <br><br> 
+                    Total Cost: ${{o.TotalCost}}
+                </th>
+                <th> <a class="Button" href="{% url 'UnfTrans' pk=o.pk %}" id="ViewProds"> View & Edit </a> </th>
+                <th id="lasty"> <a class="Button" style="width: 20vw;" href="{% url 'completeorder' pk=o.pk %}"> Confirm Order </a>
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="container" style="padding: 20px;">
+            No pending orders yet!
+        </div>
+
+    {% endif %}
 
     <!-- This will be the pop-up divs of Ordered Products -->
 

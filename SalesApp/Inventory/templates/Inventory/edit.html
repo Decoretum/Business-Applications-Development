@@ -40,8 +40,11 @@
             <input type="text" class="forminput" name="Cost" id="Cost" value="{{Prod.Cost}}">
 
             {% for m in messages %}
-                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span {% if m.tags %} style="color: red;" class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <br><span {% if m.tags %} style="color: red;" class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
             {% endfor %}
+
+            <div class="Largetext"> Stock (Add amount to be restocked) </span> <span class="bodytext" id="costnote"> </div>
+            <input type="number" class="forminput" name="stock" id="stock" value=0>
 
             <div class="Largetext"> Product Description </div>
             <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> {{Prod.Description}} </textarea>
@@ -112,7 +115,7 @@
             right: 24.5vw;
             display: none;
             height: fit-content;
-            background-color: rgb(53, 192, 213);
+            background-color: rgb(58, 152, 185);
             max-width: 100%;
         }
 

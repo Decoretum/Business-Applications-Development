@@ -49,9 +49,9 @@
             </div>
         </div>
         <br>
-        <div class="container" id="tempbox" style="word-wrap: break-word; max-width: 100%; background-color:rgb(218, 198, 171);">
+        <div class="container" id="tempbox" style="word-wrap: break-word; max-width: 100%; background-color:rgb(238, 238, 238);">
             <div class="Largetext" style="font-family: Helvetica; font-weight: 200;"> Are you sure you sure you want to delete product: {{P.Name}}? </div>
-            <a class="Button" type="submit" id="temp" href="{% url 'deleteproduct' pk=P.pk %}"> Yes </a>
+            <a class="Button" type="submit" id="temp"  href="{% url 'deleteproduct' pk=P.pk %}"> Yes </a>
             <a class="Button" id="hideme"> No </a>
         </div>
     {% elif C == False %}

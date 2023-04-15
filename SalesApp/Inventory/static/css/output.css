@@ -515,6 +515,7 @@ video {
 html > *:not(.image){
   max-width: 100%;
   word-wrap: break-word;
+  word-break: break-word;
   /*background: rgb(70,103,154);
   background: linear-gradient(90deg, rgba(70,103,154,1) 11%, rgba(61,144,159,1) 52%, rgba(39,111,181,1) 60%);*/
   /*background-image: url('../pic/backy.jpeg');
@@ -528,7 +529,7 @@ html > *:not(.image){
 
 .Largetext{
   font-size: 25px;
-  font-family: Verdana;
+  font-family:Helvetica;
   margin-bottom: 1vh;
   padding: 15px;
 }

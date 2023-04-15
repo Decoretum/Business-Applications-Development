@@ -47,7 +47,7 @@
             <span class="Largetext"> Stock </span> <span class="bodytext" id="stocknote"> </span> 
             <br><br>
             
-            <input type="text" class="forminput" name="Stock" id="Stock"> 
+            <input type="number" class="forminput" name="Stock" id="Stock"> 
                {% for m in messages %}
                     {% if m.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <p style="color: red;" {% if m.tag == 'error' %} class="{{m.tags}}" {% endif %}> {{m}}</p> {% endif %}
                 {% endfor %}

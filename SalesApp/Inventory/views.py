@@ -78,9 +78,10 @@ in compensation for some performance
 '''
 def isDigit(request,num):
     try:
-        Decimal(num)
+        #type(result) == int or type(result) == Decimal 
+        "-" not in num and (Decimal(num) or int(num))
         return True
-    except ValueError:
+    except:
         return False
     
 
@@ -187,7 +188,7 @@ def AddProduct(request):
             messages.warning(request,"No negative costs or costs equal to 0")
             return redirect('addproduct')
  
-        elif stock == "" or stock == None or "." in stock or type(stock) == str or int(stock) <= 0:
+        elif stock == "" or stock == None or "." in stock or int(stock) <= 0:
             messages.error(request, 'Stock must not be blank, a decimal, or less than 0, or a string')
             return redirect('addproduct')
             
@@ -244,13 +245,14 @@ def EditProduct(request,pk):
         desc = request.POST.get('Description')
         meas = request.POST.get('Measurement')
         weight = request.POST.get('Weight')
+        stock = request.POST.get('stock')
 
         if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
             messages.info(request, 'You must fill out all the fields')
             return redirect('editproduct',pk)
 
         elif isDigit(request,num = str(cost[0:])) == False:
-            messages.warning(request,"Input cost was not a number")
+            messages.warning(request,"Input cost was not a valid number")
             return redirect('editproduct', pk)
 
         elif Decimal(cost[slice(0,len(cost))]) <= 0:
@@ -261,7 +263,8 @@ def EditProduct(request,pk):
 
         if imgfile != None:
             Existing.Image = imgfile
-            
+        
+        Existing.Stock += int(stock)
         Existing.Measurement = meas
         Existing.GrossWeight = weight
         Existing.Manufacturer = manufacturer
@@ -293,7 +296,8 @@ def delProduct(request,pk):
 def Products(request):
     use = 'home'
     User = Userperson.objects.all()
-    P = Product.objects.filter(Stock__gte = 1).filter(Status = True).order_by('-Stock')
+    P = Product.objects.order_by('-Stock')
+    length = len(P)
     if request.user.is_authenticated:
         condition = True
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
@@ -312,7 +316,8 @@ def Products(request):
             'P':P, 
             'User':User,
             'username' : request.session['user'],
-            'use' : use
+            'use' : use,
+            'L' : length
             })
     else:
         condition = False   
@@ -321,7 +326,8 @@ def Products(request):
             'P':P, 
             'User':User,
             #'url':settings.MEDIA_URL,
-            'use' : use
+            'use' : use,
+            "L" : length
             })
     
 
@@ -420,10 +426,12 @@ def ShowProds(request):
     request.session['NAVIGATE'] = "users"
 
     AllOrders = FinalOrder.objects.filter(Finished = False)
+    length = len(AllOrders)
 
     return render(request, 'Inventory/users2.html',{
             'C' : True,
             'Orders' : AllOrders,
+            'L' : length
         })
 
 '''def ProdsinOrder(request, pk):
@@ -440,13 +448,15 @@ def ShowComplete(request):
     use = 'complete'
     DoneOrders = FinalOrder.objects.filter(Finished = True).order_by('-pk')
     OrderedP = OrderedProduct.objects.all()
+    length = len(DoneOrders)
     if request.user.is_authenticated:
         pass
         return render(request, 'Inventory/products.html',{
             'use' : use,
             'C' : condition,
             'O' : DoneOrders,
-            'Ord' : OrderedP
+            'Ord' : OrderedP,
+            'L' : length
         })
 
 
@@ -455,7 +465,6 @@ def Info(request,pk):
     CurrentProd = get_object_or_404(Product, pk=pk)
     if request.user.is_authenticated:
         condition = True
-
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
             print('DELETED CACHE')
             request.session['Remarks'] = None
@@ -845,15 +854,16 @@ def CompleteOrder(request,pk):
 
             while i < len(OrderedProds):
                 prod = OrderedProds[i]
-                if prod.Marks.Name in hashmap:
+                prodobj = prod.Marks
+                if prodobj.Name in hashmap:
                     ''' If the product name exists in the hashmap, then we will simply update their value,
                     but we will retain the old value in order to update'''
-                    old = hashmap[prod.Marks.Name]
-                    hashmap.update({prod.Marks.Name: old - prod.quantity})
+                    old = hashmap[prodobj.Name]
+                    hashmap.update({prodobj.Name: old - prod.quantity})
                 else:
                     ''' If product name doesn't exist yet in the hashmap, then we will
                     create a new key-value for it '''
-                    hashmap.update({prod.Marks.Name: prod.Marks.Stock - prod.quantity })
+                    hashmap.update({prodobj.Name: prodobj.Stock - prod.quantity })
 
                 i = i + 1
 
@@ -874,11 +884,11 @@ def CompleteOrder(request,pk):
         
          
             else:
-                #O(n) algorithm
-                for item in OrderedProds:
-                    item.Marks.Stock -= item.quantity
-                    item.Marks.save()
-                    item.save()
+                #O(n) algorithm, very efficient
+                for name in hashmap.keys():
+                    product = get_object_or_404(Product, Name = name)
+                    product.Stock = hashmap[name]
+                    product.save()
 
             notifobject = get_object_or_404(NotifyParty, Name = notify)
             OrderDone.Portdis = portdis
@@ -903,7 +913,6 @@ def CompleteOrder(request,pk):
             OrderDone.Finished = True
 
             OrderDone.save()
-            print(OrderDone.pk)
             return redirect('Products2')
     else:
         return render(request, 'Inventory/finalize.html',{
