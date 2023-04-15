@@ -188,7 +188,7 @@ def AddProduct(request):
             messages.warning(request,"No negative costs or costs equal to 0")
             return redirect('addproduct')
  
-        elif stock == "" or stock == None or "." in stock or int(stock) <= 0:
+        elif stock == "" or stock == None or "." in stock or isDigit(request,num = str(stock)) == False or int(stock) <= 0:
             messages.error(request, 'Stock must not be blank, a decimal, or less than 0, or a string')
             return redirect('addproduct')
             
