@@ -49,7 +49,7 @@
             
             <input type="text" class="forminput" name="Stock" id="Stock"> 
                {% for m in messages %}
-                    {% if m.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <p style="color: red;" {% if m.tag == 'error' %} class="{{m.tags}}" {% endif %}> {{m}}</p> {% endif %}
+                    {% if m.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <p style="color: red; margin-left: 2vw;" {% if m.tag == 'error' %} class="{{m.tags}}" {% endif %}> {{m}}</p> {% endif %}
                 {% endfor %}
             <br><br>
 

@@ -179,17 +179,21 @@ def AddProduct(request):
             messages.info(request, 'You must fill out all the fields')
             return redirect('addproduct')
 
-        elif isDigit(request,num = str(cost[0:])) == False:
+        elif isDigit(request,num = str(cost)) == False:
             messages.warning(request,"Input cost was not a number")
             return redirect('addproduct')
 
 
-        elif Decimal(cost[slice(0,len(cost))]) <= 0:
+        elif Decimal(cost) <= 0:
             messages.warning(request,"No negative costs or costs equal to 0")
             return redirect('addproduct')
- 
-        elif stock == "" or stock == None or "." in stock or isDigit(request,num = str(stock)) == False or int(stock) <= 0:
-            messages.error(request, 'Stock must not be blank, a decimal, or less than 0, or a string')
+
+        elif isDigit(request, num = str(stock)) == False:
+            messages.error(request, "Stock cannot be text")
+            return redirect('addproduct')
+        
+        elif stock == "" or stock == None or "." in stock or int(stock) <= 0:
+            messages.error(request, 'Stock must not be blank, a decimal, or <= 0')
             return redirect('addproduct')
             
         New = Product.objects.create(
@@ -251,12 +255,20 @@ def EditProduct(request,pk):
             messages.info(request, 'You must fill out all the fields')
             return redirect('editproduct',pk)
 
-        elif isDigit(request,num = str(cost[0:])) == False:
-            messages.warning(request,"Input cost was not a valid number")
+        elif isDigit(request,num = str(cost)) == False:
+            messages.error(request,"Input cost was not a valid number")
             return redirect('editproduct', pk)
 
-        elif Decimal(cost[slice(0,len(cost))]) <= 0:
-            messages.warning(request,"No negative costs or costs equal to 0")
+        elif Decimal(cost) <= 0:
+            messages.error(request,"No negative costs or costs equal to 0")
+            return redirect('editproduct', pk)
+        
+        elif isDigit(request, num = str(stock)) == False:
+            messages.warning(request, "Stock cannot be text")
+            return redirect('editproduct', pk)
+        
+        elif stock == "" or stock == None or "." in stock or int(stock) <= 0:
+            messages.warning(request, 'Stock must not be blank, a decimal, or <= 0')
             return redirect('editproduct', pk)
 
         Existing.Name = name

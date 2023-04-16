@@ -34,17 +34,22 @@
             <input type="text" class="forminput" name="Location" id="Location" value="{{Prod.ManuLoc}}">
 
             <div class="Largetext"> Color </div>
-            <input type="text" class="forminput" name="Color" id="Color" value="{{Prod.Color}}"> <br><br>
-
-            <span class="Largetext"> Cost </span> <span class="bodytext" id="costnote"> </span><br><br>
-            <input type="text" class="forminput" name="Cost" id="Cost" value="{{Prod.Cost}}">
+            <input type="text" class="forminput" name="Color" id="Color" value="{{Prod.Color}}"> <br><br><br>
 
             {% for m in messages %}
-                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <br><span {% if m.tags %} style="color: red;" class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <span {% if m.tags %} style="color: red; margin-left: 2vw;" class="{{ m.tags}}" {% endif %}>{{m}} </span><br> {% endif %}
             {% endfor %}
 
-            <div class="Largetext"> Stock (Add amount to be restocked) </span> <span class="bodytext" id="costnote"> </div>
-            <input type="number" class="forminput" name="stock" id="stock" value=0>
+            <span class="Largetext"> Cost </span> <br>
+            <span class="bodytext" id="costnote" style="margin-left: 2vw;"> </span><br>
+            <input type="text" class="forminput" name="Cost" id="Cost" value="{{Prod.Cost}}"><br><br><br>
+
+            {% for m in messages %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span {% if m.tags %} style="color: red; margin-left: 2vw;" class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
+            {% endfor %}
+
+            <div class="Largetext" style="padding: 8px; margin-bottom: 0vh; margin-left: 1.5vw;"> Stock (Add amount to be restocked) </div> <span class="bodytext" id="stocknote" name="stocknote" style="margin-left: 2vw;"> </span><br>
+            <input type="text" class="forminput" name="stock" id="stock" value=0>
 
             <div class="Largetext"> Product Description </div>
             <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> {{Prod.Description}} </textarea>
@@ -101,6 +106,24 @@
 
             else{
                 cnote.innerHTML = "";
+            }
+        })
+
+        let s = document.getElementById('stock')
+        let snote = document.getElementById('stocknote');
+        s.addEventListener('keyup',(e)=>{
+
+            if (!Number.isInteger(Number(s.value)) || Number(s.value) === NaN || s.value.includes(".")){
+                snote.innerHTML = "Not an integer!";
+            }
+
+            else if (Number(s.value) <= 0 && s.value !== ""){
+                snote.innerHTML = "Stock cannot be less than 0!";
+            }
+
+
+            else{
+                snote.innerHTML = "";
             }
         })
         
