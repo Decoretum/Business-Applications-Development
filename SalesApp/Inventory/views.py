@@ -267,7 +267,7 @@ def EditProduct(request,pk):
             messages.warning(request, "Stock cannot be text")
             return redirect('editproduct', pk)
         
-        elif stock == "" or stock == None or "." in stock or int(stock) <= 0:
+        elif stock == "" or stock == None or "." in stock or int(stock) < 0:
             messages.warning(request, 'Stock must not be blank, a decimal, or <= 0')
             return redirect('editproduct', pk)
 

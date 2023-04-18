@@ -34,34 +34,25 @@
             <div class="Largetext" style="width: 50%; margin-left: 20%;"> Signup </div>
             <div class="label"> Username </div>
 
-            <div class="forminput">
-                <input class="form-control forminput" type="text" name="usern"> </input>
-            </div>
+            
+                <input class="form-control forminput" type="text" name="usern"> </input><br><br>
+            
 
             <div class="label"> Password </div>
-            <div class="forminput">
-                <input class="form-control forminput" type="text" name="passn" autocomplete="off"> </input>
-            </div>
+            <input class="form-control forminput" type="text" name="passn" autocomplete="off"> </input><br><br>
+        
 
             <div class="label"> First Name </div>
-            <div class="forminput">
-                <input class="form-control forminput" type="text" name="firstn"> </input>
-            </div>
+            <input class="form-control forminput" type="text" name="firstn"> </input><br><br>
 
             <div class="label"> Last Name </div>
-            <div class="forminput">
-                <input class="form-control forminput" type="text" name="lastn"> </input>
-            </div>
+            <input class="form-control forminput" type="text" name="lastn"> </input><br><br>
 
             <div class="label"> Birthday </div>
-            <div class="forminput">
-                <input class="form-control forminput" type="date" name="birthday1"> </input>
-            </div>
+            <input class="form-control forminput" type="date" name="birthday1"> </input><br><br>
 
             <div class="label"> Sex </div>
-            <div class="forminput">
-                <input class="form-control forminput" type="text" name="sexx"> </input>
-            </div>
+            <input class="form-control forminput" type="text" name="sexx"> </input><br><br>
 
             <button class="Button" type="submit" style="margin-top: 4vh; margin-left: 22%; width: 7vw;">
                 Create Account
@@ -80,12 +71,16 @@
         div {
             font-weight: 100;
         }
+
+        .forminput {
+            margin-left: 22%;
+        }
     </style>
     {% endblock %}
     <script>
-        function LoginF(){
+        /*function LoginF(){
             location.href="{% url 'Login' %}";
-        }
+        }*/
     </script>
 </body>
 </html>

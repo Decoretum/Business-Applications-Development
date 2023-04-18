@@ -16,7 +16,7 @@
     <form method="POST" action="{% url 'addnotify' %}" enctype="multipart/form-data">{% csrf_token %}
         <div class="container">
                 {% for m in messages %}
-                {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span style="color: red;" {% if m.tag == 'info' %} {% endif %}> {{m}} </span> {% endif %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span style="color: red; float: right; margin-top: 2vh; margin-right: 2vh;" {% if m.tag == 'info' %} {% endif %}> {{m}} </span> {% endif %}
                 {% endfor %}
             <div class="Largetext" style="font-size: 30px;"> Add a Notify Party </div> 
 

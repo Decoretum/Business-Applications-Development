@@ -14,6 +14,10 @@ SQL will be integrated with the SQLITE3 database in the future.
 
 <br>
 
+<h1> Supported Platforms and Browsers </h1>
+The application can be used in Windows 10+ and MacOS 10.14.16 (Mojave)
+Google Chrome and Safari <br>
+
 <h1> Database Architecture </h1>
 https://app.diagrams.net/#G1PZlwUNpmm8cHGGkcCigoE5KhDCgxFYLc
 
