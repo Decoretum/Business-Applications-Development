@@ -612,16 +612,11 @@ a{
 }
 
 
-
-.active{
-  color: azure;
-}
-
 .header > *{
   text-align:center;
   display: table-cell;
   vertical-align:middle;
-  padding: 0px;
+  padding: 10px;
   max-width: 100%;
   font-family:Helvetica;
   font-weight: 300;
@@ -630,14 +625,27 @@ a{
   width: 10%;
 }
 
+.header > a:hover:not(.active){
+  background-color: rgb(222, 227, 232);
+  border-radius: 9px;
+}
+
+.active{
+  /*color: azure;*/
+  background-color: azure;
+  border-radius: 9px;
+  padding-top:10px;
+  padding-bottom: 10px;
+}
+
 
 
 
 .justin{
-  min-height: 10vh;
-  max-height: 10vh;
+  min-height: 9vh;
+  max-height: 9vh;
   width: 1px;
-  background-color:black;
+  /*background-color:black;*/
   
 }
 

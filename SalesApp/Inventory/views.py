@@ -439,12 +439,21 @@ def ShowProds(request):
 
     AllOrders = FinalOrder.objects.filter(Finished = False)
     length = len(AllOrders)
-
-    return render(request, 'Inventory/users2.html',{
-            'C' : True,
-            'Orders' : AllOrders,
-            'L' : length
-        })
+    pk = request.session.get('PK')
+    if pk != None:
+        print(pk)
+        return render(request, 'Inventory/users2.html',{
+                'C' : True,
+                'Orders' : AllOrders,
+                'L' : length,
+                'primary' : pk
+            })
+    else:
+        return render(request, 'Inventory/users2.html',{
+                'C' : True,
+                'Orders' : AllOrders,
+                'L' : length
+            })
 
 '''def ProdsinOrder(request, pk):
     Ordered = OrderedProduct.objects.filter(OrderID = pk)
@@ -893,7 +902,7 @@ def CompleteOrder(request,pk):
                 request.session['HM'] = hashmap #Hashmap Data
                 request.session['PK'] = pk #Primary Key of Final Order
                 return redirect('UnfTrans', pk)
-        
+
          
             else:
                 #O(n) algorithm, very efficient

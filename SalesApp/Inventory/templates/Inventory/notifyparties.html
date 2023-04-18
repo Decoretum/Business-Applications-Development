@@ -17,8 +17,7 @@
                 <div class="container" style="position: relative; max-width: 100%;">
                     <div class="bodytext"><b>Name:</b> {{p.Name}}</div> <br>
                     <div class="bodytext" style="max-width: 100%; display: flex; flex-wrap: wrap; word-break: break-word;"><b>Address:&nbsp;</b> {{p.Address}} </div>
-                    <a class="Button" href="{% url 'editnotify' pk=p.pk %}" style="position: absolute; right:1vw; width: 5vw;"> Edit </a>
-                    <br><br>
+                    <a class="Button" href="{% url 'editnotify' pk=p.pk %}" style="position: absolute; right:1vw; bottom: 1vw; width: 5vw;"> Edit </a>
                 </div><br>
             {% endfor %} 
             <a class="Button" id="B1" href="{% url 'addnotify' %}" style="float: right; margin-right: 25vw; margin-bottom: 4vh; position: relative;"> Add a Notify Party </a>

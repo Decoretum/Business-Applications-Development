@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> DecoreManufacturing </title>
+    <title> Product Order Management Software </title>
     <link rel="stylesheet" type="text/css" href="{% static '/css/output.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static '/pic/favicon.ico' %}">
 
@@ -38,17 +38,11 @@
             <div class="justin"> </div>
             {% endif %}
             <input id="hide" name="hide" type="hidden" value="">  
-        </div>
-        <img src= "{% static 'pic/chinalogo.gif' %}" style="float: right; margin-right: 9vw; margin-top: 3vh; border-radius: 9px;"> <br><br><br>
-        
-    <script>
-        let button1 = document.querySelector('.header');
-        let input1 = document.getElementById('hide');
-        button1.addEventListener('click', ()=>{
-            console.log('clicked!');
-            input1.value = "DEAD";
-        })
-    </script>
+        </div><br>
+        <div class="brandholder" style="float: right; margin-right: 9vw; margin-top: 3vh; border-radius: 9px;">
+            <img src="{% static 'pic/chinalogo2.png' %}" style="display: inline;">
+            <span style="font-family: Helvetica; font-weight: 100; font-size: 20px;"><i>China Global Steel Trading</i></span> 
+        </div><br><br><br>
 
     {% endblock %}
 
