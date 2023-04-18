@@ -33,7 +33,7 @@ https://www.tomshardware.com/how-to/install-python-on-windows-10-and-11 <br><br>
 <h1> Python Virtual Environment   </h1> <br>
 The purpose of a Python virtual environment is to create an isolated virtual space where you could freely <br>
 install packages and depencies for a <b> certain </b> project without worrying if these packages and depencies will <br>
-conflict with your global packages! <br>
+conflict with your global packages! <br><br>
 
 Open up the directory of the project, but be sure you're outside of the "SalesApp" directory. Once you're in this directory, type: <br>
 ```bash
