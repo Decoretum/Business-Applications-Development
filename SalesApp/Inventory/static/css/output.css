@@ -626,13 +626,13 @@ a{
 }
 
 .header > a:hover:not(.active){
-  background-color: rgb(222, 227, 232);
+  color: rgb(222, 227, 232);
   border-radius: 9px;
 }
 
 .active{
   /*color: azure;*/
-  background-color: azure;
+  color: azure;
   border-radius: 9px;
   padding-top:10px;
   padding-bottom: 10px;

@@ -14,19 +14,23 @@
         {% if C == True %}
             <Br><br><br>
             <div class="container" style="height: fit-content;">
+                <div class="Largetext"> User Logged In: {{username}}</div>
                 <div class="bodytext">
-                    User Logged in: {{username}} <br>
+                    <i>User Details:</i> <br><br>
                     First name: {{firstname}} <Br>
                     Last name: {{lastname}} <br>
                     Birthday: {{birthday}} <br>
-                    Sex: {{sex}} <br><br>
-                    
-                    
+                    Sex: {{sex}} <br><br>                    
                         <a href="{% url 'logout' %}" class="LOGOUT" style="display: inline;"> Logout </a>
                         <br><br>
-                    
                 </div>
             </div>
+            <br><br>
+            <style>
+                .Largetext, .bodytext{
+                    font-weight: 100;
+                }
+            </style>
         {% endif %}
     {% endblock %}
 </body>
