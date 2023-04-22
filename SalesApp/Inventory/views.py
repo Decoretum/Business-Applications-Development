@@ -26,7 +26,6 @@ def home(request):
         This ensures that server data during the filling up of forms will be reset in case you navigate to another
         page'''
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
-            print('DELETED CACHE')
             request.session['Remarks'] = None
             request.session['productname'] = None
             request.session['OrderedPRem'] = None
@@ -40,7 +39,6 @@ def home(request):
         'C' : condition
         })
     else:
-        print("no user")
         condition = False
         return render(
             request, 'Inventory/home.html', {
@@ -50,7 +48,6 @@ def home(request):
 
 def Clerk(request):
     if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
-        print('DELETED CACHE')
         request.session['Remarks'] = None
         request.session['productname'] = None
         request.session['OrderedPRem'] = None
@@ -441,7 +438,6 @@ def ShowProds(request):
     length = len(AllOrders)
     pk = request.session.get('PK')
     if pk != None:
-        print(pk)
         return render(request, 'Inventory/users2.html',{
                 'C' : True,
                 'Orders' : AllOrders,
@@ -487,7 +483,6 @@ def Info(request,pk):
     if request.user.is_authenticated:
         condition = True
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
-            print('DELETED CACHE')
             request.session['Remarks'] = None
             request.session['productname'] = None
             request.session['OrderedPRem'] = None
@@ -520,7 +515,6 @@ def Developer(request):
         condition = True
 
         if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
-            print('DELETED CACHE')
             request.session['Remarks'] = None
             request.session['productname'] = None
             request.session['OrderedPRem'] = None
@@ -603,7 +597,6 @@ def CreateOrder(request):
         request.session['rem'] = request.POST.get('rem')
         request.session['productname'] = request.POST.get('proddrop')
         ChosenProduct = get_object_or_404(Product, Name = request.session['productname'])
-        print(request.session['rem'])
         return redirect('confirmcreateorder', pk=ChosenProduct.pk)
         
         
@@ -690,7 +683,6 @@ def ConfirmOrder(request,pk):
         ChosenOrder = get_object_or_404(FinalOrder, pk=order)
         if request.method == 'POST':
             if request.POST.get('Back') == "Back":
-                print('GOING BACK')
                 return redirect('addtoorder', pk=order)
             
             q = request.POST.get('drop')
@@ -718,7 +710,6 @@ def ConfirmOrder(request,pk):
             ChosenOrder.save()
 
             if request.POST.get('More') == "More":
-                print('MORE')
                 return redirect('addtoorder', pk=order)
                 
             else:
@@ -741,7 +732,6 @@ def ConfirmOrder(request,pk):
         status = 'confirming'
         if request.method == "POST":
             if request.POST.get('Back') == "Back":
-                print('GOING BACK')
                 request.session['Order'] = None
                 request.session['productname'] = None
                 request.session['Remarks'] = None
@@ -796,7 +786,6 @@ def ConfirmOrder(request,pk):
             NewOrderProduct.save()
 
             if request.POST.get('More') == "More":
-                print('MORE')
                 return redirect('createorder')
                 
             else:
@@ -980,7 +969,7 @@ def EditTrans(request, pk):
             for item in error.keys():
                 if error[item] < 0:
                     array.append((item, error[item]))
-            print(error)
+            
             return render(request,'Inventory/cart.html',{ 
                     'C' : condition,
                     'Products' : Products,
@@ -1023,8 +1012,6 @@ def ChangeTrans(request,pk):
         prody.append(x.Name)
 
     if request.method == 'POST':
-        print('Authenticated!')
-        print(ChosenTrans.pk)
         condition = True
         
         request.session['OrderedPRem'] = ChosenTrans.pk
