@@ -22,8 +22,18 @@ Google Chrome and Safari <br>
 https://app.diagrams.net/#G1PZlwUNpmm8cHGGkcCigoE5KhDCgxFYLc
 
 <br><br>
-<h1> Install Python </h1>
-Install Python 3.9.5 in Windows or Mac. <br>
+<h1> Install MySQL </h1>
+Install MySQL for MacOS: <br>
+https://dev.mysql.com/doc/mysql-macos-excerpt/5.7/en/macos-installation.html <br><br>
+
+Install MySQL for Windows: <br>
+https://dev.mysql.com/downloads/installer/ <br><br>
+
+Afterwards, setup a <b> permanent </b> environment path for MySQL.
+
+<br><br>
+<h1> Install Python </h1> 
+Install Python 3.9.5 in Windows or Mac. <br><br>
 Install Python for MacOS: <br>
 https://www.dataquest.io/blog/installing-python-on-mac/ <br><br>
 
