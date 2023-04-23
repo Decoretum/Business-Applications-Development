@@ -17,7 +17,7 @@
                 <img src="{{ Prod.Image.url }}" style="margin: 15px;" class="image"> <br><br>
                 <div class="Largetext"> Order ID: {{OrderedP.OrderedProductID}}</div>
                 <div class="Largetext"> Product: <span id ='productname'>{{Prod.Name}}</span> </div>
-                <div class="Largetext"> Product Price: <span id ='productcost'>${{Prod.Cost}}</span> </div>
+                <div class="Largetext"> Product Price: <span id ='productcost' data-val="{{Prod.Cost}}">${{Prod.Cost}}</span> </div>
                     <div class="Largetext"> Quantity </div>
                     <select type="number" id="drop" name="drop" style="display:inline; margin-left: 5vw;">
                         <option type="number" id="def" name="def"> {{OrderedP.quantity}} </option>
@@ -45,24 +45,12 @@
             </div>
             <br><br>
             
-    <script>
-        let cost = "{{Prod.Cost}}";
-        let chosen = document.getElementById('drop');
-        chosen.addEventListener('change',()=>{
-            let result = document.getElementById('totalcost');
-            let chosen = document.getElementById('drop');
-            let val = chosen.value;
-            console.log(val);
-            console.log(cost);
-            result.value = "$" + parseFloat(parseInt(val) * parseFloat(cost.slice(0))).toFixed(2);
-        })
-    </script>
     <style>
         .Largetext{
             font-weight: 100;
-        }
-        
+        }  
     </style>
+    <script src="{% static 'js/confirmorder.js' %}"> </script>
     {% endblock %}
     
 </body>

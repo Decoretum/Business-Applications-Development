@@ -52,7 +52,7 @@
         <div class="container" id="tempbox" style="word-wrap: break-word; max-width: 100%; background-color:rgb(238, 238, 238);">
             <div class="Largetext" style="font-family: Helvetica; font-weight: 200;"> Are you sure you sure you want to delete product: {{P.Name}}? </div>
             <a class="Button" type="submit" id="temp"  href="{% url 'deleteproduct' pk=P.pk %}"> Yes </a>
-            <a class="Button" id="hideme"> No </a>
+            <a class="Button" id="hideme"> No </a><br><br>
         </div>
     {% elif C == False %}
     <br>
@@ -94,20 +94,8 @@
         <br>
     {% endif %}
     <br><br<br>
-    <script>
-        let tempbox = document.getElementById('tempbox');
-        let trigger = document.getElementById('edittemp');
-        let back = document.getElementById('hideme');
-        trigger.addEventListener('click',() => {
-            tempbox.style.display = "inline";
-            tempbox.classList.add("shade");
-        })
-        back.addEventListener('click',()=>{
-            tempbox.style.display = "none";
-            tempbox.classList.remove("shade");
-        })
-    
-    </script>
+    <script src="{% static 'js/info.js' %}"></script>  
+
 
     <style>
         .bodytext{

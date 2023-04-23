@@ -21,7 +21,7 @@
 
             <table style="text-align: left;"> 
                 <tr>
-                    <th> <span class="Largetext"> Product Price: ${{OrderedP.Cost}} </span> </th>
+                    <th> <span class="Largetext"> Product Price: <span id="costval" name="costval" data-val="{{OrderedP.Cost}}">${{OrderedP.Cost}}</span> </span> </th>
                 </tr>
                 <tr>
                     <th> <span class="Largetext"> Consignee Name: </span> 
@@ -64,6 +64,7 @@
         </div>
     </form>
     <br><br>
+    <script src="{% static 'js/confirmcreateorder.js' %}"> </script>
 
         {% else %}
         <br><br><br>
@@ -77,7 +78,7 @@
                         <th> <span class="Largetext"> Product: {{OrderedP.Name}} </span> </th>
                     </tr>
                     <tr>
-                        <th> <span class="Largetext"> Product Price: ${{OrderedP.Cost}} </span> </th>
+                        <th> <span class="Largetext"> Product Price: <span id="costval" name="costval" data-val="{{OrderedP.Cost}}">${{OrderedP.Cost}}</span> </span> </th>
                     </tr>
                     <tr>
                         <th> <span class="Largetext"> Consignee Name: </span>
@@ -137,46 +138,7 @@
 
 
     </style>
-    <script>
-        let cost = "{{OrderedP.Cost}}";
-        let chosen = document.getElementById('drop');
-        chosen.addEventListener('change',()=>{
-            let result = document.getElementById('totalcost');
-            let chosen = document.getElementById('drop');
-            let val = chosen.value;
-            result.value = "$" + parseFloat(parseInt(val) * parseFloat(cost.slice(0))).toFixed(2);
-        })
-
-        let order = document.getElementById('Order')
-        let person = document.getElementById('Person')
-        order.addEventListener('change',()=>{
-            let obj = {
-
-            }
-            let query = "{% for i in Orders %} {{ i.BL }} {% endfor %}"
-            let queries = query.trim().replaceAll(" ","")
-            let sam = 0;
-            if (queries.length === 0){
-                console.log('empty')
-                person.value = "Type Name of Consignee"
-                console.log("queries.`${sam}`")
-            }
-            else{
-                let data = order.value;
-                let sam = 0;
-            
-
-            }
-           
-            
-        })
-
-        
-        
-
-
-        
-    </script>
+    <script src="{% static 'js/confirmcreateorder.js' %}"> </script>
     {% endblock %}
     
 </body>
