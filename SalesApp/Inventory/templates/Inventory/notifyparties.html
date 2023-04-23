@@ -15,7 +15,7 @@
         {% if many == True %}
             {% for p in P %}
                 <div class="container" style="position: relative; max-width: 100%;">
-                    <div class="bodytext"><b>Name:</b> {{p.Name}}</div> <br>
+                    <div class="bodytext"><b>Name:</b> {{p.Name}}</div> 
                     <div class="bodytext" style="max-width: 100%; display: flex; flex-wrap: wrap; word-break: break-word;"><b>Address:&nbsp;</b> {{p.Address}} </div>
                     <a class="Button" href="{% url 'editnotify' pk=p.pk %}" style="position: absolute; right:1vw; bottom: 1vw; width: 5vw;"> Edit </a>
                 </div><br>

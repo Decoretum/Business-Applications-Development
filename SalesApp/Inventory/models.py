@@ -96,8 +96,6 @@ class Userperson(models.Model):
 class FinalOrder(models.Model):
     ShipperName = models.CharField(max_length=100, default='', blank=True)
     OceanVessel = models.CharField(max_length=50, null=True, default='')
-    LocalVessel =  models.CharField(max_length=50, null=True, default='')
-    LocalVesselOrigin = models.CharField(max_length=50, null=True, default='')
 
     TotalCost = models.DecimalField(default=0, validators=[DecimalValidator(10,2)], decimal_places=2, max_digits=10) 
     Finished = models.BooleanField(default=False) #confirmed or not

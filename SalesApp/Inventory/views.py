@@ -106,19 +106,19 @@ def AddNotify(request):
             return redirect('addnotify')
         if request.POST.get('More') == 'More':
             party = NotifyParty.objects.create(
-                Name = name,
-                Street = street,
-                City = city,
-                State = state
+                Name = name.strip(),
+                Street = street.strip(),
+                City = city.strip(),
+                State = state.strip()
             )
             party.Ad() #model function to create a derived value
             return redirect('addnotify')
         else:
             party = NotifyParty.objects.create(
-                Name = name,
-                Street = street,
-                City = city,
-                State = state
+                Name = name.strip(),
+                Street = street.strip(),
+                City = city.strip(),
+                State = state.strip()
             )
             party.Ad()
             return redirect('shownotify')
@@ -133,10 +133,10 @@ def EditNotify(request, pk):
     edit = True
     chosen = get_object_or_404(NotifyParty, pk=pk)
     if request.method == 'POST':
-        name = request.POST.get('name')
-        street = request.POST.get('street')
-        city = request.POST.get('city')
-        state = request.POST.get('state')
+        name = request.POST.get('name').strip()
+        street = request.POST.get('street').strip()
+        city = request.POST.get('city').strip()
+        state = request.POST.get('state').strip()
         if name.strip() == "" or street.strip() == "" or city.strip() == "" or state.strip() == "":
             messages.info(request, 'No fields must be left blank')
             return redirect('shownotify', pk)
@@ -159,18 +159,18 @@ def EditNotify(request, pk):
  
 def AddProduct(request):
     if request.method == "POST":
-        imgfile = request.FILES.get('Image')               
-        name = request.POST.get('Name')
-        length = request.POST.get('Length')
-        manufacturer = request.POST.get('Manufacturer')
-        manuloc = request.POST.get('Location')
-        color = request.POST.get('Color')
+        imgfile = request.FILES.get('Image')         
+        name = request.POST.get('Name').strip()
+        length = request.POST.get('Length').strip()
+        manufacturer = request.POST.get('Manufacturer').strip()
+        manuloc = request.POST.get('Location').strip()
+        color = request.POST.get('Color').strip()
         cost = request.POST.get('Cost')
         stock = request.POST.get('Stock')
-        desc = request.POST.get('Description')
-        contact = request.POST.get('Contact')
-        meas = request.POST.get('Measurement')
-        weight = request.POST.get('Weight')
+        desc = request.POST.get('Description').strip()
+        contact = request.POST.get('Contact').strip()
+        meas = request.POST.get('Measurement').strip()
+        weight = request.POST.get('Weight').strip()
 
         if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
             messages.info(request, 'You must fill out all the fields')
@@ -235,17 +235,17 @@ def EditProduct(request,pk):
 
     if request.method == "POST":
         imgfile = request.FILES.get('Image')
-        name = request.POST.get('Name')
-        length = request.POST.get('Length')
-        manufacturer = request.POST.get('Manufacturer')
-        manuloc = request.POST.get('Location')
+        name = request.POST.get('Name').strip()
+        length = request.POST.get('Length').strip()
+        manufacturer = request.POST.get('Manufacturer').strip()
+        manuloc = request.POST.get('Location').strip()
         color = request.POST.get('Color')
         cost = request.POST.get('Cost')
-        contact = request.POST.get('Contact')
+        contact = request.POST.get('Contact').strip()
 
-        desc = request.POST.get('Description')
-        meas = request.POST.get('Measurement')
-        weight = request.POST.get('Weight')
+        desc = request.POST.get('Description').strip()
+        meas = request.POST.get('Measurement').strip()
+        weight = request.POST.get('Weight').strip()
         stock = request.POST.get('stock')
 
         if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
@@ -346,12 +346,12 @@ def Products(request):
 
 def Signup(request):
     if request.method == 'POST':
-        username = request.POST.get('usern')
-        password = request.POST.get('passn')
-        first_name = request.POST.get('firstn')
-        last_name = request.POST.get('lastn')
+        username = request.POST.get('usern').strip()
+        password = request.POST.get('passn').strip()
+        first_name = request.POST.get('firstn').strip()
+        last_name = request.POST.get('lastn').strip()
         birthday = request.POST.get('birthday1')
-        sex = request.POST.get('sexx')
+        sex = request.POST.get('sexx').strip()
 
         if User.objects.filter(username = username):
             messages.info(request,"Username is already taken")
@@ -384,8 +384,8 @@ def Signup(request):
 
 def Login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get('username').strip()
+        password = request.POST.get('password').strip()
         checking = authenticate(request, username=username, password=password)
         if checking is not None:
             login(request, checking)
@@ -688,7 +688,7 @@ def ConfirmOrder(request,pk):
             q = request.POST.get('drop')
             Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
             Cost = Decimal(Cost)
-            rem = request.POST.get('Description')
+            rem = request.POST.get('Description').strip()
 
             if str(rem).strip() == "":
                 remarks = "No remarks"
@@ -715,8 +715,6 @@ def ConfirmOrder(request,pk):
             else:
                 return redirect('UnfTrans', pk=order)
 
-
-
         else:
             return render(request, 'Inventory/confirmcreateorder.html',{
                 'C' : True,
@@ -739,7 +737,7 @@ def ConfirmOrder(request,pk):
 
             q = request.POST.get('drop')
             Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
-            Person = request.POST.get('Person')
+            Person = request.POST.get('Person').strip()
 
             if str(Person).strip() == '' or str(Person).strip() == "Type new Consignee Name":
                 messages.info(request,"No proper fields for Consignee")
@@ -769,7 +767,7 @@ def ConfirmOrder(request,pk):
             ChosenOrder = NewOrder
                 
             #Ordered Product Section
-            remarks = request.POST.get('Description')
+            remarks = request.POST.get('Description').strip()
 
             if str(remarks).strip() == "":
                 remarks = "No remarks"
@@ -816,24 +814,24 @@ def CompleteOrder(request,pk):
     num = pk
     OrderDone = get_object_or_404(FinalOrder, pk=pk)
     if request.method == 'POST':
-        shipper = request.POST.get('shipper')
-        ocean = request.POST.get('ocean')
-        local = request.POST.get('local')
-        localorigin = request.POST.get('localorigin')
+        shipper = request.POST.get('shipper').strip()
+        ocean = request.POST.get('ocean').strip()
+        local = request.POST.get('local').strip()
+        localorigin = request.POST.get('localorigin').strip()
 
-        notify = request.POST.get('notify')
-        portload = request.POST.get('portload')
-        portdis = request.POST.get('portdis')
-        transhto = request.POST.get('transhto')
-        finaldest = request.POST.get('finaldest')
+        notify = request.POST.get('notify').strip()
+        portload = request.POST.get('portload').strip()
+        portdis = request.POST.get('portdis').strip()
+        transhto = request.POST.get('transhto').strip()
+        finaldest = request.POST.get('finaldest').strip()
         voyage = request.POST.get('voyage')
 
-        prepaid = request.POST.get('prepaid')
-        collect = request.POST.get('collect')
+        prepaid = request.POST.get('prepaid').strip()
+        collect = request.POST.get('collect').strip()
         charges = request.POST.get('charges')
-        revtons = request.POST.get('revtons')
+        revtons = request.POST.get('revtons').strip()
         rate = request.POST.get('rate')
-        payat = request.POST.get('payat')
+        payat = request.POST.get('payat').strip()
 
         if (charges == ""):
             charges = 0
@@ -887,6 +885,7 @@ def CompleteOrder(request,pk):
                 if val < 0:
                     outcome = False
 
+
             if outcome == False:
                 request.session['HM'] = hashmap #Hashmap Data
                 request.session['PK'] = pk #Primary Key of Final Order
@@ -894,36 +893,35 @@ def CompleteOrder(request,pk):
 
          
             else:
+                notifobject = get_object_or_404(NotifyParty, Name = notify)
+
                 #O(n) algorithm, very efficient
                 for name in hashmap.keys():
                     product = get_object_or_404(Product, Name = name)
                     product.Stock = hashmap[name]
                     product.save()
 
-            notifobject = get_object_or_404(NotifyParty, Name = notify)
-            OrderDone.Portdis = portdis
-            OrderDone.Portload = portload
-            OrderDone.ShipperName = shipper
-            OrderDone.OceanVessel = ocean
-            OrderDone.LocalVessel = local
-            OrderDone.LocalVesselOrigin = localorigin
-            OrderDone.NotifyName = notifobject
-            OrderDone.TranshTo = transhto
-            OrderDone.FinalDest = finaldest
-            OrderDone.Voyage = voyage
+                OrderDone.Portdis = portdis
+                OrderDone.Portload = portload
+                OrderDone.ShipperName = shipper
+                OrderDone.OceanVessel = ocean
+                OrderDone.NotifyName = notifobject
+                OrderDone.TranshTo = transhto
+                OrderDone.FinalDest = finaldest
+                OrderDone.Voyage = voyage
 
-            OrderDone.Prepaid = prepaid
-            OrderDone.Collect = collect
-            OrderDone.Charges = charges
-            OrderDone.RevTons = revtons
-            OrderDone.Rate = rate
-            OrderDone.PayAt = payat
+                OrderDone.Prepaid = prepaid
+                OrderDone.Collect = collect
+                OrderDone.Charges = charges
+                OrderDone.RevTons = revtons
+                OrderDone.Rate = rate
+                OrderDone.PayAt = payat
 
-            
-            OrderDone.Finished = True
+                
+                OrderDone.Finished = True
 
-            OrderDone.save()
-            return redirect('Products2')
+                OrderDone.save()
+                return redirect('Products2')
     else:
         return render(request, 'Inventory/finalize.html',{
             'C' : condition,

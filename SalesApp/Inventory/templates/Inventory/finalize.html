@@ -25,17 +25,11 @@
             <div class="Largetext"> Ocean Vessel </div> 
             <input class="forminput" type="text" name="ocean" id="ocean"> <br><br>
 
-            <div class="Largetext"> Local Vessel </div> 
-            <input class="forminput" type="text" name="local" id="local"> <br><br>
-
-            <div class="Largetext"> Local Vessel Origin </div> 
-            <input class="forminput" type="text" name="localorigin" id="localorigin"> <br><br>
-
             <div class="Largetext"> Notify Party * </div> 
             <select type="text" name="notify" id="notify" style="margin-left: 2vw;">
                 <option selected> Select a Notify Party </option>
                 {% for p in parties %}
-                    <option type="text" id="val" name="val"> {{p.Name}}</option>
+                    <option type="text" id="val" name="val"> {{p.Name}} </option>
                 {% endfor %}
             </select> 
             {% for m in messages %}
