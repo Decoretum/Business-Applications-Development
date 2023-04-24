@@ -816,8 +816,6 @@ def CompleteOrder(request,pk):
     if request.method == 'POST':
         shipper = request.POST.get('shipper').strip()
         ocean = request.POST.get('ocean').strip()
-        local = request.POST.get('local').strip()
-        localorigin = request.POST.get('localorigin').strip()
 
         notify = request.POST.get('notify').strip()
         portload = request.POST.get('portload').strip()
