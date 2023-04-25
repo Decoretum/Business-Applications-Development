@@ -15,22 +15,20 @@
     {% block header %}
         <div class="header">
             {% if C == True %}
-            <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"> <span>Home</span> </a>
+            <a class="Home {% if request.path == '/' %}active glow{% endif %}" href="{% url 'home' %}">  <img style="max-width: 50px; max-height: 50px; margin: auto;" src="{% static 'pic/homeicon.png' %}"></a>
             <div class="justin"> </div>
             <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> <span>View Steel Inventory</span> </a>
             <div class="justin"> </div>
             <a class="User {% if request.path == '/PendingOrders' %}active{% endif %}" href="{% url 'Products2' %}"> <span>Pending Orders</span> </a>
             <div class="justin"> </div>
-            <a class="User {% if request.path == '/ClerkPage' %}active{% endif %}" href="{% url 'clerk' %}"> <span>Clerk Page</span> </a>          
-            <div class="justin"> </div>
             <a class="User {% if request.path == '/NotifyParties' %}active{% endif %}" href="{% url 'shownotify' %}"> <span>Notify Parties</span> </a>
             <div class="justin"> </div>
             <a class="User {% if request.path == '/ConfirmedOrders' %}active{% endif %}" href="{% url 'doneorders' %}"> <span>Confirmed orders</span> </a>
-            
+            <a class="User {% if request.path == '/ClerkPage' %}active glow{% endif %}" href="{% url 'clerk' %}"> <img style="max-width: 45px; max-height: 45px; margin: auto;" src="{% static 'pic/settings.png' %}"> </a>          
+    
 
             {% elif C == False %}
-            
-            <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}"> Home </a>
+            <a class="Home {% if request.path == '/' %}active glow{% endif %}" href="{% url 'home' %}"> <img style="max-width: 50px; max-height: 50px; margin: auto;" src="{% static 'pic/homeicon.png' %}"> </a>
             <div class="justin"> </div>
             <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> View Steel Inventory </a>
             <div class="justin"> </div>
@@ -43,7 +41,14 @@
             <img src="{% static 'pic/chinalogo2.png' %}" style="display: inline;">
             <span style="font-family: Helvetica; font-weight: 100; font-size: 20px;"><i>China Global Steel Trading</i></span> 
         </div><br><br><br>
-
+    
+        <style>
+            a:has(img):hover{
+                box-shadow: 4px 4px #fff;
+                padding:10px;
+                border-radius: 9px;
+            }
+        </style>
     {% endblock %}
 
     {% block content %}

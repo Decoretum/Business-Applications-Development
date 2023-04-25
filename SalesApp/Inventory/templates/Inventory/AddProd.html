@@ -21,22 +21,22 @@
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span style="color: red;" {% if m.tag == 'info' %} {% endif %}> {{m}} </span> {% endif %}
                 {% endfor %}
             <div class="Largetext"> Product Name </div> 
-            <input type="text" class="forminput" name="Name" id="Name">
+            <input type="text" class="forminput" name="Name" id="Name" placeholder="Name of Product">
 
             <div class="Largetext"> Length </div>
-            <input type="text" class="forminput" name="Length" id="Length">
+            <input type="text" class="forminput" name="Length" id="Length" placeholder="In meter, centimeters, millimeters, etc.">
 
             <div class="Largetext"> Manufacturer Name </div>
-            <input type="text" class="forminput" name="Manufacturer" id="Manufacturer">
+            <input type="text" class="forminput" name="Manufacturer" id="Manufacturer" placeholder="Name of Steel Manufacturer">
 
             <div class="Largetext"> Manufacturer Location </div>
-            <input type="text" class="forminput" name="Location" id="Location">
+            <input type="text" class="forminput" name="Location" id="Location" placeholder="Location of Manufacturing">
 
             <div class="Largetext"> Color </div>
-            <input type="text" class="forminput" name="Color" id="Color"> <br><br>
+            <input type="text" class="forminput" name="Color" id="Color" placeholder="Color of the Steel"> <br><br>
 
             <span class="Largetext"> Cost </span> <span class="bodytext" id="costnote"> </span><br><br>
-            <input type="text" class="forminput" name="Cost" id="Cost">
+            <input type="text" class="forminput" name="Cost" id="Cost" placeholder="In USD">
 
             {% for m in messages %}
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <br><span style="color: red; margin-left: 2vw;" {% if m.tags %} class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
@@ -47,23 +47,23 @@
             <span class="Largetext"> Stock </span> <span class="bodytext" id="stocknote" name="stocknote"> </span> 
             <br><br>
             
-            <input type="text" class="forminput" name="Stock" id="Stock"> 
+            <input type="text" class="forminput" name="Stock" id="Stock" placeholder="Stock of Steel"> 
                {% for m in messages %}
                     {% if m.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <p style="color: red; margin-left: 2vw;" {% if m.tag == 'error' %} class="{{m.tags}}" {% endif %}> {{m}}</p> {% endif %}
                 {% endfor %}
             <br><br>
 
             <div class="Largetext"> Description </div>
-            <textarea type="text" class="forminput" name="Description" id="desc" rows="8" placeholder="Type in new Product Description!" style="margin-left: 2vw;"> </textarea>
+            <textarea type="text" class="forminput" name="Description" id="desc" rows="8" placeholder="Type in Product Description!" style="margin-left: 2vw;"></textarea>
             
             <div class="Largetext"> Measurement </div>
-            <input type="text" class="forminput" name="Measurement" id="Measurement" value="{{Prod.Measurement}}">
+            <input type="text" class="forminput" name="Measurement" id="Measurement" value="{{Prod.Measurement}}" placeholder="Provide length, radius, circumference, etc.">
 
             <div class="Largetext"> Gross Weight </div>
-            <input type="text" class="forminput" name="Weight" id="Weight" value="{{Prod.GrossWeight}}">
+            <input type="text" class="forminput" name="Weight" id="Weight" value="{{Prod.GrossWeight}}" placeholder="Specify unit of measurement">
         
             <div class="Largetext"> Contact Details </div>
-            <input type="text" class="forminput" name="Contact" id="Contact">
+            <input type="text" class="forminput" name="Contact" id="Contact" placeholder="Telephone, email, or Telegram">
             <div style="display: inline-flex; margin-left: 2vw; margin-top: 5vh;">
             <button class="Button" type="submit"> Add Product </button>
             <a class="Button" href="{% url 'Products' %}" style="margin-left: 2vw;"> Back to Products </a>

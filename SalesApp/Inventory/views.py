@@ -824,8 +824,8 @@ def CompleteOrder(request,pk):
         finaldest = request.POST.get('finaldest').strip()
         voyage = request.POST.get('voyage')
 
-        prepaid = request.POST.get('prepaid').strip()
-        collect = request.POST.get('collect').strip()
+        prepcol = request.POST.get('fin')
+
         charges = request.POST.get('charges')
         revtons = request.POST.get('revtons').strip()
         rate = request.POST.get('rate')
@@ -836,15 +836,48 @@ def CompleteOrder(request,pk):
         if (rate == ""):
             rate = 0
 
+
         if notify == "Select a Notify Party":
             messages.info(request, 'Select a valid Notify Party')
             return redirect('completeorder', pk)
-        elif portload.strip() == "" or portdis.strip() == "" or voyage.strip() == "":
-            messages.info(request, 'Port of Loading, Port of Discharge, or Voyage cannot be left blank')
+        
+        elif portload.strip() == "" or portdis.strip() == "" or voyage.strip() == "" or shipper == "":
+            messages.info(request, 'Shipper Company, Port of Loading, Port of Discharge, or Voyage cannot be left blank')
             return redirect('completeorder', pk)
-        elif (prepaid.strip() != "Yes" and collect.strip() != "Yes"):
+        
+        elif (prepcol == None):
             messages.warning(request, 'Both Prepaid and Collect cannot be null, one field must not be null')
             return redirect('completeorder',pk)
+    
+        elif isDigit(request,num = str(voyage)) == False:
+            messages.warning(request,"Voyage was not a valid number")
+            return redirect('completeorder', pk)
+        
+        elif voyage == "" or voyage == None or "." in voyage or int(voyage) < 0:
+            messages.warning(request, 'Voyage must not be blank, a decimal, or <= 0')
+            return redirect('completeorder', pk)
+        
+        elif isDigit(request,num = str(charges)) == False:
+            messages.warning(request,"Charges was not a valid number")
+            return redirect('completeorder', pk)
+        
+        elif charges == "" or charges == None or Decimal(voyage) < 0:
+            messages.warning(request, 'Charges cannot be less than 0')
+            return redirect('completeorder', pk)
+        
+        elif isDigit(request,num = str(rate)) == False:
+            messages.warning(request,"Rate was not a valid number")
+            return redirect('completeorder', pk)
+        
+        elif rate == "" or rate == None or Decimal(rate) < 0:
+            messages.warning(request, 'Rate cannot be less than 0')
+            return redirect('completeorder', pk)
+
+        #elif True != False:
+        #    print('RESET')
+        #    return redirect('completeorder', pk)
+
+
 
         else:
             outcome = True
@@ -899,6 +932,11 @@ def CompleteOrder(request,pk):
                     product.Stock = hashmap[name]
                     product.save()
 
+                if prepcol == 'collect':
+                    OrderDone.Collect = 'Yes'
+                else:
+                    OrderDone.Prepaid = 'Yes'
+
                 OrderDone.Portdis = portdis
                 OrderDone.Portload = portload
                 OrderDone.ShipperName = shipper
@@ -908,8 +946,6 @@ def CompleteOrder(request,pk):
                 OrderDone.FinalDest = finaldest
                 OrderDone.Voyage = voyage
 
-                OrderDone.Prepaid = prepaid
-                OrderDone.Collect = collect
                 OrderDone.Charges = charges
                 OrderDone.RevTons = revtons
                 OrderDone.Rate = rate

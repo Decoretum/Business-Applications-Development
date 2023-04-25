@@ -30,7 +30,7 @@
             </select> 
             
             <div class="Largetext"> Remarks </div>
-            <textarea type="text" class="forminput" name="rem" id="rem" rows="8" style="margin-left: 2vw;">  </textarea>
+            <textarea type="text" class="forminput" name="rem" id="rem" rows="8" style="margin-left: 2vw;" placeholder="Can be left blank if no remarks..."></textarea>
             <div style="display: inline-flex; margin-left: 5vw;">
                 <button class="Button" id="submit" type="submit">  Next </button> 
                 <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'Products' %}" style="margin-left: 2vw;"> Back </a> <br>
@@ -59,7 +59,7 @@
                 </select>
 
                 <div class="Largetext"> Remarks </div>
-                <textarea type="text" class="forminput" name="rem" id="rem" rows="8" style="margin-left: 2vw;">  </textarea>
+                <textarea type="text" class="forminput" name="rem" id="rem" rows="8" style="margin-left: 2vw;" placeholder="Can be left blank if no remarks..."></textarea>
                 <div style="display: inline-flex; margin-left: 5vw;">
                     <button class="Button" id="submit" type="submit">  Next </button> <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'UnfTrans' pk=pk %}" style="margin-left: 2vw;"> Back </a> <br>
                 </div>

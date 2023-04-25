@@ -20,10 +20,10 @@
             <br>
             <div class="Largetext"> <i>Shipping Information</i> </div>
             <div class="Largetext"> Shipper Company * </div> 
-            <input class="forminput" type="text" name="shipper" id="shipper"> <br><br>
+            <input class="forminput" type="text" name="shipper" id="shipper" placeholder="China Global Steel Trading Corporation"> <br><br>
 
             <div class="Largetext"> Ocean Vessel </div> 
-            <input class="forminput" type="text" name="ocean" id="ocean"> <br><br>
+            <input class="forminput" type="text" name="ocean" id="ocean" placeholder="Ocean Vessel of Shipper"> <br><br>
 
             <div class="Largetext"> Notify Party * </div> 
             <select type="text" name="notify" id="notify" style="margin-left: 2vw;">
@@ -34,7 +34,7 @@
             </select> 
             {% for m in messages %}
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-                <span class="label" style="display:inline; float: right; margin-right: 1vw; color: red;">
+                <span class="label" style="position: absolute; font-size: medium; width: 20vw; right: 1vw; margin-top: -1vw; color: red;">
                     {{ m }}
                 </span>
                 {% endif %}
@@ -42,23 +42,23 @@
             <br><br>
             
             <div class="Largetext"> Port of Loading * </div> 
-            <input class="forminput" type="text" name="portload" id="portload"> 
+            <input class="forminput" type="text" name="portload" id="portload" placeholder="Port for Cargo Pickup"> 
 
             <div class="Largetext"> Port of Discharge * </div> 
-            <input class="forminput" type="text" name="portdis" id="portdis"> 
+            <input class="forminput" type="text" name="portdis" id="portdis" placeholder="Port for Receiving Cargo"> 
 
             <div class="Largetext"> Transhipment To </div> 
-            <input class="forminput" type="text" name="transhto" id="transhto">
+            <input class="forminput" type="text" name="transhto" id="transhto" placeholder="Intermediary Port before Final Destination">
 
             <div class="Largetext"> Final Destination </div> 
-            <input class="forminput" type="text" name="finaldest" id="finaldest">
+            <input class="forminput" type="text" name="finaldest" id="finaldest" placeholder="Final Dropping Location"><br><br>
 
-            <div class="Largetext"> Voyage * </div> 
-            <input class="forminput" type="number" name="voyage" id="voyage"> <br><br><br>
+            <span class="Largetext"> Voyage * </span> <span style="display: inline-block;" id="voy" name="voy"></span><br><br>
+            <input class="forminput" type="text" name="voyage" id="voyage" placeholder="Identifier for Physical Shipping Vessel"> <br><br><br>
 
             <div class="Largetext"> <i>Quantitative Details</i> </div>
 
-            <div class="Largetext"> Prepaid * </div> 
+            <span class="Largetext"> Prepaid / Collect * </span>
             {% for m in messages %}
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
                 <span class="label" style="display:inline; color: red; font-size: 15px; margin-left: 1.5vw;">
@@ -66,22 +66,25 @@
                 </span>
                 {% endif %}
             {% endfor %}
-            <input class="forminput" type="text" name="prepaid" id="prepaid">
+            <br><br>
+            <input type="radio" name="prepcol" id="collect" value="collect">
+            <label for="prepaid"> Collect </label> 
+            <input type="radio" name="prepcol" id="prepaid" value="prepaid" checked>
+            <label for="collect"> Prepaid </label> <br><br>
 
-            <div class="Largetext"> Collect * </div> 
-            <input class="forminput" type="text" name="collect" id="collect">
+            <input type="hidden" id="fin" name="fin"> <br>
 
-            <div class="Largetext"> Charges </div> 
-            <input class="forminput" type="number" name="charges" id="charges" step="any">
+            <span class="Largetext"> Charges </span> <span id="coy">  </span><br><br> 
+            <input class="forminput" type="text" name="charges" id="charges" step="any" placeholder="Charges for transportation of Goods">
 
             <div class="Largetext"> Revenue Tons </div> 
-            <input class="forminput" type="text" name="revtons" id="revtons">
+            <input class="forminput" type="text" name="revtons" id="revtons" placeholder="Unit Measure of Packages">
 
-            <div class="Largetext"> Rate </div> 
-            <input class="forminput" type="number" name="rate" id="rate" step="any">
+    <br><br><span class="Largetext"> Rate </span> <span id="roy"> </span><br><br>
+            <input class="forminput" type="text" name="rate" id="rate" step="any" placeholder="Ocean Freight rate per metric ton in USD">
 
             <div class="Largetext"> Payable at </div> 
-            <input class="forminput" type="text" name="payat" id="payat"> <br>
+            <input class="forminput" type="text" name="payat" id="payat" placeholder="Location where Payment will be Made"> <br>
             
             <div style="display: inline-flex; margin-left: 1.5vw; margin-top: 5vh;">
                 <button class="Button" id="submit" type="submit">  Submit </button> <a class="Button ml-20" id="More" name="More" type="submit" href="{% url 'Products2' %}" style="margin-left: 2vw;"> Back </a> <br>
@@ -90,7 +93,7 @@
             </div>
     </form>
     <br><br>
-
+    <script src="{% static 'js/finalize.js' %}" defer></script>
     {% endblock %}
     
     

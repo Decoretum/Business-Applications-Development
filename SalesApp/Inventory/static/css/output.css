@@ -653,6 +653,10 @@ a{
   cursor: pointer;
 }
 
+.glow{
+  box-shadow: 5px 5px #fff;
+}
+
 /*.header > a:nth-child(7){
   margin-top: 5vh;
 }*/
@@ -691,6 +695,10 @@ a{
   max-width: 100%;
 }
 
+::placeholder{
+  color: #9ca3af;
+}
+
 .forminput{
   padding: 7.5px;
   max-width: 100%;
@@ -699,6 +707,8 @@ a{
   border-radius: 9px;
   border-color: #9ca3af;
   background-color: #feffff;
+  font-family: Helvetica;
+  font-weight: 100;
 }
 
 .forminput:focus{

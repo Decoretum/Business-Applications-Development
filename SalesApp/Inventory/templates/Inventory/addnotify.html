@@ -21,24 +21,24 @@
             <div class="Largetext" style="font-size: 30px;"> Add a Notify Party </div> 
 
             <div class="Largetext"> Name </div> 
-            <input type="text" class="forminput" name="name" id="name">
+            <input type="text" class="forminput" name="name" id="name" placeholder="Notify Party to be contacted for cargo arrival">
 
             <div class="Largetext"> Street </div>
-            <input type="text" class="forminput" name="street" id="street">
+            <input type="text" class="forminput" name="street" id="street" placeholder="Street where Notify Party resides in">
 
             <div class="Largetext"> City </div>
-            <input type="text" class="forminput" name="city" id="city">
+            <input type="text" class="forminput" name="city" id="city" placeholder="City where Notify Party is situated">
 
             <div class="Largetext"> State </div>
-            <input type="text" class="forminput" name="state" id="state">
+            <input type="text" class="forminput" name="state" id="state" placeholder="State where Notify Party belongs to">
 
             <br><br>
 
 
             <div style="display: inline-flex; margin-left: 2vw; margin-top: 5vh;">
-            <button class="Button" type="submit"> Add Notify Party </button>
-            <button class="Button" href="{% url 'addnotify' %}" value="More" name="More" style="margin-left: 2vw;"> Submit and Add again </button>
-            <a class="Button" href="{% url 'shownotify' %}" style="margin-left: 2vw;"> Back to Notify Parties </a>
+            <button class="Button" type="submit"> Add </button>
+            <a class="Button" href="{% url 'shownotify' %}" style="margin-left: 2vw;"> Back </a>
+            <button class="Button" href="{% url 'addnotify' %}" value="More" name="More" style="margin-left: 2vw;"> Submit and Add More</button>
             </div>
             <br><br>
         </div>

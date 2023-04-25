@@ -22,7 +22,7 @@
     {% block content %}
     <br>
     <form method="POST" action="{% url 'Signup' %}">{% csrf_token %}
-        <div class="formblock" style="padding-left: 0vw; width: 45vw; background-color: rgb(208, 184, 168); position: relative;">
+        <div class="formblock" style="padding-left: 0vw; width: 40vw; background-color: rgb(208, 184, 168); position: relative;">
 
             {% for m in messages %}
             <div class="label" style="position: absolute; right: -5vw; top: 5vh; color: red; font-size: medium;">
@@ -49,7 +49,7 @@
             <input class="form-control forminput" type="text" name="lastn"> </input><br><br>
 
             <div class="label"> Birthday </div>
-            <input class="form-control forminput" type="date" name="birthday1"> </input><br><br>
+            <input class="form-control forminput" type="date" name="birthday1" placeholder="YYYY-MM-DD"> </input><br><br>
 
             <div class="label"> Sex </div>
             <input class="form-control forminput" type="text" name="sexx"> </input><br><br>
