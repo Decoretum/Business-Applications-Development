@@ -15,7 +15,7 @@
     {% block header %}
         <div class="header">
             {% if C == True %}
-            <a class="Home {% if request.path == '/' %}active glow{% endif %}" href="{% url 'home' %}">  <img style="max-width: 50px; max-height: 50px; margin: auto;" src="{% static 'pic/homeicon.png' %}"></a>
+            <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">  <img id="homey" {% if request.path == '/' %} class="glow" {% endif %} style="max-width: 60px; max-height: 60px; margin: auto; padding: 10px;" src="{% static 'pic/homeicon.png' %}"></a>
             <div class="justin"> </div>
             <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> <span>View Steel Inventory</span> </a>
             <div class="justin"> </div>
@@ -24,11 +24,11 @@
             <a class="User {% if request.path == '/NotifyParties' %}active{% endif %}" href="{% url 'shownotify' %}"> <span>Notify Parties</span> </a>
             <div class="justin"> </div>
             <a class="User {% if request.path == '/ConfirmedOrders' %}active{% endif %}" href="{% url 'doneorders' %}"> <span>Confirmed orders</span> </a>
-            <a class="User {% if request.path == '/ClerkPage' %}active glow{% endif %}" href="{% url 'clerk' %}"> <img style="max-width: 45px; max-height: 45px; margin: auto;" src="{% static 'pic/settings.png' %}"> </a>          
+            <a class="User {% if request.path == '/ClerkPage' %}active{% endif %}" href="{% url 'clerk' %}"> <img {% if request.path == '/ClerkPage' %} class="glow" {% endif %} style="max-width: 60px; max-height: 60px; margin: auto; padding: 10px;" id="settingy" src="{% static 'pic/settings.png' %}"> </a>          
     
 
             {% elif C == False %}
-            <a class="Home {% if request.path == '/' %}active glow{% endif %}" href="{% url 'home' %}"> <img style="max-width: 50px; max-height: 50px; margin: auto;" src="{% static 'pic/homeicon.png' %}"> </a>
+            <a class="Home {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">  <img {% if request.path == '/' %} class="glow" {% endif %} style="max-width: 60px; max-height: 60px; margin: auto; padding: 5px;" id="homey" src="{% static 'pic/homeicon.png' %}"> </a>
             <div class="justin"> </div>
             <a class="Products {% if request.path == '/Products' %}active{% endif %}" href="{% url 'Products' %}"> View Steel Inventory </a>
             <div class="justin"> </div>
@@ -43,11 +43,10 @@
         </div><br><br><br>
     
         <style>
-            a:has(img):hover{
-                box-shadow: 4px 4px #fff;
-                padding:10px;
-                border-radius: 9px;
-            }
+            /*a:has(img):hover{
+                /*box-shadow: 4px 4px #fff;*/
+                /*border-radius: 9px;*/
+
         </style>
     {% endblock %}
 

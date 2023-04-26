@@ -16,7 +16,7 @@
     <form method="POST" action="{% url 'completeorder' pk=n %}">{% csrf_token %}
         <div class="container">
             <div class="Largetext"> <b> Finalize Order </b> </div>
-            <div class="bodytext" style="margin-left: 2vw;"> Note: Fields could be null except for <i> Port of Loading, Port of Discharge, Notify Party, Shipper Company, and Voyage.</i> Either <i>Prepaid or Collect</i> must be at least "Yes". </div>
+            <div class="bodytext" style="margin-left: 2vw;"> <i>Note: Fields with a " * " mark cannot be left blank.</i> </div>
             <br>
             <div class="Largetext"> <i>Shipping Information</i> </div>
             <div class="Largetext"> Shipper Company * </div> 

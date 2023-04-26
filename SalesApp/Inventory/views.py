@@ -842,7 +842,7 @@ def CompleteOrder(request,pk):
             return redirect('completeorder', pk)
         
         elif portload.strip() == "" or portdis.strip() == "" or voyage.strip() == "" or shipper == "":
-            messages.info(request, 'Shipper Company, Port of Loading, Port of Discharge, or Voyage cannot be left blank')
+            messages.info(request, 'Shipper Company, Port of Loading, Port of Discharge, and Voyage cannot be left blank')
             return redirect('completeorder', pk)
         
         elif (prepcol == None):
