@@ -354,7 +354,7 @@ textarea {
 input::-moz-placeholder, textarea::-moz-placeholder {
   opacity: 1;
   /* 1 */
-  color: #9ca3af;
+  color: #898f9b;
   /* 2 */
 }
 
@@ -362,7 +362,7 @@ input::placeholder,
 textarea::placeholder {
   opacity: 1;
   /* 1 */
-  color: #9ca3af;
+  color: #898f9b;
   /* 2 */
 }
 
@@ -707,10 +707,6 @@ a{
 
 #desc{
   max-width: 100%;
-}
-
-::placeholder{
-  color: #9ca3af;
 }
 
 .forminput{
