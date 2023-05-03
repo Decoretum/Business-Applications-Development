@@ -7,3 +7,5 @@ SalesApp/db.sqlite3
 SalesApp/.DS_Store
 Steel/lib
 Steel/pyvenv.cfg
+SalesApp/SalesApp/settings.py
+
