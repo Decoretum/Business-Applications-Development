@@ -11,7 +11,7 @@
 </head>
 <body>
     {% block content %}
-    <br><br>
+    <br><br><br>
         {% if many == True %}
             {% for p in P %}
                 <div class="container" style="position: relative; max-width: 100%;">
@@ -24,7 +24,7 @@
             <br><br>
         {% else %}
             <div class="container" style="padding:20px;">
-                <span class="bodytext">You have no Notify parties yet! Click the button below to add!</span> <br><br>
+                <div class="Largetext" style="font-weight: 100;">You have no Notify parties yet! Click the button below to add!</div><br>
                 <a class="Button" id="B1" href="{% url 'addnotify' %}"> Add a Notify Party </a>
             </div>
         {% endif %}
