@@ -14,7 +14,7 @@
     let sum = 0;
     let coveredsum = 0;
     header = document.querySelector('.identify');   
-    filtered = search.value.toUpperCase();
+    filtered = search.value.toUpperCase().trim();
     for (let i = 1; i < products.length; i++){
         let text = products[i].childNodes[3].textContent;
         if (text.toUpperCase().indexOf(filtered) > -1){

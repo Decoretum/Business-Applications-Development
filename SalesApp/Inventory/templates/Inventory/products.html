@@ -97,7 +97,7 @@
                 <table id="tab" style="text-align: center; width: 45vw; max-width: 100%; border-width: 2px; margin-right: 1vw; word-break: break-word;">
                     <tr>
                         <th> <b>Order ID</b>: {{o.Verification}} </th>
-                        <th> <b>Order Total Cost</b>: {{o.TotalCost}} </th> 
+                        <th> <b>Order Total Cost</b>: ${{o.TotalCost}} </th> 
                     </tr>
                     <tr>
                         <th> <b>Order Place & Date of Issue</b>: {{o.PlaceDate}} </th>
@@ -153,7 +153,7 @@
 
                     {% if o.Rate != "" %}
                     <tr class="last">
-                        <th class="last"> <b>Rate</b>: ${{o.Rate}} </th>
+                        <th class="last"> <b>Rate</b>: ${{o.Rate}} per metric ton </th>
                     </tr>
                     {% endif %}
 
