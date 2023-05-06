@@ -13,6 +13,7 @@ SELECT * FROM Inventory_consignee;
 SELECT * FROM Inventory_finalorder;
 SELECT * FROM Inventory_orderedproduct
 WHERE OrderID_id = 1;
+SELECT * FROM Inventory_product;
 SELECT * FROM auth_user;
 SELECT * FROM auth_group;
 

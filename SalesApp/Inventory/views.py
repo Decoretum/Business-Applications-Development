@@ -305,7 +305,7 @@ def delProduct(request,pk):
 def Products(request):
     use = 'home'
     User = Userperson.objects.all()
-    P = Product.objects.order_by('-Stock')
+    P = Product.objects.filter(Status = True).order_by('-Stock')
     length = len(P)
     if request.user.is_authenticated:
         condition = True
