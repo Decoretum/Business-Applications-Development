@@ -17,6 +17,19 @@ SELECT * FROM Inventory_product;
 SELECT * FROM auth_user;
 SELECT * FROM auth_group;
 
+UPDATE Inventory_product
+SET Status = 1
+WHERE Name = "Jedd's Steel";
+
+UPDATE Inventory_product
+SET Status = 1
+WHERE Name = "Steel Sheets";
+
+UPDATE Inventory_product
+SET Stock = 0
+WHERE Name = "Steel Sheets"
+OR Name = "Jedd's Steel";
+
 SELECT CONCAT(Inventory_notifyparty.id,": ", Name) AS 'PK and Address', Address
 FROM Inventory_notifyparty, Inventory_finalorder
 WHERE Inventory_notifyparty.id = Inventory_finalorder.notifyname_id

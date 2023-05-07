@@ -15,8 +15,8 @@
         {% if e == True %}      
             <div class="container">
                 <div class="Largetext" style="position: relative;"> No Products for this order yet! </div><br>
-                <a class="Button" href="{% url 'Products2' %}" style="margin-bottom: 1vh; position: relative;"> Back to Pending Orders </a>
-                <a class="Button" href="{% url 'addtoorder' pk=p %}"> Add a Product </a> <br><br>
+                <a class="Button" href="{% url 'addtoorder' pk=p %}"> Add a Product </a> 
+                <a class="Button" href="{% url 'Products2' %}" style="margin-bottom: 1vh; position: relative;"> Back to Pending Orders </a><br><br>
             </div>
         {% else %}
                 <div class="Largetext" style="margin-left: 24vw;"> Edit a Transaction from Order {{p}} </div> 
@@ -36,7 +36,12 @@
                 
                 {% for o in Products %}
                 <div class="container" id="info">
-                    <div class="Largetext"> <b>Ordered Product ID:</b> {{o.OrderedProductID}} </div> 
+                    {% if o.Marks.Status == False %}
+                        <div class="Largetext"> <b>Ordered Product ID:</b> {{o.OrderedProductID}} </div>
+                        <div class="bodytext" style="color: red;"> Product "{{o.Marks.Name}}" is a deleted product. </div><br>
+                    {% else %}
+                        <div class="Largetext"> <b>Ordered Product ID:</b> {{o.OrderedProductID}} </div> 
+                    {% endif %}
                     <div class="bodytext"> Product: <b> {{o.Marks.Name}} </b> </div> 
                     <div class="bodytext"> Order Remarks: {{o.remarks}} </div>
                     <div class="bodytext"> Quantity: {{o.quantity}} </div>

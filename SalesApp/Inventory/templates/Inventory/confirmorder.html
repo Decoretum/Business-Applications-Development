@@ -14,7 +14,12 @@
         <br><br><br>
         <form method="POST">{% csrf_token %}
             <div class="container" style="position: relative;">
-                <img src="{{ Prod.Image.url }}" style="margin: 15px;" class="image"> <br><br>
+                <img src="{{ Prod.Image.url }}" style="margin: 15px;" class="image"> 
+                {% for m in messages %}
+                    <div class="bodytext" style="position: absolute; top: 0; margin-left: 15vw; margin-top: 10vh; color: red;"> {{m}} </div>
+                {% endfor %}
+                
+                <br><br>
                 <div class="Largetext"> Order ID: {{OrderedP.OrderedProductID}}</div>
                 <div class="Largetext"> Product: <span id ='productname'>{{Prod.Name}}</span> </div>
                 <div class="Largetext"> Product Price: <span id ='productcost' data-val="{{Prod.Cost}}">${{Prod.Cost}}</span> </div>

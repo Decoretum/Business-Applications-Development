@@ -802,120 +802,135 @@ Completing phase of an order
 product, then an error will pop up, and it will show in the view/edit section of an order in "Pending Orders"
 '''
 def CompleteOrder(request,pk):
-    condition = True
-    parties = NotifyParty.objects.all()
-    num = pk
     OrderDone = get_object_or_404(FinalOrder, pk=pk)
-    if request.method == 'POST':
-        shipper = request.POST.get('shipper').strip()
-        ocean = request.POST.get('ocean').strip()
+    Ordered = OrderedProduct.objects.filter(OrderID = OrderDone)
 
-        notify = request.POST.get('notify').strip()
-        portload = request.POST.get('portload').strip()
-        portdis = request.POST.get('portdis').strip()
-        transhto = request.POST.get('transhto').strip()
-        finaldest = request.POST.get('finaldest').strip()
-        voyage = request.POST.get('voyage')
-
-        prepcol = request.POST.get('fin')
-
-        charges = request.POST.get('charges')
-        revtons = request.POST.get('revtons').strip()
-        rate = request.POST.get('rate')
-        payat = request.POST.get('payat').strip()
-
-        if (charges == ""):
-            charges = 0
-        if (rate == ""):
-            rate = 0
-
-
-        if notify == "Select a Notify Party":
-            messages.info(request, 'Select a valid Notify Party')
-            return redirect('completeorder', pk)
-        
-        elif portload.strip() == "" or portdis.strip() == "" or voyage.strip() == "" or shipper == "":
-            messages.info(request, 'Shipper Company, Port of Loading, Port of Discharge, and Voyage cannot be left blank')
-            return redirect('completeorder', pk)
-        
-        elif (prepcol == None):
-            messages.warning(request, 'Both Prepaid and Collect cannot be null, one field must not be null')
-            return redirect('completeorder',pk)
+    #Algorithm for checking if a product is deleted or not
+    for order in Ordered:
+        if order.Marks.Status == False:
+            return redirect('UnfTrans', pk=OrderDone.pk)
     
-        elif isDigit(request,num = str(voyage)) == False:
-            messages.warning(request,"Voyage was not a valid number")
-            return redirect('completeorder', pk)
-        
-        elif voyage == "" or voyage == None or "." in voyage or int(voyage) < 0:
-            messages.warning(request, 'Voyage must not be blank, a decimal, or <= 0')
-            return redirect('completeorder', pk)
-        
-        elif isDigit(request,num = str(charges)) == False:
-            messages.warning(request,"Charges was not a valid number")
-            return redirect('completeorder', pk)
-        
-        elif charges == "" or charges == None or Decimal(voyage) < 0:
-            messages.warning(request, 'Charges cannot be less than 0')
-            return redirect('completeorder', pk)
-        
-        elif isDigit(request,num = str(rate)) == False:
-            messages.warning(request,"Rate was not a valid number")
-            return redirect('completeorder', pk)
-        
-        elif rate == "" or rate == None or Decimal(rate) < 0:
-            messages.warning(request, 'Rate cannot be less than 0')
-            return redirect('completeorder', pk)
 
-        #elif True != False:
-        #    print('RESET')
-        #    return redirect('completeorder', pk)
+    '''
+    O(n) algorithm as worst case 
+    Hashmap will be used in order to store data for every specific product
+    that OrderedProducts would contain, no matter how few or many OrderedProducts there is
+    '''
 
+    outcome = True
+    OrderedProds = OrderedProduct.objects.filter(OrderID = OrderDone)
+    i = 0
+    hashmap = {}
 
-
+    while i < len(OrderedProds):
+        prod = OrderedProds[i]
+        prodobj = prod.Marks
+        if prodobj.Name in hashmap:
+            ''' If the product name exists in the hashmap, then we will simply update their value,
+            but we will retain the old value in order to update'''
+            old = hashmap[prodobj.Name]
+            hashmap.update({prodobj.Name: old - prod.quantity})
         else:
-            outcome = True
-            OrderedProds = OrderedProduct.objects.filter(OrderID = OrderDone)
-            i = 0
-            hashmap = {}
+            ''' If product name doesn't exist yet in the hashmap, then we will
+            create a new key-value for it '''
+            hashmap.update({prodobj.Name: prodobj.Stock - prod.quantity })
 
-            '''
-            O(n) algorithm as worst case 
-            Hashmap will be used in order to store data for every specific product
-            that OrderedProducts would contain, no matter how few or many OrderedProducts there is
-            '''
+        i = i + 1
 
-            while i < len(OrderedProds):
-                prod = OrderedProds[i]
-                prodobj = prod.Marks
-                if prodobj.Name in hashmap:
-                    ''' If the product name exists in the hashmap, then we will simply update their value,
-                    but we will retain the old value in order to update'''
-                    old = hashmap[prodobj.Name]
-                    hashmap.update({prodobj.Name: old - prod.quantity})
-                else:
-                    ''' If product name doesn't exist yet in the hashmap, then we will
-                    create a new key-value for it '''
-                    hashmap.update({prodobj.Name: prodobj.Stock - prod.quantity })
+    '''
+    A negative value in a hashmap would mean that the total quantity sum of a product in
+    the entirety of a FinalOrder is greater than number of Stock available for that product 
+    ''' 
 
-                i = i + 1
-
-            '''
-            A negative value in a hashmap would mean that the total quantity sum of a product in
-            the entirety of a FinalOrder is greater than number of Stock available for that product 
-            ''' 
-
-            #O(n) algorithm
-            for val in hashmap.values():
-                if val < 0:
-                    outcome = False
+    #O(n) algorithm
+    for val in hashmap.values():
+        if val < 0:
+            outcome = False
 
 
-            if outcome == False:
-                request.session['HM'] = hashmap #Hashmap Data
-                request.session['PK'] = pk #Primary Key of Final Order
-                return redirect('UnfTrans', pk)
+    if outcome == False:
+        request.session['HM'] = hashmap #Hashmap Data
+        request.session['PK'] = pk #Primary Key of Final Order
+        return redirect('UnfTrans', pk)
 
-         
+    
+    else:
+        request.session['HM'] = None
+        request.session['PK'] = None
+        condition = True
+        parties = NotifyParty.objects.all()
+        num = pk
+
+        if request.method == 'POST':
+            shipper = request.POST.get('shipper').strip()
+            ocean = request.POST.get('ocean').strip()
+
+            notify = request.POST.get('notify').strip()
+            portload = request.POST.get('portload').strip()
+            portdis = request.POST.get('portdis').strip()
+            transhto = request.POST.get('transhto').strip()
+            finaldest = request.POST.get('finaldest').strip()
+            voyage = request.POST.get('voyage').strip()
+
+            prepcol = request.POST.get('fin')
+
+            charges = request.POST.get('charges').strip()
+            revtons = request.POST.get('revtons').strip()
+            rate = request.POST.get('rate').strip()
+            payat = request.POST.get('payat').strip()
+
+            if (charges == ""):
+                charges = 0
+            if (rate == ""):
+                rate = 0
+
+
+            if notify == "Select a Notify Party":
+                messages.info(request, 'Select a valid Notify Party')
+                return redirect('completeorder', pk)
+            
+            elif portload.strip() == "" or portdis.strip() == "" or voyage.strip() == "" or shipper == "":
+                messages.info(request, 'Shipper Company, Port of Loading, Port of Discharge, and Voyage cannot be left blank')
+                return redirect('completeorder', pk)
+            
+            elif (prepcol == None):
+                messages.warning(request, 'Both Prepaid and Collect cannot be null, one field must not be null')
+                return redirect('completeorder',pk)
+
+            elif isDigit(request,num = str(voyage)) == False:
+                messages.warning(request,"Voyage was not a valid number")
+                return redirect('completeorder', pk)
+            
+            elif voyage == "" or voyage == None or "." in voyage or int(voyage) < 0:
+                messages.warning(request, 'Voyage must not be blank, a decimal, or <= 0')
+                return redirect('completeorder', pk)
+            
+            elif isDigit(request,num = str(charges)) == False:
+                messages.warning(request,"Charges was not a valid number")
+                return redirect('completeorder', pk)
+            
+            elif charges == "" or charges == None or Decimal(charges) < 0:
+                messages.warning(request, 'Charges cannot be less than 0')
+                return redirect('completeorder', pk)
+            
+            elif isDigit(request,num = str(rate)) == False:
+                messages.warning(request,"Rate was not a valid number")
+                return redirect('completeorder', pk)
+            
+            elif rate == "" or rate == None or Decimal(rate) < 0:
+                messages.warning(request, 'Rate cannot be less than 0')
+                return redirect('completeorder', pk)
+
+            #elif True != False:
+            #    print('RESET')
+            #    print(type(rate))
+            #    print(Decimal(rate) + 10)
+            #    print(Decimal(charges) + 10)
+            #    print(type(charges))
+            #    return redirect('completeorder', pk)
+
+
+
             else:
                 notifobject = get_object_or_404(NotifyParty, Name = notify)
 
@@ -949,12 +964,13 @@ def CompleteOrder(request,pk):
 
                 OrderDone.save()
                 return redirect('Products2')
-    else:
-        return render(request, 'Inventory/finalize.html',{
-            'C' : condition,
-            'parties' : parties,
-            'n' : num
-        })
+                
+        else:
+            return render(request, 'Inventory/finalize.html',{
+                'C' : condition,
+                'parties' : parties,
+                'n' : num
+            })
 
 
 
@@ -1023,6 +1039,10 @@ that will determine what data will be displayed on the second phase
 def ChangeTrans(request,pk):
     condition = ""
     ChosenTrans = get_object_or_404(OrderedProduct, pk=pk)
+    Ordernum = ChosenTrans.OrderID.pk
+    if ChosenTrans.Marks.Status == False:
+        return redirect('UnfTrans', pk=Ordernum)
+    
     quant = ChosenTrans.Marks.Stock
     prods = Product.objects.filter(Stock__gte = 1).filter(Status = True)
     currentq = ChosenTrans.quantity
@@ -1084,6 +1104,9 @@ def ConfirmTrans(request,pk):
         request.session['NAVIGATE'] = "confirmtrans"
 
         if request.method == "POST":
+            if Newproduct.Status == False:
+                messages.info(request,'You cant confirm transaction with a deleted product')
+                return redirect('confirmorder', pk=Order.pk)
             cost = request.POST.get('totalcost')
             Newremarks = request.POST.get('Description')
             q = request.POST.get('drop')
