@@ -873,8 +873,8 @@ border-radius: 9px;
 }
 
 .image{
-  max-width: 20vw;
-  max-height: 20vh;
+  max-width: 150px;
+  max-height: 150px;
   border-radius: 9px;
   margin: auto;
 }
