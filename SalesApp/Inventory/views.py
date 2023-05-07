@@ -304,7 +304,6 @@ def delProduct(request,pk):
 
 def Products(request):
     use = 'home'
-    User = Userperson.objects.all()
     P = Product.objects.filter(Status = True).order_by('-Stock')
     length = len(P)
     if request.user.is_authenticated:
@@ -323,7 +322,6 @@ def Products(request):
         return render(request, 'Inventory/products.html',{
             'C' : condition,
             'P':P, 
-            'User':User,
             'username' : request.session['user'],
             'use' : use,
             'L' : length
@@ -333,7 +331,6 @@ def Products(request):
         return render(request, 'Inventory/products.html',{
             'C' : condition,
             'P':P, 
-            'User':User,
             #'url':settings.MEDIA_URL,
             'use' : use,
             "L" : length
@@ -583,17 +580,14 @@ phase of order creation will display data based on the the first phase's input
 def CreateOrder(request):
     status = ""
     condition = True
-    Orders = FinalOrder.objects.filter(Finished = False)
     Products = Product.objects.filter(Stock__gte = 1).filter(Status = True)
 
     if request.method == "POST":
-        OrderNum = request.POST.get('Order')
         if request.POST.get('proddrop') == "":
             messages.info(request,"Choose a product!")
             return redirect('createorder')
         
         
-        request.session['Order'] = OrderNum
         request.session['rem'] = request.POST.get('rem')
         request.session['productname'] = request.POST.get('proddrop')
         ChosenProduct = get_object_or_404(Product, Name = request.session['productname'])
@@ -603,7 +597,6 @@ def CreateOrder(request):
 
     else:
         return render(request,'Inventory/MakeOrder.html',{ 
-            'O' : Orders,
             'P' : Products,
             'C' : condition,
             'status' : status

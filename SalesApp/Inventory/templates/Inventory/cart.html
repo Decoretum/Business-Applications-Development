@@ -15,7 +15,8 @@
         {% if e == True %}      
             <div class="container">
                 <div class="Largetext" style="position: relative;"> No Products for this order yet! </div><br>
-                <a class="Button" href="{% url 'Products2' %}" style="margin-bottom: 1vh; position: relative;"> Back to Pending Orders </a><br><br>
+                <a class="Button" href="{% url 'Products2' %}" style="margin-bottom: 1vh; position: relative;"> Back to Pending Orders </a>
+                <a class="Button" href="{% url 'addtoorder' pk=p %}"> Add a Product </a> <br><br>
             </div>
         {% else %}
                 <div class="Largetext" style="margin-left: 24vw;"> Edit a Transaction from Order {{p}} </div> 
