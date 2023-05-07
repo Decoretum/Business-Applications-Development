@@ -10,9 +10,15 @@ desc Inventory_orderedproduct;
 desc Inventory_product;
 
 SELECT * FROM Inventory_consignee;
-SELECT * FROM Inventory_finalorder;
-SELECT * FROM Inventory_orderedproduct
-WHERE OrderID_id = 1;
+SELECT * FROM Inventory_finalorder
+where Finished = True;
+
+SELECT Inventory_finalorder.id, Inventory_orderedproduct.OrderedProductID, Inventory_orderedproduct.totalcost
+FROM Inventory_orderedproduct, Inventory_finalorder
+WHERE Inventory_orderedproduct.OrderID_id = Inventory_finalorder.id
+AND Inventory_finalorder.Finished = False;
+#AND Inventory_finalorder.TotalCost >= 100;
+
 SELECT * FROM Inventory_product;
 SELECT * FROM auth_user;
 SELECT * FROM auth_group;
