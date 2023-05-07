@@ -588,7 +588,7 @@ def CreateOrder(request):
             return redirect('createorder')
         
         
-        request.session['rem'] = request.POST.get('rem')
+        request.session['rem'] = request.POST.get('rem').strip()
         request.session['productname'] = request.POST.get('proddrop')
         ChosenProduct = get_object_or_404(Product, Name = request.session['productname'])
         return redirect('confirmcreateorder', pk=ChosenProduct.pk)
@@ -784,7 +784,7 @@ def ConfirmOrder(request,pk):
 
     
         else:
-            remarks = request.session.get('rem')
+            remarks = request.session.get('rem').strip()
             return render(request,'Inventory/confirmcreateorder.html',{
                 'OrderedP' : ChosenProduct,
                 'C' : True,
@@ -1062,7 +1062,7 @@ def ChangeTrans(request,pk):
         request.session['OrderedPRem'] = ChosenTrans.pk
         request.session['OrderPname'] = request.POST.get('proddrop')
         request.session['manufacturer'] = request.POST.get('Manufacturer')
-        request.session['Remarks'] = request.POST.get('Description')
+        request.session['Remarks'] = request.POST.get('Description').strip()
         if request.session['OrderPname'] == "":
             request.session['OrderPname'] = ChosenTrans.Marks.Name
             
@@ -1089,7 +1089,7 @@ will be fetched from the database to be displayed on this second phase
 def ConfirmTrans(request,pk):
     ChosenTrans = get_object_or_404(OrderedProduct, pk=request.session.get('OrderedPRem')) #Orderedproduct
     orderprodname = request.session.get('OrderPname') #Orderedproductpk
-    remarks = request.session.get('Remarks') #remarks
+    remarks = request.session.get('Remarks').strip() #remarks
     Newproduct = get_object_or_404(Product, Name = orderprodname) #new product
     Order = get_object_or_404(FinalOrder,pk=ChosenTrans.OrderID.pk)
 
@@ -1108,7 +1108,7 @@ def ConfirmTrans(request,pk):
                 messages.info(request,'You cant confirm transaction with a deleted product')
                 return redirect('confirmorder', pk=Order.pk)
             cost = request.POST.get('totalcost')
-            Newremarks = request.POST.get('Description')
+            Newremarks = request.POST.get('Description').strip()
             q = request.POST.get('drop')
     
             Order.TotalCost -= ChosenTrans.totalcost

@@ -22,20 +22,20 @@
                 {% endfor %}
                 
                 <br><br><br>
-                <div class="Largetext"> Order ID: {{OrderedP.OrderedProductID}}</div>
+                <div class="Largetext"> Order ID: {{OrderedP.OrderedProductID}}</div><br>
                     <div class="Largetext"> Quantity </div>
                     <select type="number" id="drop" name="drop" style="display:inline; margin-left: 5vw;">
-                        <option type="number" id="def" name="def"> {{OrderedP.quantity}} </option>
+                        <option type="number" id="def" name="def"> 1 </option>
                         {% for x in stock %}
-                            {% if x != OrderedP.quantity %}
+                            {% if x != 1 %}
                             <option type="text" id="num" name="num"> {{x}} </option>
                             {% endif %}
                         {% endfor %}
-                    </select>
+                    </select><br><br>
                 <div class="Largetext"> Total Cost </div>
-                <input type="text" class="forminput" name="totalcost" id="totalcost" value="${{OrderedP.totalcost}}" style="margin-left: 5vw;" readonly> 
+                <input type="text" class="forminput" name="totalcost" id="totalcost" value="${{Prod.Cost}}" style="margin-left: 5vw;" readonly><br><br>
                 <div class="Largetext"> Remarks </div> 
-                    <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 5vw;"> {{Rem}} </textarea><br><br>
+                    <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 5vw;">{{Rem}}</textarea><br><br>
                 <div style="display: inline-flex;">
                     <button class="Button" type="submit" style="margin-left: 4vw;"> Submit </button>
                 </div>

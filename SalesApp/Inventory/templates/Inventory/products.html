@@ -93,7 +93,7 @@
         {% if L > 0%}
         {% for o in O %}
             <div class="container">
-                <div class="Largetext"> Order {{o.pk}} </div>
+                <div class="Largetext" style="font-weight: 200;"> Order {{o.pk}} -  {{o.OrderDate}}, {{o.Time}} </div>
                 <table id="tab" style="text-align: center; width: 45vw; max-width: 100%; border-width: 2px; margin-right: 1vw; word-break: break-word;">
                     <tr>
                         <th> <b>Order ID</b>: {{o.Verification}} </th>
