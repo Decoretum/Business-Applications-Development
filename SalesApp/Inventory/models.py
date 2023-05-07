@@ -33,7 +33,7 @@ class Product(models.Model): #Steels, not food
     Color = models.CharField(default=None, max_length=20)
     Status = models.BooleanField(default=True) #Records incase of removed
 
-    Measurement = models.CharField(default=None, max_length=30)
+    Measurement = models.CharField(default=None, max_length=100)
     Description = models.CharField(default=None, max_length=500)
     GrossWeight = models.CharField(default=None, max_length=40)
 
@@ -107,8 +107,8 @@ class FinalOrder(models.Model):
 
     NotifyName = models.ForeignKey(NotifyParty, default=None, on_delete=models.CASCADE, null=True, blank=True)
     NumOfBL = models.IntegerField(default=3, null=True, blank=True)
-    PayAt = models.CharField(default='', max_length=70, null=True, blank=True)
-    Place = models.CharField(default="Kaohsiung, Taiwan", max_length=70, null=False)
+    PayAt = models.CharField(default='', max_length=255, null=True, blank=True)
+    Place = models.CharField(default="Kaohsiung, Taiwan", max_length=255, null=False)
     PlaceDate = models.CharField(default='', max_length=100, blank=True)
 
     Charges = models.DecimalField(default=0.0, max_length=11, validators=[MinValueValidator(Decimal('0.01'))], null=True, blank=True, decimal_places=2, max_digits=8)
@@ -119,7 +119,7 @@ class FinalOrder(models.Model):
     
     Portload = models.CharField(max_length=255, default='', blank=True)
     Portdis = models.CharField(max_length=255, default='', blank=True)
-    TranshTo = models.CharField(max_length=50, default='', null=True, blank=True)
+    TranshTo = models.CharField(max_length=255, default='', null=True, blank=True)
     FinalDest = models.CharField(max_length=255, default='', null=True, blank=True)
     Voyage = models.SmallIntegerField(default=0, blank=True)
 
@@ -131,7 +131,7 @@ class FinalOrder(models.Model):
 
 
 class OrderedProduct(models.Model):
-    remarks = models.CharField(max_length=200)
+    remarks = models.CharField(max_length=500, default='', null=True, blank=True)
     quantity = models.IntegerField(default=0)
     totalcost = models.DecimalField(default=0, validators=[DecimalValidator(10,2)], decimal_places=2, max_digits=10)
 
