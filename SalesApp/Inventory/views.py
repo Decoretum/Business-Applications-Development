@@ -431,8 +431,20 @@ def ShowProds(request):
         request.session['addedproduct'] = None
 
     request.session['NAVIGATE'] = "users"
-
+    errorproducts = []
+    i = 0
     AllOrders = FinalOrder.objects.filter(Finished = False)
+
+    #This is O(n)
+    AllSubOrders = OrderedProduct.objects.all()
+    while i < len(AllSubOrders):
+        finalorder = AllSubOrders[i].OrderID 
+        if finalorder.Finished == False:
+            product = AllSubOrders[i].Marks
+            if product.Status == False:
+                errorproducts.append(finalorder.pk)
+        i += 1
+
     length = len(AllOrders)
     pk = request.session.get('PK')
     if pk != None:
@@ -440,13 +452,15 @@ def ShowProds(request):
                 'C' : True,
                 'Orders' : AllOrders,
                 'L' : length,
-                'primary' : pk
+                'primary' : pk,
+                'array' : errorproducts
             })
     else:
         return render(request, 'Inventory/users2.html',{
                 'C' : True,
                 'Orders' : AllOrders,
-                'L' : length
+                'L' : length,
+                'array' : errorproducts
             })
 
 '''def ProdsinOrder(request, pk):
@@ -744,7 +758,7 @@ def ConfirmOrder(request,pk):
             human = "noone"
             people = Consignee.objects.all()
             i = 0
-            
+
             while i < len(people):
                 if people[i].Name == Person:
                     human = people[i]
