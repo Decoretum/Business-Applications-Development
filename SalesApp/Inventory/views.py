@@ -18,6 +18,7 @@ import string
 def home(request):
     condition = ''
     use = "home"
+    
     #This state checks if there is a user logged in for the application
     if request.user.is_authenticated: 
         condition = True
@@ -740,12 +741,26 @@ def ConfirmOrder(request,pk):
             Cost = Decimal(Cost)
         
             #Final Order Section         
-            NewConsign = Consignee.objects.create(
+            human = "noone"
+            people = Consignee.objects.all()
+            i = 0
+            
+            while i < len(people):
+                if people[i].Name == Person:
+                    human = people[i]
+                    break
+                i += 1
+
+            if human == "noone":
+                NewConsign = Consignee.objects.create(
                     BL = VerifBL(request),
                     Name = Person,
                 )
-            NewConsign.save()
-
+                NewConsign.save()
+            else:
+                NewConsign = human
+    
+            
             timezone.activate('Asia/Taipei')
 
             NewOrder = FinalOrder.objects.create(

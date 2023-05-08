@@ -873,8 +873,10 @@ border-radius: 9px;
 }
 
 .image{
-  max-width: 150px;
-  max-height: 150px;
+  /*max-width: 150px;
+  max-height: 150px;*/
+  max-width: 20vw;
+  max-height: 20vh;
   border-radius: 9px;
   margin: auto;
 }
