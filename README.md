@@ -1,11 +1,13 @@
 # Business-Applications-Development
 This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project.<br><br>
-The real-world client of this project is China Global Steel Corporation. <br><br>
+The real-world client of this project is China Global Steel Corporation. <br><br><br>
 
+<h1> Systems Design and Development </h1> <br>
 The Software System was designed by Chan Hyun, Gael Estrera, Jem Flores, Faustin Pua, and Alexis Miner. <br><br>
-This Software System was developed by [Gael Estrera](https://github.com/Decoretum)
+This Software System was developed by [Gael Estrera](https://www.github.com/Decoretum). 
 
-<b> Tech Stack used </b>: Python (including Django), Javascript, TailWind CSS, SQL <br>
+<br><br>
+<h1> Tech Stack used </h1>
 
 <b> Django </b> <br>
 This framework utilizes Python and is used for both front-end and back-end. For this project, it is heavily used for back-end computing especially in session data, Model data analysis, and model instance creations. <br>
@@ -14,7 +16,7 @@ This framework utilizes Python and is used for both front-end and back-end. For 
 Plain Javascript will be used for client-side rendering of dynamic HTML changes such as dropdown quantity and total cost. This will also be used for User Interface and User experience. <br>
 
 <b> SQL </b> <br>
-SQL will be integrated with the SQLITE3 database in the future.
+SQL is used for creating and managing queries for functional back-end algorithms.
 
 <br>
 
