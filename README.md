@@ -4,7 +4,8 @@ The real-world client of this project is China Global Steel Corporation. <br><br
 
 <h1> Systems Design and Development </h1> <br>
 The Software System was designed by Chan Hyun, Gael Estrera, Jem Flores, Faustin Pua, and Alexis Miner. <br><br>
-This Software System was developed by [Gael Estrera](https://www.github.com/Decoretum). 
+
+This Software System was developed by [Gael Estrera](https://github.com/Decoretum).
 
 <br><br>
 <h1> Tech Stack used </h1>
