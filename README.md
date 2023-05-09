@@ -1,6 +1,10 @@
 # Business-Applications-Development
 This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project.<br><br>
 The real-world client of this project is China Global Steel Corporation. <br><br>
+
+The Software System was designed by Chan Hyun, Gael Estrera, Jem Flores, Faustin Pua, and Alexis Miner. <br><br>
+This Software System was developed by [Gael Estrera](https://github.com/Decoretum)
+
 <b> Tech Stack used </b>: Python (including Django), Javascript, TailWind CSS, SQL <br>
 
 <b> Django </b> <br>
