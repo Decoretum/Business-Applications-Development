@@ -1,6 +1,7 @@
 # Business-Applications-Development
 This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project.<br><br>
-The real-world client of this project is China Global Steel Corporation. <br><br><br>
+The real-world client of this project is China Global Steel Corporation. <br><br>
+To obtain the settings.py and Django Secret Key, message [Gael Estrera](https://github.com/Decoretum).<br><br><br>
 
 <h1> Systems Design and Development </h1> <br>
 The Software System was designed by Chan Hyun, Gael Estrera, Jem Flores, Faustin Pua, and Alexis Miner. <br><br>
@@ -47,17 +48,26 @@ https://www.dataquest.io/blog/installing-python-on-mac/ <br><br>
 Install Python for Windows: <br>
 https://www.tomshardware.com/how-to/install-python-on-windows-10-and-11 <br><br>
 
-<h1> Python Virtual Environment   </h1> <br>
+<h1> Activate Python Virtual Environment   </h1> <br>
 The purpose of a Python virtual environment is to create an isolated virtual space where you could freely <br>
 install packages and depencies for a <b> certain </b> project without worrying if these packages and depencies will <br>
 conflict with your global packages! <br><br>
 
-Open up the directory of the project, but be sure you're outside of the "SalesApp" directory. Once you're in this directory, type: <br>
+Open up the directory of the project, but be sure you're outside of the "SalesApp" directory. Once you're in this directory, type: <br><br>
+For MacOS:
 ```bash
-python3 -m venv EnvironmentName 
+source Steel/bin/activate
 ``` 
-wherein "EnvironmentName" could be any name you want. <br><br>
 
+The Python Virtual Environment for MacOS will then be activated! You can now run the server.
+<br><br>
+
+For Windows:
+```bash
+python3 -m venv Steel
+```
+
+<br><br>
 
 <h1> Running the Server </h1>
 Enter the directory of the virtual environment folder that you've created. <br>
