@@ -431,7 +431,7 @@ def ShowProds(request):
         request.session['addedproduct'] = None
 
     request.session['NAVIGATE'] = "users"
-    errorproducts = []
+    errorproducts = set() #Set for no duplicates
     i = 0
     AllOrders = FinalOrder.objects.filter(Finished = False)
 
@@ -442,9 +442,10 @@ def ShowProds(request):
         if finalorder.Finished == False:
             product = AllSubOrders[i].Marks
             if product.Status == False:
-                errorproducts.append(finalorder.pk)
+                errorproducts.add(finalorder.pk)
         i += 1
 
+  
     length = len(AllOrders)
     pk = request.session.get('PK')
     if pk != None:
