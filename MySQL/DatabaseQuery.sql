@@ -8,15 +8,21 @@ desc Inventory_notifyparty;
 desc Inventory_finalorder;
 desc Inventory_orderedproduct;
 desc Inventory_product;
+desc Inventory_userperson;
 
 SELECT * FROM Inventory_consignee;
 SELECT * FROM Inventory_finalorder
 where Finished = True;
 
-SELECT Inventory_finalorder.id, Inventory_orderedproduct.OrderedProductID, Inventory_orderedproduct.totalcost
-FROM Inventory_orderedproduct, Inventory_finalorder
+SELECT * FROM auth_user;
+select * from inventory_userperson;
+
+
+SELECT Inventory_finalorder.id, Inventory_product.Name, Inventory_orderedproduct.OrderedProductID, Inventory_orderedproduct.quantity, Inventory_product.stock, Inventory_orderedproduct.totalcost
+FROM Inventory_orderedproduct, Inventory_finalorder, Inventory_product
 WHERE Inventory_orderedproduct.OrderID_id = Inventory_finalorder.id
-AND Inventory_finalorder.Finished = False;
+AND Inventory_orderedproduct.marks_id = Inventory_product.id
+AND Inventory_finalorder.id = 3;
 #AND Inventory_finalorder.TotalCost >= 100;
 
 SELECT * FROM Inventory_product;
@@ -25,7 +31,12 @@ SELECT * FROM auth_group;
 
 UPDATE Inventory_product
 SET Status = 1
-WHERE Name = "Jedd's Steel";
+WHERE Name = "Jedd's Steel" 
+or Name = "Steel Cylinders";
+
+UPDATE Inventory_product
+SET Status = 1
+where Name = "Steel Cylinders"; 
 
 UPDATE Inventory_product
 SET Status = 1
@@ -35,6 +46,9 @@ UPDATE Inventory_product
 SET Stock = 0
 WHERE Name = "Steel Sheets"
 OR Name = "Jedd's Steel";
+
+Select * from Inventory_product
+where Status = True;
 
 SELECT CONCAT(Inventory_notifyparty.id,": ", Name) AS 'PK and Address', Address
 FROM Inventory_notifyparty, Inventory_finalorder

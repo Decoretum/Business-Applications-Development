@@ -1,3 +1,14 @@
+let collect = document.getElementById('yes');
+let prepaid = document.getElementById('no');
+
+function val(e){
+    let holder = document.getElementById('fin');
+    holder.value = e.target.value;
+}
+
+collect.addEventListener('click', val);
+prepaid.addEventListener('click', val);
+
 let tempbox = document.getElementById('tempbox');
         let trigger = document.getElementById('edittemp');
         let back = document.getElementById('hideme');

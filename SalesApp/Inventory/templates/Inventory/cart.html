@@ -39,6 +39,9 @@
                     {% if o.Marks.Status == False %}
                         <div class="Largetext"> <b>Ordered Product ID:</b> {{o.OrderedProductID}} </div>
                         <div class="bodytext" style="color: red;"> Product "{{o.Marks.Name}}" is a deleted product. </div><br>
+                    {% elif o.Marks.Available == False %}
+                        <div class="Largetext"> <b>Ordered Product ID:</b> {{o.OrderedProductID}} </div>
+                        <div class="bodytext" style="color: red;"> Product "{{o.Marks.Name}}" is not available as of the moment. </div><br>                   
                     {% else %}
                         <div class="Largetext"> <b>Ordered Product ID:</b> {{o.OrderedProductID}} </div> 
                     {% endif %}

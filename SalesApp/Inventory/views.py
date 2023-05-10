@@ -48,6 +48,9 @@ def home(request):
             })
 
 def Clerk(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    
     if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
         request.session['Remarks'] = None
         request.session['productname'] = None
@@ -77,7 +80,8 @@ in compensation for some performance
 def isDigit(request,num):
     try:
         #type(result) == int or type(result) == Decimal 
-        "-" not in num and (Decimal(num) or int(num))
+        "-" not in num 
+        print(Decimal(num)) or print(int(num))
         return True
     except:
         return False
@@ -86,6 +90,8 @@ def isDigit(request,num):
 #Notify Party section
     
 def showNotify(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     parties = NotifyParty.objects.all()
     many = len(parties) > 0
 
@@ -96,6 +102,8 @@ def showNotify(request):
     })
 
 def AddNotify(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     edit = False
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -131,6 +139,8 @@ def AddNotify(request):
         })
 
 def EditNotify(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     edit = True
     chosen = get_object_or_404(NotifyParty, pk=pk)
     if request.method == 'POST':
@@ -159,13 +169,14 @@ def EditNotify(request, pk):
 #Products Section    
  
 def AddProduct(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     if request.method == "POST":
         imgfile = request.FILES.get('Image')         
         name = request.POST.get('Name').strip()
         length = request.POST.get('Length').strip()
         manufacturer = request.POST.get('Manufacturer').strip()
         manuloc = request.POST.get('Location').strip()
-        color = request.POST.get('Color').strip()
         cost = request.POST.get('Cost')
         stock = request.POST.get('Stock')
         desc = request.POST.get('Description').strip()
@@ -173,7 +184,7 @@ def AddProduct(request):
         meas = request.POST.get('Measurement').strip()
         weight = request.POST.get('Weight').strip()
 
-        if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
+        if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
             messages.info(request, 'You must fill out all the fields')
             return redirect('addproduct')
 
@@ -198,7 +209,6 @@ def AddProduct(request):
                 Name = name,
                 Manufacturer = manufacturer,
                 ManuLoc = manuloc,
-                Color = color,
                 Length = length,
                 Cost = cost,
                 Stock = stock,
@@ -224,6 +234,8 @@ def AddProduct(request):
             )
 
 def EditProduct(request,pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     Existing = get_object_or_404(Product, pk=pk)
     if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
         request.session['Remarks'] = None
@@ -240,7 +252,6 @@ def EditProduct(request,pk):
         length = request.POST.get('Length').strip()
         manufacturer = request.POST.get('Manufacturer').strip()
         manuloc = request.POST.get('Location').strip()
-        color = request.POST.get('Color')
         cost = request.POST.get('Cost')
         contact = request.POST.get('Contact').strip()
 
@@ -249,7 +260,14 @@ def EditProduct(request,pk):
         weight = request.POST.get('Weight').strip()
         stock = request.POST.get('stock')
 
-        if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or color.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
+        prepcol = request.POST.get('fin')
+
+        if prepcol == 'True':
+            prepcol = True
+        else:
+            prepcol = False
+
+        if name.strip() == "" or length.strip() == ""  or manufacturer.strip() == "" or manuloc.strip() == "" or cost.strip() == "" or desc.strip() == "" or contact.strip() == "" or meas.strip() == "" or weight.strip() == "":
             messages.info(request, 'You must fill out all the fields')
             return redirect('editproduct',pk)
 
@@ -279,11 +297,11 @@ def EditProduct(request,pk):
         Existing.GrossWeight = weight
         Existing.Manufacturer = manufacturer
         Existing.ManuLoc = manuloc
-        Existing.Color = color
         Existing.Length = length
         Existing.Cost = cost
         Existing.Description = desc
         Existing.Contact = contact
+        Existing.Available = prepcol
         Existing.MakeMark()
         return redirect ('view',pk)
         
@@ -296,6 +314,8 @@ def EditProduct(request,pk):
             )
 
 def delProduct(request,pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     Deleted = get_object_or_404(Product, pk=pk)
     if request.user.is_authenticated:
         Deleted.Status = False
@@ -413,6 +433,8 @@ If you want to put anything into the session that will be available
 to the user immediately after logging out, do that after calling django.contrib.auth.logout().
 '''
 def logoutuser(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     logout(request)
     return redirect('Login')
     
@@ -421,6 +443,8 @@ def logoutuser(request):
 #Displaying Section
 
 def ShowProds(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     if request.session.get('NAVIGATE') == "confirmorder" or request.session.get('NAVIGATE') == "confirmtrans":
         request.session['Remarks'] = None
         request.session['productname'] = None
@@ -441,7 +465,7 @@ def ShowProds(request):
         finalorder = AllSubOrders[i].OrderID 
         if finalorder.Finished == False:
             product = AllSubOrders[i].Marks
-            if product.Status == False:
+            if product.Status == False or product.Available == False:
                 errorproducts.add(finalorder.pk)
         i += 1
 
@@ -474,6 +498,8 @@ def ShowProds(request):
     })'''
 
 def ShowComplete(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     condition = True
     use = 'complete'
     DoneOrders = FinalOrder.objects.filter(Finished = True).order_by('-pk')
@@ -551,6 +577,8 @@ def Developer(request):
 
 #Creates a randomized ID with a length of 13 consisting of letters and integers
 def VerifID(request): 
+    if not request.user.is_authenticated:
+        return redirect('home')
     ID = []
     for x in range(13):
         chooser = random.randint(1,2)
@@ -568,6 +596,8 @@ def VerifID(request):
 
 #Similar to VerifID, but the length is 20
 def VerifBL(request): 
+    if not request.user.is_authenticated:
+        return redirect('home')
     ID = []
     for x in range(20):
         chooser = random.randint(1,2)
@@ -594,9 +624,11 @@ phase of order creation will display data based on the the first phase's input
 - Request data are initialized for the second phase to adapt to the request data
 '''
 def CreateOrder(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
     status = ""
     condition = True
-    Products = Product.objects.filter(Stock__gte = 1).filter(Status = True)
+    Products = Product.objects.filter(Stock__gte = 1).filter(Status = True).filter(Available = True)
 
     if request.method == "POST":
         if request.POST.get('proddrop') == "":
@@ -625,10 +657,12 @@ This is the alternative of the first phase of order creation
 - Identical functionalities and fields as the CreateOrder() function
 '''
 def AddtoOrder(request,pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     condition = True
     status = 'adding'
     Order = get_object_or_404(FinalOrder, pk=pk)
-    Prods = Product.objects.filter(Stock__gte = 1).filter(Status = True)
+    Prods = Product.objects.filter(Stock__gte = 1).filter(Status = True).filter(Available = True)
     request.session['NAVIGATE'] = 'confirmorder'
     if request.method == 'POST':
         prod = request.POST.get('prod')
@@ -675,6 +709,8 @@ This is the second phase of Order Creation
     adding an ordered product with
 '''
 def ConfirmOrder(request,pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     remarks = request.session.get('rem') #remarks
     ChosenProduct = get_object_or_404(Product, pk=pk) #product
     stock = ChosenProduct.Stock
@@ -832,12 +868,14 @@ Completing phase of an order
 product, then an error will pop up, and it will show in the view/edit section of an order in "Pending Orders"
 '''
 def CompleteOrder(request,pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     OrderDone = get_object_or_404(FinalOrder, pk=pk)
     Ordered = OrderedProduct.objects.filter(OrderID = OrderDone)
 
     #Algorithm for checking if a product is deleted or not
     for order in Ordered:
-        if order.Marks.Status == False:
+        if order.Marks.Status == False or order.Marks.Available == False:
             return redirect('UnfTrans', pk=OrderDone.pk)
     
 
@@ -926,14 +964,6 @@ def CompleteOrder(request,pk):
             elif (prepcol == None):
                 messages.warning(request, 'Both Prepaid and Collect cannot be null, one field must not be null')
                 return redirect('completeorder',pk)
-
-            elif isDigit(request,num = str(voyage)) == False:
-                messages.warning(request,"Voyage was not a valid number")
-                return redirect('completeorder', pk)
-            
-            elif voyage == "" or voyage == None or "." in voyage or int(voyage) < 0:
-                messages.warning(request, 'Voyage must not be blank, a decimal, or <= 0')
-                return redirect('completeorder', pk)
             
             elif isDigit(request,num = str(charges)) == False:
                 messages.warning(request,"Charges was not a valid number")
@@ -1008,6 +1038,8 @@ def CompleteOrder(request,pk):
     
 # Deleting of OrderedProduct obejct
 def DeleteTrans(request,pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     TobeDel = get_object_or_404(OrderedProduct, pk=pk)
     Order = get_object_or_404(FinalOrder, pk=TobeDel.OrderID.pk)
     Order.TotalCost -= TobeDel.totalcost
@@ -1024,6 +1056,8 @@ you will see an error
 - Array was used to store data for a product and an integer that represents its error on quantity 
 '''
 def EditTrans(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     condition = ""
     Order = get_object_or_404(FinalOrder, pk=pk)
     Products = OrderedProduct.objects.filter(OrderID = Order).order_by('-totalcost')
@@ -1067,14 +1101,16 @@ that will determine what data will be displayed on the second phase
 - We get the data for Product name and remarks
 '''
 def ChangeTrans(request,pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     condition = ""
     ChosenTrans = get_object_or_404(OrderedProduct, pk=pk)
     Ordernum = ChosenTrans.OrderID.pk
-    if ChosenTrans.Marks.Status == False:
+    if ChosenTrans.Marks.Status == False or ChosenTrans.Marks.Available == False:
         return redirect('UnfTrans', pk=Ordernum)
     
     quant = ChosenTrans.Marks.Stock
-    prods = Product.objects.filter(Stock__gte = 1).filter(Status = True)
+    prods = Product.objects.filter(Stock__gte = 1).filter(Status = True).filter(Available = True)
     currentq = ChosenTrans.quantity
     currentprod = ChosenTrans.Marks.Name
     stocky = []
@@ -1117,6 +1153,8 @@ will be fetched from the database to be displayed on this second phase
 
 '''
 def ConfirmTrans(request,pk):
+    if not request.user.is_authenticated:
+        return redirect('home')
     ChosenTrans = get_object_or_404(OrderedProduct, pk=request.session.get('OrderedPRem')) #Orderedproduct
     orderprodname = request.session.get('OrderPname') #Orderedproductpk
     remarks = request.session.get('Remarks').strip() #remarks

@@ -7,7 +7,7 @@ from django.utils import timezone
 
 
 class NotifyParty(models.Model):
-    Name = models.CharField(max_length=50, unique=True)
+    Name = models.CharField(max_length=100, unique=True)
     Street = models.CharField(max_length=100)
     City = models.CharField(max_length=100)
     State = models.CharField(max_length=100)
@@ -30,16 +30,17 @@ class Product(models.Model): #Steels, not food
     Image = models.ImageField(default= "images/defproduct.jpg", blank=True, upload_to="images/") #not have image if we dont have one, uploaded to images folder automatically
     Manufacturer = models.CharField(default=None, max_length=100)
     ManuLoc = models.CharField(default=None,max_length=255)
-    Color = models.CharField(default=None, max_length=20)
     Status = models.BooleanField(default=True) #Records incase of removed
 
     Measurement = models.CharField(default=None, max_length=100)
-    Description = models.CharField(default=None, max_length=500)
-    GrossWeight = models.CharField(default=None, max_length=40)
+    Description = models.CharField(default=None, max_length=1000)
+    GrossWeight = models.CharField(default=None, max_length=100)
+
+    Available = models.BooleanField(default=True)
 
     Marks = models.CharField(default=None, null=True, max_length=300) 
     def MakeMark(self):
-        self.Marks = str(self.Manufacturer) + ", " + str(self.ManuLoc) + ", " + str(self.Color)
+        self.Marks = str(self.Manufacturer) + ", " + str(self.ManuLoc)
         super(Product,self).save() 
     
     Length = models.CharField(max_length=20)
@@ -95,14 +96,14 @@ class Userperson(models.Model):
 #portload, portdis, transhto, FinalDest, Voyage
 class FinalOrder(models.Model):
     ShipperName = models.CharField(max_length=100, default='', blank=True)
-    OceanVessel = models.CharField(max_length=50, null=True, default='')
+    OceanVessel = models.CharField(max_length=100, null=True, default='')
 
     TotalCost = models.DecimalField(default=0, validators=[DecimalValidator(10,2)], decimal_places=2, max_digits=10) 
     Finished = models.BooleanField(default=False) #confirmed or not
     OrderDate = models.DateField(auto_now_add=True)#auto_now_add=True)
     Time = models.TimeField(default=timezone.now()) 
 
-    Verification = models.CharField(default='',unique=True, max_length=13, null=True, blank=True) #Orderid -> verification
+    Verification = models.CharField(default='',unique=True, max_length=13, blank=True) #Orderid -> verification
     BL = models.ForeignKey(Consignee, null=False, blank=True, on_delete=models.CASCADE)
 
     NotifyName = models.ForeignKey(NotifyParty, default=None, on_delete=models.CASCADE, null=True, blank=True)
@@ -111,7 +112,7 @@ class FinalOrder(models.Model):
     Place = models.CharField(default="Kaohsiung, Taiwan", max_length=255, null=False)
     PlaceDate = models.CharField(default='', max_length=100, blank=True)
 
-    Charges = models.DecimalField(default=0.0, max_length=11, validators=[MinValueValidator(Decimal('0.01'))], null=True, blank=True, decimal_places=2, max_digits=8)
+    Charges = models.DecimalField(default=0.0, validators=[MinValueValidator(Decimal('0.01'))], null=True, blank=True, decimal_places=2, max_digits=8)
     RevTons = models.CharField(max_length=1000, default='', null=True, blank=True)
     Rate = models.DecimalField(default=0.0, null=True, blank=True, validators=[MinValueValidator(Decimal('0.01'))], decimal_places=2, max_digits=8)
     Prepaid = models.CharField(max_length=20, default='', blank=True)
@@ -121,7 +122,7 @@ class FinalOrder(models.Model):
     Portdis = models.CharField(max_length=255, default='', blank=True)
     TranshTo = models.CharField(max_length=255, default='', null=True, blank=True)
     FinalDest = models.CharField(max_length=255, default='', null=True, blank=True)
-    Voyage = models.SmallIntegerField(default=0, blank=True)
+    Voyage = models.CharField(max_length=255, default='')
 
     def PD(self): #call this when confirming the order
         self.PlaceDate = str(self.Place) + ", " + str(self.OrderDate)

@@ -33,8 +33,7 @@
             <div class="Largetext"> Manufacturer Location </div>
             <input type="text" class="forminput" name="Location" id="Location" value="{{Prod.ManuLoc}}">
 
-            <div class="Largetext"> Color </div>
-            <input type="text" class="forminput" name="Color" id="Color" value="{{Prod.Color}}"> <br><br><br>
+            <br><br><br>
 
             {% for m in messages %}
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.ERROR %} <span {% if m.tags %} style="color: red; margin-left: 2vw;" class="{{ m.tags}}" {% endif %}>{{m}} </span><br> {% endif %}
@@ -43,6 +42,20 @@
             <span class="Largetext"> Cost </span> <br>
             <span class="bodytext" id="costnote" style="margin-left: 2vw;"> </span><br>
             <input type="text" class="forminput" name="Cost" id="Cost" value="{{Prod.Cost}}"><br><br><br>
+
+            {% if Prod.Available == True %}
+                <input type="radio" name="prepcol" id="yes" value="True" checked>
+                <label for="yes"> Available </label> 
+                <input type="radio" name="prepcol" id="no" value="False">
+                <label for="no"> Not Available </label> <br><br>
+            {% else %}
+                <input type="radio" name="prepcol" id="yes" value="True">
+                <label for="yes"> Available </label> 
+                <input type="radio" name="prepcol" id="no" value="False" checked>
+                <label for="no"> Not Available </label> <br><br>
+            {% endif %}
+
+            <input type="hidden" id="fin" name="fin"> <br>
 
             {% for m in messages %}
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span {% if m.tags %} style="color: red; margin-left: 2vw;" class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}

@@ -10,7 +10,7 @@ collect.addEventListener('click', val);
 prepaid.addEventListener('click', val);
 
 
-let s = document.getElementById('voyage');
+/*let s = document.getElementById('voyage');
         let snote = document.getElementById('voy');
         console.log(s.value);
         s.addEventListener('keyup',(e)=>{
@@ -27,7 +27,7 @@ let s = document.getElementById('voyage');
             else{
                 snote.innerHTML = "";
             }
-        })
+        })*/
 
         let c = document.getElementById('charges');
         let cnote = document.getElementById('coy');
