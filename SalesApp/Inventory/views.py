@@ -196,12 +196,12 @@ def AddProduct(request):
             messages.warning(request,"No negative costs or costs equal to 0")
             return redirect('addproduct')
 
-        elif isDigit(request, num = str(stock)) == False:
-            messages.error(request, "Stock cannot be text")
+        elif isDigit(request, num = str(stock)) == False or stock == "" or stock == None:
+            messages.error(request, "Stock cannot be text or empty")
             return redirect('addproduct')
         
-        elif stock == "" or stock == None or "." in stock or int(stock) <= 0 or '-' in stock:
-            messages.error(request, 'Stock must not be blank, a decimal, or <= 0')
+        elif "." in stock or int(stock) <= 0 or '-' in stock:
+            messages.error(request, 'Stock must not be a decimal or <= 0')
             return redirect('addproduct')
             
         New = Product.objects.create(
@@ -278,12 +278,12 @@ def EditProduct(request,pk):
             messages.error(request,"No negative costs or costs equal to 0")
             return redirect('editproduct', pk)
         
-        elif isDigit(request, num = str(stock)) == False:
-            messages.warning(request, "Stock cannot be text")
+        elif isDigit(request, num = str(stock)) == False or stock == "" or stock == None:
+            messages.warning(request, "Stock cannot be text or empty")
             return redirect('editproduct', pk)
         
-        elif stock == "" or stock == None or "." in stock or int(stock) < 0 or '-' in stock:
-            messages.warning(request, 'Stock must not be blank, a decimal, or < 0')
+        elif "." in stock or int(stock) < 0 or '-' in stock:
+            messages.warning(request, 'Stock must not be a decimal or < 0')
             return redirect('editproduct', pk)
 
         Existing.Name = name

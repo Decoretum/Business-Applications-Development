@@ -9,6 +9,7 @@ desc Inventory_finalorder;
 desc Inventory_orderedproduct;
 desc Inventory_product;
 desc Inventory_userperson;
+DESC INVENTORY_CONSIGNEE;
 
 SELECT * FROM Inventory_consignee;
 SELECT * FROM Inventory_finalorder
