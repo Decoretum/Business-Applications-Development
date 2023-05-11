@@ -31,7 +31,7 @@ let tempbox = document.getElementById('tempbox');
             }
 
             else if (Number(c.value.slice(0)) <= 0){
-                cnote.innerHTML = "Stock cannot be less than 0!";
+                cnote.innerHTML = "Stock cannot be less than or equal to 0!";
             }
 
             else if (isNaN(c.value.slice(0))){
@@ -52,7 +52,7 @@ let tempbox = document.getElementById('tempbox');
                 snote.innerHTML = "Not an integer!";
             }
 
-            else if (Number(s.value) <= 0 && s.value !== ""){
+            else if (Number(s.value) < 0 && s.value !== "" || s.value.includes('-')){
                 snote.innerHTML = "Stock cannot be less than 0!";
             }
 
