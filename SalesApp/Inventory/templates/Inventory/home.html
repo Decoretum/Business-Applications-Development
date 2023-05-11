@@ -13,20 +13,20 @@
         {% block content %}
     <br><br>
     <div class="container">
-        <div class="Largetext" style="font-size: 30px; font-family: Helvetica; font-weight: 100;"> Product Order Management Software </div>
-        <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;"> <a href="https://github.com/Decoretum/Business-Applications-Development" id="git" target="_blank"> GitHub Repository for the Application </a> </div>
+        <div class="Largetext" style="font-size: 30px; font-family: Helvetica; font-weight: 100;"> Inventory Order Management Software </div>
+        <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;"> <a href="https://github.com/Decoretum/Business-Applications-Development" id="git" target="_blank"> GitHub Repository for the Application </a> </div>
 
         <br>
 
         <div class="Largetext" style="display: inline; font-size: 28px;"> Purpose </div>
-        <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;"> 
+        <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight:200;"> 
             This software was created to create and manage product transactions for China Global Steel Trading. It could
             confirm orders and could store and present data in a manner that could be used for the letter of credit and manufacturing order. 
             This software is capable of managing orders, product stock, order total costs, and the products within those orders. 
         </div> <br><br>
 
         <div class="Largetext" style="display: inline; font-size: 28px;"> Systems Design and Development </div>
-        <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;" id="contribute">
+        <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;" id="contribute">
             This software system was designed and documented by <a href="https://github.com/hchyun0105" target="_blank" style="color: rgb(12, 79, 137);"> Chan Hyun</a>, <a href="https://github.com/Decoretum" target="_blank" style="color: rgb(12, 79, 137);"> Gael Estrera</a>, <a href="https://github.com/jemmmmmm" target="_blank" style="color: rgb(12, 79, 137);"> Jem Flores</a>, <a href="https://github.com/hchyun0105" target="_blank" style="color: rgb(12, 79, 137);"> Faustin Pua</a>, and <span style="color: rgb(12, 79, 137);"> Alexis Miner</span>.</b> <br><br>
             This software system was developed by <a href="https://github.com/Decoretum" target="_blank" style="color: green;" id="boss">Gael Estrera</a> for both front-end and back-end.
         </div><br><br>
@@ -34,7 +34,7 @@
         <div class="Largetext" style="display: inline; font-size: 28px;"> Application Components </div> <br><br><br>
 
         <div class="Largetext" style="display: inline;"> Product Management </div>
-        <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;"> 
+        <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;"> 
             This software allows Product management through adding products, editing products, and the deletion of products.
             Products are categorized through a <b>Product</b> object entity which includes product information and stock. Once the stock 
             reaches 0 or less than 0, then it will not be available for being included in orders. If there are new stock available for the 
@@ -42,13 +42,13 @@
         </div> <br><br>
 
         <div class="Largetext" style="display: inline;"> Order Management </div>
-            <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;"> 
+            <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;"> 
                 Orders are object entities that contain information about the products that were ordered within it. Orders are used to
                 identify the products that a Consignee have ordered within an order. However, Orders aren't as straightforward as it seems in the software. <br>
             </div><br>
 
                 <div class="Largetext" style="font-size: 22px;"> FinalOrder </div> 
-                    <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;"> 
+                    <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;"> 
                         An order could contain
                         several products that a Consignee could order. In this software, Orders are known as a <b>FinalOrder</b>. They contain fields such as
                         place and date of issue, consignee information, time of issue, as well as other manufacturing order fields such as local vessel, shipper name,
@@ -57,7 +57,7 @@
             
                     
                 <div class="Largetext" style="font-size: 22px;"> OrderedProduct </div> 
-                    <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;"> 
+                    <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;"> 
                         For good Database practice, an object entity must be created between a "Product" object 
                         and a "FinalOrder" object in order to represent a product that was ordered <i>within</i>
                         an order. This is the definition of an <b>OrderedProduct</b> object. It contains fields such as
@@ -65,13 +65,13 @@
                     </div><br> 
 
                 <div class="Largetext" style="font-size: 22px;"> Consignee </div> 
-                    <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;"> 
+                    <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;"> 
                         A <b>Consignee</b> object represents the customer or client that will order products. It contains the fields 
                         Bill of Lading identification ID and the name of the client.
                     </div><br>
         
         <div class="Largetext"> Notify Party </div> 
-            <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;"> 
+            <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;"> 
                 Every shipment containing multiple orders would require a Notify Party. The Notify
                 Party would be notified when the shipment arrives at the destination. During the process of 
                 confirming an order, there would be a list of choices for available notify parties. The 
@@ -84,7 +84,7 @@
         <br><br>
 
         <div class="Largetext" style="display: inline; font-size: 28px;"> Technical Specifications </div>
-            <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh;">
+            <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;">
                 In order to develop this software, Django (Python), SQL, and Javascript were used. <br><br>
                 <b>Django</b> was used for the back-end architecture as well as the front-end views components of the application.<br><br>
                 <b>SQL</b> was used as a Relational Database Management System for Django to connect to a MySQL server. <br><br>
