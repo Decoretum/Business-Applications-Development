@@ -80,9 +80,8 @@ in compensation for some performance
 def isDigit(request,num):
     try:
         #type(result) == int or type(result) == Decimal 
-        "-" not in num 
-        print(Decimal(num)) or print(int(num))
-        return True
+        if (Decimal(num) + 0 > 0 or Decimal(num) <= 0) or (int(num) + 0 > 0 or int(num) + 0 < 0):
+            return True 
     except:
         return False
     
@@ -201,7 +200,7 @@ def AddProduct(request):
             messages.error(request, "Stock cannot be text")
             return redirect('addproduct')
         
-        elif stock == "" or stock == None or "." in stock or int(stock) <= 0:
+        elif stock == "" or stock == None or "." in stock or int(stock) <= 0 or '-' in stock:
             messages.error(request, 'Stock must not be blank, a decimal, or <= 0')
             return redirect('addproduct')
             
@@ -252,13 +251,13 @@ def EditProduct(request,pk):
         length = request.POST.get('Length').strip()
         manufacturer = request.POST.get('Manufacturer').strip()
         manuloc = request.POST.get('Location').strip()
-        cost = request.POST.get('Cost')
+        cost = request.POST.get('Cost').strip()
         contact = request.POST.get('Contact').strip()
 
         desc = request.POST.get('Description').strip()
         meas = request.POST.get('Measurement').strip()
         weight = request.POST.get('Weight').strip()
-        stock = request.POST.get('stock')
+        stock = request.POST.get('stock').strip()
 
         prepcol = request.POST.get('fin')
 
@@ -271,7 +270,7 @@ def EditProduct(request,pk):
             messages.info(request, 'You must fill out all the fields')
             return redirect('editproduct',pk)
 
-        elif isDigit(request,num = str(cost)) == False:
+        elif isDigit(request,num = cost) == False:
             messages.error(request,"Input cost was not a valid number")
             return redirect('editproduct', pk)
 
@@ -283,8 +282,8 @@ def EditProduct(request,pk):
             messages.warning(request, "Stock cannot be text")
             return redirect('editproduct', pk)
         
-        elif stock == "" or stock == None or "." in stock or int(stock) < 0:
-            messages.warning(request, 'Stock must not be blank, a decimal, or <= 0')
+        elif stock == "" or stock == None or "." in stock or int(stock) < 0 or '-' in stock:
+            messages.warning(request, 'Stock must not be blank, a decimal, or < 0')
             return redirect('editproduct', pk)
 
         Existing.Name = name
@@ -969,7 +968,7 @@ def CompleteOrder(request,pk):
                 messages.warning(request,"Charges was not a valid number")
                 return redirect('completeorder', pk)
             
-            elif charges == "" or charges == None or Decimal(charges) < 0:
+            elif charges == "" or charges == None or (Decimal(charges) or int(charges)) < 0 or '-' in charges:
                 messages.warning(request, 'Charges cannot be less than 0')
                 return redirect('completeorder', pk)
             
@@ -977,7 +976,7 @@ def CompleteOrder(request,pk):
                 messages.warning(request,"Rate was not a valid number")
                 return redirect('completeorder', pk)
             
-            elif rate == "" or rate == None or Decimal(rate) < 0:
+            elif rate == "" or rate == None or (Decimal(rate) or int(rate)) < 0 or '-' in rate:
                 messages.warning(request, 'Rate cannot be less than 0')
                 return redirect('completeorder', pk)
 

@@ -37,7 +37,7 @@ prepaid.addEventListener('click', val);
                 cnote.innerHTML = "Not a valid Charges number!";
             }
 
-            else if (Number(c.value) <= 0 && c.value !== ""){
+            else if (Number(c.value) < 0 && c.value !== "" || c.value.includes('-')){
                 cnote.innerHTML = "Charges cannot be less than 0!";
             }
 
@@ -55,7 +55,7 @@ prepaid.addEventListener('click', val);
                 rnote.innerHTML = "Not a valid rate number!";
             }
 
-            else if (Number(r.value) <= 0 && r.value !== ""){
+            else if (Number(r.value) < 0 && r.value !== "" || r.value.includes('-')){
                 rnote.innerHTML = "Charges cannot be less than 0!";
             }
 
