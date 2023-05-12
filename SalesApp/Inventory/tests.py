@@ -8,3 +8,10 @@ try:
     print(Decimal(num) or int(num))
 except:
     print('error')
+
+
+def hasnumber(request,string):
+    return any(i.isdigit() for i in string)
+
+
+print(hasnumber(request='you',string = "Mama123"))

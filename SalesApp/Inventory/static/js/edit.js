@@ -31,7 +31,7 @@ let tempbox = document.getElementById('tempbox');
             }
 
             else if (Number(c.value.slice(0)) <= 0){
-                cnote.innerHTML = "Stock cannot be less than or equal to 0!";
+                cnote.innerHTML = "Cost cannot be less than or equal to 0!";
             }
 
             else if (isNaN(c.value.slice(0))){

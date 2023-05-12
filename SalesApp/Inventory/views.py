@@ -86,6 +86,9 @@ def isDigit(request,num):
         return False
     
 
+def hasnumber(request,string):
+    return any(i.isdigit() for i in string)
+
 #Notify Party section
     
 def showNotify(request):
@@ -377,7 +380,18 @@ def Signup(request):
             if str(username).strip() == '' or str(password).strip() == '' or str(first_name).strip() == '' or str(last_name).strip() == '' or str(birthday).strip() == '' or str(sex).strip() == '':
                 messages.info(request,"Missing Credentials!")
                 return redirect('Signup')
-                
+            
+            elif hasnumber(request, string = username) == True:
+                messages.info(request, 'Invalid input for username')
+                return redirect('Signup')
+            
+            elif hasnumber(request, string = first_name) == True:
+                messages.info(request, 'Invalid input for first name')
+                return redirect('Signup')
+            
+            elif hasnumber(request, string = last_name) == True:
+                messages.info(request, 'Invalid input for last name')
+                return redirect('Signup')
             else:
                 Userinst = User.objects.create_user(username=username, password=password, 
                 first_name=first_name, last_name=last_name)
@@ -783,7 +797,7 @@ def ConfirmOrder(request,pk):
             Cost = request.POST.get('totalcost')[1:len(request.POST.get('totalcost'))]
             Person = request.POST.get('Person').strip()
 
-            if str(Person).strip() == '' or str(Person).strip() == "Type new Consignee Name":
+            if str(Person).strip() == '' or hasnumber(request,string=Person):
                 messages.info(request,"No proper fields for Consignee")
                 return redirect('confirmcreateorder', pk)
 

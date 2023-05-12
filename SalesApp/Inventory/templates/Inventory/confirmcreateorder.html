@@ -26,14 +26,14 @@
                 <tr>
                     <th> <span class="Largetext"> Consignee Name: </span> 
                         {% for m in messages %}
-                            <div class="label" style="float: right; font-size: 20px; color: red;">
+                            <span class="label" style=" font-size: 20px; color: red;">
                                 {{m}}
-                            </div>
+                            </span>
                         {% endfor %}
                     </th> 
                 </tr>
                 <tr>
-                    <th><input type="text" class="forminput" name="Person" id="Person" style="margin-left: 1vw;" value="Type new Consignee Name"></th>          
+                    <th><input type="text" class="forminput" name="Person" id="Person" style="margin-left: 1vw;" placeholder="Type new Consignee Name"></th>          
                 </tr>
                 <tr>
                     <th> <span class="Largetext"> Quantity </span>            
