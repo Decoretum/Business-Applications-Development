@@ -18,7 +18,7 @@
             <div class="Largetext"> Image </div>
             <input type="file" name="Image" id="Image">
             {% for m in messages %}
-                {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span {% if m.tag == 'info' %} class="{{ m.info }}" {% endif %}>{{m}} </span> {% endif %}
+                {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span style="color: red;">{{m}} </span> {% endif %}
             {% endfor %}
 
             <div class="Largetext"> Product Name </div> 
