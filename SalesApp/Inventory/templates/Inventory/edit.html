@@ -79,7 +79,7 @@
             <a class="Button" href="{% url 'view' pk=Prod.pk %}" id="browse"> Back to Product Information </a> <br> <br>
         </div>
         <br><br>
-        <div class="container" id="tempbox">
+        <div class="container" id="tempbox" style="background-color:rgb(238, 238, 238)">
             <div class="Largetext"> Are you sure you sure you want to save these changes to product: {{Prod.Name}}? </div>
             <button class="Button" type="submit" id="temp"> Yes </button>
             <a class="Button" id="hideme" style="margin-left: 2vw;"> No </a>
@@ -97,15 +97,6 @@
             height: fit-content;
             background-color: rgb(58, 152, 185);
             max-width: 100%;
-        }
-
-        #temp{
-            background-color: azure;
-            
-        }
-
-        #hideme{
-            background-color: azure;
         }
 
         .showme{
