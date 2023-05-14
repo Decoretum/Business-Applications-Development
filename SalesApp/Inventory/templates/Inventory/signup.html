@@ -25,7 +25,7 @@
         <div class="formblock" style="padding-left: 0vw; width: 40vw; background-color: rgb(208, 184, 168); position: relative;">
 
             {% for m in messages %}
-            <div class="label" style="position: absolute; right: 0vw; top: 5vh; color: red; font-size: medium;">
+            <div class="label" style="position: absolute; right: -3vw; top: 5vh; color: red; font-size: medium;">
                 {{ m }} 
             </div>
             {% endfor %}
@@ -42,11 +42,11 @@
             <input class="form-control forminput" type="text" name="passn" autocomplete="off"> </input><br><br>
         
 
-            <div class="label"> First Name </div>
-            <input class="form-control forminput" type="text" name="firstn"> </input><br><br>
+            <div class="label"> First Name &nbsp; <span id="ferror"> </span></div>
+            <input class="form-control forminput" type="text" name="firstn" id="firstn"> </input><br><br>
 
-            <div class="label"> Last Name </div>
-            <input class="form-control forminput" type="text" name="lastn"> </input><br><br>
+            <div class="label"> Last Name &nbsp; <span id="lerror"> </span></div>
+            <input class="form-control forminput" type="text" name="lastn" id="lastn"> </input><br><br>
 
             <div class="label"> Birthday </div>
             <input class="form-control forminput" type="date" name="birthday1" placeholder="YYYY-MM-DD"> </input><br><br>
@@ -75,7 +75,12 @@
         .forminput {
             margin-left: 22%;
         }
+
+        #ferror, #lerror{
+            font-size: small;
+        }
     </style>
+    <script src="{% static 'js/signup.js' %}"> </script>
     {% endblock %}
 </body>
 </html>
