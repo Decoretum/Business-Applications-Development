@@ -16,19 +16,19 @@
     <form method="POST" enctype="multipart/form-data" action="{% url 'editproduct' pk=Prod.pk %}">{% csrf_token %}
         <div class="container">
             <div class="Largetext"> Image </div>
-            <input type="file" name="Image" id="Image">
+            <input type="file" name="Image" id="Image"><br><br>
             {% for m in messages %}
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span style="color: red;">{{m}} </span> {% endif %}
             {% endfor %}
 
             <div class="Largetext"> Product Name </div> 
-            <input type="text" class="forminput" name="Name" id="Name" value="{{ Prod.Name }}"> 
+            <input type="text" class="forminput" name="Name" id="Name" value="{{ Prod.Name }}"><br><br>
 
             <div class="Largetext"> Length </div>
-            <input type="text" class="forminput" name="Length" id="Length" value="{{Prod.Length}}">
+            <input type="text" class="forminput" name="Length" id="Length" value="{{Prod.Length}}"><br><br>
 
             <div class="Largetext"> Manufacturer Name </div>
-            <input type="text" class="forminput" name="Manufacturer" id="Manufacturer" value="{{Prod.Manufacturer}}">
+            <input type="text" class="forminput" name="Manufacturer" id="Manufacturer" value="{{Prod.Manufacturer}}"><br><br>
 
             <div class="Largetext"> Manufacturer Location </div>
             <input type="text" class="forminput" name="Location" id="Location" value="{{Prod.ManuLoc}}">
@@ -62,19 +62,19 @@
             {% endfor %}
 
             <div class="Largetext" style="padding: 8px; margin-bottom: 0vh; margin-left: 1.5vw;"> Stock (Add amount to be restocked) </div> <span class="bodytext" id="stocknote" name="stocknote" style="margin-left: 2vw;"> </span><br>
-            <input type="text" class="forminput" name="stock" id="stock" value=0>
+            <input type="text" class="forminput" name="stock" id="stock" value=0><br><br>
 
             <div class="Largetext"> Product Description </div>
-            <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> {{Prod.Description}} </textarea>
+            <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> {{Prod.Description}} </textarea><br><br>
             
             <div class="Largetext"> Measurement </div>
-            <input type="text" class="forminput" name="Measurement" id="Measurement" value="{{Prod.Measurement}}">
+            <input type="text" class="forminput" name="Measurement" id="Measurement" value="{{Prod.Measurement}}"><br><br>
 
             <div class="Largetext"> Gross Weight </div>
-            <input type="text" class="forminput" name="Weight" id="Weight" value="{{Prod.GrossWeight}}">
+            <input type="text" class="forminput" name="Weight" id="Weight" value="{{Prod.GrossWeight}}"><br><br>
 
             <div class="Largetext"> Contact Details </div>
-            <input type="text" class="forminput" name="Contact" id="Contact" value="{{Prod.Contact}}"><br><br><br>
+            <input type="text" class="forminput" name="Contact" id="Contact" value="{{Prod.Contact}}"><br><br><br><br>
             <a class="Button" id="edittemp"> Edit Product </a>
             <a class="Button" href="{% url 'view' pk=Prod.pk %}" id="browse"> Back to Product Information </a> <br> <br>
         </div>
@@ -99,6 +99,9 @@
             max-width: 100%;
         }
 
+        .Largetext{
+            font-weight: 100;
+        }
         .showme{
             display: inline;
         }

@@ -467,6 +467,7 @@ def ShowProds(request):
         request.session['Order'] = None
         request.session['addedproduct'] = None
 
+    pk = None #This is placeholder in case pk doesn't exist 
     request.session['NAVIGATE'] = "users"
     errorproducts = set() #Set for no duplicates
     i = 0
@@ -484,7 +485,15 @@ def ShowProds(request):
 
   
     length = len(AllOrders)
-    pk = request.session.get('PK')
+    if request.session.get('error') != None:
+        errors = request.session.get('error')
+        print(errors)
+        pk = []
+        i = 0
+        while i < len(errors):
+            pk.append(errors[i][1])
+            i += 1 
+
     if pk != None:
         return render(request, 'Inventory/users2.html',{
                 'C' : True,
@@ -936,14 +945,37 @@ def CompleteOrder(request,pk):
 
 
     if outcome == False:
-        request.session['HM'] = hashmap #Hashmap Data
-        request.session['PK'] = pk #Primary Key of Final Order
+        if request.session.get('error') == None:
+            request.session['error'] = [(hashmap,pk)]
+        else:
+            errors = request.session.get('error')
+            new = []
+            i = 0 
+            while i < len(errors):
+                if errors[i][1] == pk:
+                    pass
+                else:
+                    new.append(errors[i])
+                i += 1
+            new.append((hashmap,pk))
+            request.session['error'] = new
         return redirect('UnfTrans', pk)
 
     
     else:
-        request.session['HM'] = None
-        request.session['PK'] = None
+        if request.session.get('error') != None:
+            errors = request.session.get('error')
+            i = 0
+            new = []
+            while i < len(errors):
+                if errors[i][1] == pk:
+                    #request.session['error'][i] = None
+                    pass
+                else:
+                    new.append(errors[i])
+                i += 1
+            request.session['error'] = new
+
         condition = True
         parties = NotifyParty.objects.all()
         num = pk
@@ -1081,11 +1113,30 @@ def EditTrans(request, pk):
     Order = get_object_or_404(FinalOrder, pk=pk)
     Products = OrderedProduct.objects.filter(OrderID = Order).order_by('-totalcost')
     if request.user.is_authenticated:
-        error = request.session.get('HM')
-        finalorderkey = request.session.get('PK')
+        '''
+        If request data for error is not None, then there are errors in one/many of the orders.
+        We have to check if the chosen order has products that have error.
+        '''
+        errors = request.session.get('error')
+        error = None
+        i = 0
+        if errors != None:
+            while i < len(errors):
+                if errors[i][1] == pk:
+                    error = errors[i][0]
+                    finalorderkey = errors[i][1]
+                    break
+                i += 1
+
+        #error = request.session.get('HM')
+        #finalorderkey = request.session.get('PK')
 
         condition = True
         empty = len(Products) == 0
+
+        '''
+        We fetch the product name and its corresponding quantity that have an error (quantity < 0)
+        '''
 
         if error != None:
             array = []

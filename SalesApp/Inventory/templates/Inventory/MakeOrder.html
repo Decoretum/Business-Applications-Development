@@ -27,7 +27,7 @@
                 {% for p in P %}
                     <option type="text" id="product" name="product"> {{p.Name}} </option>
                 {% endfor %}
-            </select> 
+            </select><br><br>
             
             <div class="Largetext"> Remarks </div>
             <textarea type="text" class="forminput" name="rem" id="rem" rows="8" style="margin-left: 2vw;" placeholder="Can be left blank if no remarks..."></textarea>
@@ -50,13 +50,13 @@
                 
                 <div class="Largetext"> Add Product to Order {{pk}} </div> 
 
-                <span class="Largetext"> Product: </span>
-                <select type="text" id="prod" name="prod" style="display:inline; margin-left: 1vw;">
+                <div class="Largetext"> Product: </div>
+                <select type="text" id="prod" name="prod" style="display:inline; margin-left: 2vw;">
                     <option type="text"> Choose a product: </option>
                     {% for x in prods %}
                         <option type="text"> {{x.Name}} </option>
                     {% endfor %}
-                </select>
+                </select><br><br>
 
                 <div class="Largetext"> Remarks </div>
                 <textarea type="text" class="forminput" name="rem" id="rem" rows="8" style="margin-left: 2vw;" placeholder="Can be left blank if no remarks..."></textarea>

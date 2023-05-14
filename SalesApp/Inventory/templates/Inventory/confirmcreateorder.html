@@ -15,9 +15,9 @@
     <br><br><br>
     <form method="POST" action="">{% csrf_token %}
         <div class="container">
-            <img src="{{ OrderedP.Image.url }}" class="image" style="float:left; margin: 10px;">
-            <div class="Largetext" style="margin-left: 14vw;"> New Order {{Order.pk}}</div> 
-            <div class="Largetext" style="margin-left: 14vw;"> Product: {{OrderedP.Name}} </div><br> 
+            <img src="{{ OrderedP.Image.url }}" class="image" style="float:left; margin-top: 3vh; margin-left: 3vw;">
+            <div class="Largetext" style="margin-left: 17vw;"> <b>New Order</b></div> 
+            <div class="Largetext" style="margin-left: 17vw;"> Product: {{OrderedP.Name}} </div><br> 
 
             <table style="text-align: left;"> 
                 <tr>
@@ -52,8 +52,8 @@
                 </tr>
             </table><br>
                 
-            <div class="Largetext"> Remarks </div>
-            <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;" placeholder="Can be left blank if no remarks...">{{remarks}}</textarea><br><br><br>
+            <div class="Largetext" style="margin-left: 2vw;"> Remarks </div>
+            <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 3vw;" placeholder="Can be left blank if no remarks...">{{remarks}}</textarea><br><br><br>
 
             <div style="display: flex; margin-left: 2vw;">
                 <button class="Button" type="submit" style="width: 10vw;"> Submit </button>
@@ -70,8 +70,8 @@
         <br><br><br>
         <form method="POST" action="">{% csrf_token %}
             <div class="container">
-                <img src="{{ OrderedP.Image.url }}" class="image" style="float:left; margin: 10px;">
-                <span class="Largetext"> Add Product to Order {{Order.pk}}</span> <br><br><br><br><br><br>
+                <img src="{{ OrderedP.Image.url }}" class="image" style="float:left; margin: 10px; margin-left: 3vw;">
+                <div class="Largetext" style="margin-top: 1vh; margin-left: 16vw;"> Add Product to Order {{Order.pk}}</div> <br><br><br>
 
                 <table style="text-align: left;"> 
                     <tr>
@@ -108,8 +108,8 @@
                     </div><br>
                 {% endfor %}
                     
-                <div class="Largetext"> Remarks </div>
-                <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;" placeholder="Can be left blank if no remarks...">{{remarks}}</textarea><br><br><br>
+                <div class="Largetext" style="margin-left: 2vw;"> Remarks </div>
+                <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 3vw;" placeholder="Can be left blank if no remarks...">{{remarks}}</textarea><br><br><br>
 
                 <div style="display: flex; margin-left: 2vw;">
                     <button class="Button" type="submit" style="width: 10vw;"> Submit </button>
@@ -134,6 +134,10 @@
 
         div {
             font-weight: 100;
+        }
+
+        tr > th {
+            padding: 10px;
         }
 
 

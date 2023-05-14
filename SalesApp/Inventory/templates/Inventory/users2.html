@@ -21,7 +21,7 @@
 
             {% for o in Orders %}
             <tr class="Header" id="main" style="font-weight: 100; font-family: Helvetica;">
-                {% if o.pk == primary or o.pk in array %}
+                {% if o.pk in primary or o.pk in array %}
                 <th id="firsty">
                     <img src="{% static 'pic/error.png' %}" title="There are errors involving a product in this order" style="width: 20px; height: 20px; margin:auto"><br>
                     Order <b>{{o.pk}}</b> <br><br>

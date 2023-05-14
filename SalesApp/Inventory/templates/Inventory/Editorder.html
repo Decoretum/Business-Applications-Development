@@ -16,7 +16,7 @@
     <form method="POST" action="{% url 'editorder' pk=K.pk %}">{% csrf_token %}
         <div class="container" style="position: relative;">
             <img src="{{K.Marks.Image.url}}" class="image" style=" margin-top: 2vh; margin-left: 2vw; border-radius: 9px;"><br>
-            <div class="Largetext"> Ordered Product ID: {{K.OrderedProductID}}</div>     
+            <div class="Largetext"> Ordered Product ID: {{K.OrderedProductID}}</div><br>    
             <div class="Largetext"> Product Name </div>
             <select type="text" id="proddrop" name="proddrop" style=" margin-left: 2vw;">
                 <option value=""> {{K.Marks.Name}} </option>
@@ -25,7 +25,7 @@
                     <option type="text" id="product" name="product"> {{p}} </option>
                     {% endif %}
                 {% endfor %}
-            </select> 
+            </select><br><br>
             
             <div class="Largetext"> Remarks </div>
             <textarea type="text" class="forminput" name="Description" id="Description" rows="8" style="margin-left: 2vw;"> {{K.remarks}} </textarea><br><br>
