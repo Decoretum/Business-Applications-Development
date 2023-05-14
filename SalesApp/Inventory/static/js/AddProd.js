@@ -30,7 +30,7 @@ let s = document.getElementById('Stock')
             }   
 
             else if (Number(c.value) <= 0){
-                cnote.innerHTML = "Stock cannot be less than or equal to 0!";
+                cnote.innerHTML = "Cost cannot be less than or equal to 0!";
             }
 
             else{
