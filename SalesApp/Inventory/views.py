@@ -886,9 +886,10 @@ def CompleteOrder(request,pk):
     OrderDone = get_object_or_404(FinalOrder, pk=pk)
     Ordered = OrderedProduct.objects.filter(OrderID = OrderDone)
 
-    #Algorithm for checking if a product is deleted or not
+    #Algorithm for checking if a product is deleted or not OR available or not
     for order in Ordered:
-        if order.Marks.Status == False or order.Marks.Available == False:
+        product = order.Marks
+        if product.Status == False or product.Available == False:
             return redirect('UnfTrans', pk=OrderDone.pk)
     
 
@@ -924,9 +925,14 @@ def CompleteOrder(request,pk):
     ''' 
 
     #O(n) algorithm
-    for val in hashmap.values():
-        if val < 0:
+    #Using a while loop saves time if there is a false outcome 
+    j = 0
+    valuelist = list(hashmap.values())
+    while j < len(valuelist):
+        if valuelist[j] < 0:
             outcome = False
+            break
+        j += 1
 
 
     if outcome == False:
