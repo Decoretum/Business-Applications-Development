@@ -4,7 +4,9 @@ The real-world client of this project is China Global Steel Corporation. <br><br
 To obtain the settings.py and Django Secret Key, message [Gael Estrera](https://github.com/Decoretum).<br><br><br>
 
 <h1> Systems Design and Development </h1> <br>
-The Software System was designed by Chan Hyun, Gael Estrera, Jem Flores, Faustin Pua, and Alexis Miner. <br><br>
+
+
+The Software System was designed by [Chan Hyun](https://github.com/hchyun0105), [Gael Estrera](https://github.com/Decoretum), [Jem Flores](https://github.com/jemmmmmm), [Faustin Pua](https://github.com/faustinpua), and Alexis Miner. <br><br>
 
 This Software System was developed by [Gael Estrera](https://github.com/Decoretum).
 
