@@ -948,15 +948,13 @@ def CompleteOrder(request,pk):
     else:
         if request.session.get('error') != None:
             errors = request.session.get('error')
-            i = 0
             new = []
-            while i < len(errors):
-                if errors[i][1] == pk:
-                    #request.session['error'][i] = None
+            for error in errors:
+                if error[1] == pk:
                     pass
                 else:
-                    new.append(errors[i])
-                i += 1
+                    new.append(error)
+               
             request.session['error'] = new
 
         condition = True
