@@ -264,6 +264,7 @@ def EditProduct(request,pk):
 
         prepcol = request.POST.get('fin')
 
+        print(prepcol)
         if prepcol == 'True':
             prepcol = True
         else:
@@ -949,7 +950,7 @@ def CompleteOrder(request,pk):
             request.session['error'] = [(hashmap,pk)]
         else:
             errors = request.session.get('error')
-            new = []
+            new = [] #new array that will contain hashmap and pk
             i = 0 
             while i < len(errors):
                 if errors[i][1] == pk:
@@ -1119,6 +1120,7 @@ def EditTrans(request, pk):
         '''
         errors = request.session.get('error')
         error = None
+        print(errors)
         i = 0
         if errors != None:
             while i < len(errors):
@@ -1143,7 +1145,7 @@ def EditTrans(request, pk):
             #O(n)
             for item in error.keys():
                 if error[item] < 0:
-                    array.append((item, error[item]))
+                    array.append((item, -1 * error[item]))
             
             return render(request,'Inventory/cart.html',{ 
                     'C' : condition,

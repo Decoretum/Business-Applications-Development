@@ -14,6 +14,7 @@ DESC INVENTORY_CONSIGNEE;
 SELECT * FROM Inventory_consignee;
 SELECT * FROM Inventory_finalorder
 where Finished = True;
+SELECT * FROM Inventory_product;
 
 SELECT * FROM auth_user;
 select * from inventory_userperson;
@@ -23,7 +24,7 @@ SELECT Inventory_finalorder.id, Inventory_product.Name, Inventory_orderedproduct
 FROM Inventory_orderedproduct, Inventory_finalorder, Inventory_product
 WHERE Inventory_orderedproduct.OrderID_id = Inventory_finalorder.id
 AND Inventory_orderedproduct.marks_id = Inventory_product.id
-AND Inventory_finalorder.id = 3;
+AND Inventory_finalorder.id = 9;
 #AND Inventory_finalorder.TotalCost >= 100;
 
 SELECT * FROM Inventory_product;
@@ -41,7 +42,7 @@ where Name = "Steel Cylinders";
 
 UPDATE Inventory_product
 SET Status = 1
-WHERE Name = "Steel Sheets";
+WHERE Name = "Steel Bars";
 
 UPDATE Inventory_product
 SET Stock = 0

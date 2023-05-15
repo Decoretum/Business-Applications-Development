@@ -48,14 +48,14 @@
                 <label for="yes"> Available </label> 
                 <input type="radio" name="prepcol" id="no" value="False">
                 <label for="no"> Not Available </label> <br><br>
-            {% else %}
+            {% elif Prod.Available == False %}
                 <input type="radio" name="prepcol" id="yes" value="True">
                 <label for="yes"> Available </label> 
                 <input type="radio" name="prepcol" id="no" value="False" checked>
                 <label for="no"> Not Available </label> <br><br>
             {% endif %}
 
-            <input type="hidden" id="fin" name="fin"> <br>
+            <input type="hidden" id="fin" name="fin" value="True"> <br>
 
             {% for m in messages %}
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span {% if m.tags %} style="color: red; margin-left: 2vw;" class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}

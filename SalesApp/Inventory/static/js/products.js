@@ -14,10 +14,12 @@
     let sum = 0;
     let coveredsum = 0;
     header = document.querySelector('.identify');   
-    filtered = search.value.toUpperCase().trim();
+    filtered = search.value.toUpperCase().replaceAll(" ", "");
+
     for (let i = 1; i < products.length; i++){
         let text = products[i].childNodes[3].textContent;
-        if (text.toUpperCase().indexOf(filtered) > -1){
+        let newtext = text.replaceAll(" ", "")
+        if (newtext.toUpperCase().indexOf(filtered) > -1){
             products[i].style.display = ""; 
         }
         else{

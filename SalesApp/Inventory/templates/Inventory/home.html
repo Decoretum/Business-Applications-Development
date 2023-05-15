@@ -12,7 +12,7 @@
 
         {% block content %}
     <br><br>
-    <div class="container">
+    <div class="container" id="bigboy">
         <div class="Largetext" style="font-size: 30px; font-family: Helvetica; font-weight: 100;"> Inventory Order Management Software </div>
         <div class="bodytext" style="margin-left: 2vw; margin-top: 2vh; font-weight: 100;"> <a href="https://github.com/Decoretum/Business-Applications-Development" id="git" target="_blank"> GitHub Repository for the Application </a> </div>
 
@@ -97,6 +97,10 @@
         div > .bodytext{
             width: 45vw;
             line-height: 2.5;
+        }
+
+        #bigboy > div{
+            text-align: justify;
         }
 
         .Largetext{

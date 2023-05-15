@@ -56,7 +56,7 @@ prepaid.addEventListener('click', val);
             }
 
             else if (Number(r.value) < 0 && r.value !== "" || r.value.includes('-')){
-                rnote.innerHTML = "Charges cannot be less than 0!";
+                rnote.innerHTML = "Rate cannot be less than 0!";
             }
 
 
