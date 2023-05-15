@@ -471,28 +471,25 @@ def ShowProds(request):
     pk = None #This is placeholder in case pk doesn't exist 
     request.session['NAVIGATE'] = "users"
     errorproducts = set() #Set for no duplicates
-    i = 0
     AllOrders = FinalOrder.objects.filter(Finished = False)
 
     #This is O(n)
     AllSubOrders = OrderedProduct.objects.all()
-    while i < len(AllSubOrders):
-        finalorder = AllSubOrders[i].OrderID 
+    for OP in AllSubOrders:
+        finalorder = OP.getOrder() 
         if finalorder.Finished == False:
-            product = AllSubOrders[i].Marks
+            product = OP.getProduct()
             if product.Status == False or product.Available == False:
                 errorproducts.add(finalorder.pk)
-        i += 1
 
   
     length = len(AllOrders)
     if request.session.get('error') != None:
         errors = request.session.get('error')
         pk = []
-        i = 0
-        while i < len(errors):
-            pk.append(errors[i][1])
-            i += 1 
+        for error in errors:
+            pk.append(error[1])
+            
 
     if pk != None:
         return render(request, 'Inventory/users2.html',{
@@ -510,14 +507,6 @@ def ShowProds(request):
                 'array' : errorproducts
             })
 
-'''def ProdsinOrder(request, pk):
-    Ordered = OrderedProduct.objects.filter(OrderID = pk)
-    empty = len(Ordered) == 0
-    return render(request, 'Inventory/ProductsinOrder.html',{
-        'C' : True,
-        'Ordered' : Ordered,
-        'e' : empty
-    })'''
 
 def ShowComplete(request):
     if not request.user.is_authenticated:
@@ -910,23 +899,19 @@ def CompleteOrder(request,pk):
 
     outcome = True
     OrderedProds = OrderedProduct.objects.filter(OrderID = OrderDone)
-    i = 0
     hashmap = {}
 
-    while i < len(OrderedProds):
-        prod = OrderedProds[i]
-        prodobj = prod.Marks
+    for OP in OrderedProds:
+        prodobj = OP.Marks
         if prodobj.Name in hashmap:
             ''' If the product name exists in the hashmap, then we will simply update their value,
             but we will retain the old value in order to update'''
             old = hashmap[prodobj.Name]
-            hashmap.update({prodobj.Name: old - prod.quantity})
+            hashmap.update({prodobj.Name: old - OP.quantity})
         else:
             ''' If product name doesn't exist yet in the hashmap, then we will
             create a new key-value for it '''
-            hashmap.update({prodobj.Name: prodobj.Stock - prod.quantity })
-
-        i = i + 1
+            hashmap.update({prodobj.Name: prodobj.Stock - OP.quantity })
 
     '''
     A negative value in a hashmap would mean that the total quantity sum of a product in
@@ -950,13 +935,11 @@ def CompleteOrder(request,pk):
         else:
             errors = request.session.get('error')
             new = [] #new array that will contain hashmap and pk
-            i = 0 
-            while i < len(errors):
-                if errors[i][1] == pk:
+            for error in errors:
+                if error[1] == pk:
                     pass
                 else:
-                    new.append(errors[i])
-                i += 1
+                    new.append(error)
             new.append((hashmap,pk))
             request.session['error'] = new
         return redirect('UnfTrans', pk)

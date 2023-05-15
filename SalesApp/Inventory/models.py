@@ -141,6 +141,11 @@ class OrderedProduct(models.Model):
     OrderID = models.ForeignKey(FinalOrder, default=None, on_delete=models.CASCADE)
     Marks = models.ForeignKey(Product, on_delete=models.CASCADE)
 
+    def getProduct(self):
+        return self.Marks
+    
+    def getOrder(self):
+        return self.OrderID
 
     objects = models.Manager()
     
