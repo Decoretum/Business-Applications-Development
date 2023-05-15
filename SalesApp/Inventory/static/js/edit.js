@@ -53,7 +53,7 @@ let tempbox = document.getElementById('tempbox');
             }
 
             else if (Number(s.value) < 0 && s.value !== "" || s.value.includes('-')){
-                snote.innerHTML = "Stock cannot be less than 0!";
+                snote.innerHTML = "This will reduce the stock";
             }
 
 

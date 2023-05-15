@@ -281,13 +281,14 @@ def EditProduct(request,pk):
             messages.error(request,"No negative costs or costs equal to 0")
             return redirect('editproduct', pk)
         
+        elif "." in stock: #or int(stock) < 0 or '-' in stock:
+            messages.warning(request, 'Stock must not be a decimal')
+            return redirect('editproduct', pk)
+        
         elif isDigit(request, num = str(stock)) == False or stock == "" or stock == None:
             messages.warning(request, "Stock cannot be text or empty")
             return redirect('editproduct', pk)
-        
-        elif "." in stock or int(stock) < 0 or '-' in stock:
-            messages.warning(request, 'Stock must not be a decimal or < 0')
-            return redirect('editproduct', pk)
+    
 
         Existing.Name = name
 

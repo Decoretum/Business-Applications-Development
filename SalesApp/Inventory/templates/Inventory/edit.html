@@ -62,7 +62,7 @@
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.WARNING %} <span {% if m.tags %} style="color: red; margin-left: 2vw;" class="{{ m.tags}}" {% endif %}>{{m}} </span> {% endif %}
             {% endfor %}
 
-            <div class="Largetext" style="padding: 8px; margin-bottom: 0vh; margin-left: 1.5vw;"> Stock (Add amount to be restocked) </div> <span class="bodytext" id="stocknote" name="stocknote" style="margin-left: 2vw;"> </span><br>
+            <div class="Largetext" style="padding: 8px; margin-bottom: 0vh; margin-left: 1.5vw;"> Stock (+ for adding, - for removing) </div> <span class="bodytext" id="stocknote" name="stocknote" style="margin-left: 2vw;"> </span><br>
             <input type="text" class="forminput" name="stock" id="stock" value=0><br><br>
 
             <div class="Largetext"> Product Description </div>
