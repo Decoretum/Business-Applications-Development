@@ -49,6 +49,9 @@ SET Stock = 0
 WHERE Name = "Steel Sheets"
 OR Name = "Jedd's Steel";
 
+INSERT INTO Inventory_finalorder(Totalcost, Finished)
+values(0, False);
+
 Select * from Inventory_product
 where Status = True;
 

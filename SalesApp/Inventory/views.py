@@ -264,7 +264,6 @@ def EditProduct(request,pk):
 
         prepcol = request.POST.get('fin')
 
-        print(prepcol)
         if prepcol == 'True':
             prepcol = True
         else:
@@ -488,7 +487,6 @@ def ShowProds(request):
     length = len(AllOrders)
     if request.session.get('error') != None:
         errors = request.session.get('error')
-        print(errors)
         pk = []
         i = 0
         while i < len(errors):
@@ -1120,7 +1118,6 @@ def EditTrans(request, pk):
         '''
         errors = request.session.get('error')
         error = None
-        print(errors)
         i = 0
         if errors != None:
             while i < len(errors):
