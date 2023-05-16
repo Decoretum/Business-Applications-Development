@@ -516,9 +516,8 @@ def ShowComplete(request):
     DoneOrders = FinalOrder.objects.filter(Finished = True).order_by('-pk')
     OrderedP = OrderedProduct.objects.all()
     length = len(DoneOrders)
-    if request.user.is_authenticated:
-        pass
-        return render(request, 'Inventory/products.html',{
+
+    return render(request, 'Inventory/products.html',{
             'use' : use,
             'C' : condition,
             'O' : DoneOrders,
