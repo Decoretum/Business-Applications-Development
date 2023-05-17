@@ -13,6 +13,7 @@ from django.utils import timezone
 from decimal import Decimal
 import random
 import string
+import re
 
 
 def home(request):
@@ -88,6 +89,13 @@ def isDigit(request,num):
 
 def hasnumber(request,string):
     return any(i.isdigit() for i in string)
+
+def specialCharacters(request,text):
+    special = set(string.punctuation)
+    if any(x in special for x in text):
+        return True
+    else:
+        return False
 
 #Notify Party section
     
@@ -382,15 +390,11 @@ def Signup(request):
                 messages.info(request,"Missing Credentials!")
                 return redirect('Signup')
             
-            elif hasnumber(request, string = username) == True:
-                messages.info(request, 'Invalid input for username')
-                return redirect('Signup')
-            
-            elif hasnumber(request, string = first_name) == True:
+            elif hasnumber(request, string = first_name) == True or specialCharacters(request, text=first_name) == True:
                 messages.info(request, 'Invalid input for first name')
                 return redirect('Signup')
             
-            elif hasnumber(request, string = last_name) == True:
+            elif hasnumber(request, string = last_name) == True or specialCharacters(request, text=last_name) == True:
                 messages.info(request, 'Invalid input for last name')
                 return redirect('Signup')
             else:

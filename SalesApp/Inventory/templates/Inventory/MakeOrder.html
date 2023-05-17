@@ -43,7 +43,7 @@
         <form method="POST" action="">{% csrf_token %}
             <div class="container">
                 {% for m in messages %}
-                    <div class="label" style="position: absolute; right: -3vw; margin-top: 1vh; font-size: 20px; color: red;">
+                    <div class="label" style="position: absolute; right: -5vw; margin-top: 1vh; font-size: 20px; color: red;">
                         {{m}}
                     </div>
                 {% endfor %}

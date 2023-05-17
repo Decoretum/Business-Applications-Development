@@ -16,7 +16,7 @@
         <div class="container">
             <div class="Largetext" style="font-size: 30px;"> Add a Product </div> 
             <div class="Largetext"> Image </div>
-            <input type="file" name="Image" id="Image"/> 
+            <input type="file" name="Image" accept="image/png, image/jpeg" id="Image"/> 
                 {% for m in messages %}
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span style="color: red;" {% if m.tag == 'info' %} {% endif %}> {{m}} </span> {% endif %}
                 {% endfor %}

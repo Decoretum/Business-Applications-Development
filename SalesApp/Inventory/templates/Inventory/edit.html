@@ -16,7 +16,7 @@
     <form method="POST" enctype="multipart/form-data" action="{% url 'editproduct' pk=Prod.pk %}">{% csrf_token %}
         <div class="container">
             <div class="Largetext"> Image </div>
-            <input type="file" name="Image" id="Image"><br><br>
+            <input type="file" accept="image/png, image/jpeg" name="Image" id="Image"><br><br>
             {% for m in messages %}
                 {% if m.level == DEFAULT_MESSAGE_LEVELS.INFO %} <span style="color: red;">{{m}} </span> {% endif %}
             {% endfor %}
