@@ -1,8 +1,10 @@
 # Business-Applications-Development
 This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project.<br><br>
 The real-world client of this project is China Global Steel Corporation. <br><br>
-To obtain the settings.py and Django Secret Key, message [Gael Estrera](https://github.com/Decoretum).<br><br><br>
+To obtain the settings.py and Django Secret Key, message [Gael Estrera](https://github.com/Decoretum).<br><br>
+User Software Manual: [Link](https://docs.google.com/document/d/1R-M5G9tow4p4LqJNA_pmqqJ8MsjxN-FGH0pzDt9A3LM/edit?usp=sharing)
 
+<br><br>
 <h1> Systems Design and Development </h1> <br>
 
 
