@@ -987,7 +987,6 @@ def CompleteOrder(request,pk):
             if (rate == ""):
                 rate = 0
 
-
             if notify == "Select a Notify Party":
                 messages.info(request, 'Select a valid Notify Party')
                 return redirect('completeorder', pk)
@@ -999,67 +998,59 @@ def CompleteOrder(request,pk):
             elif (prepcol == None):
                 messages.warning(request, 'Both Prepaid and Collect cannot be null, one field must not be null')
                 return redirect('completeorder',pk)
+        
             
-            elif isDigit(request,num = str(charges)) == False:
-                messages.warning(request,"Charges was not a valid number")
-                return redirect('completeorder', pk)
+            if charges != 0:
+                if isDigit(request,num = str(charges)) == False:
+                    messages.warning(request,"Charges was not a valid number")
+                    return redirect('completeorder', pk)
+                elif (Decimal(charges) or int(charges)) < 0 or '-' in charges:
+                    messages.warning(request, 'Charges cannot be less than 0')
+                    return redirect('completeorder', pk)
             
-            elif charges == "" or charges == None or (Decimal(charges) or int(charges)) < 0 or '-' in charges:
-                messages.warning(request, 'Charges cannot be less than 0')
-                return redirect('completeorder', pk)
             
-            elif isDigit(request,num = str(rate)) == False:
-                messages.warning(request,"Rate was not a valid number")
-                return redirect('completeorder', pk)
-            
-            elif rate == "" or rate == None or (Decimal(rate) or int(rate)) < 0 or '-' in rate:
-                messages.warning(request, 'Rate cannot be less than 0')
-                return redirect('completeorder', pk)
-
-            #elif True != False:
-            #    print('RESET')
-            #    print(type(rate))
-            #    print(Decimal(rate) + 10)
-            #    print(Decimal(charges) + 10)
-            #    print(type(charges))
-            #    return redirect('completeorder', pk)
+            if rate != 0: 
+                if isDigit(request,num = str(rate)) == False:
+                    messages.warning(request,"Rate was not a valid number")
+                    return redirect('completeorder', pk)
+                elif (Decimal(rate) or int(rate)) < 0 or "-" in rate:
+                    messages.warning(request, 'Rate cannot be less than 0')
+                    return redirect('completeorder', pk)
 
 
+            notifobject = get_object_or_404(NotifyParty, Name = notify)
 
+            #O(n) algorithm, very efficient
+            for name in hashmap.keys():
+                product = get_object_or_404(Product, Name = name)
+                product.Stock = hashmap[name]
+                product.save()
+
+            if prepcol == 'collect':
+                OrderDone.Collect = 'Yes'
             else:
-                notifobject = get_object_or_404(NotifyParty, Name = notify)
+                OrderDone.Prepaid = 'Yes'
 
-                #O(n) algorithm, very efficient
-                for name in hashmap.keys():
-                    product = get_object_or_404(Product, Name = name)
-                    product.Stock = hashmap[name]
-                    product.save()
+            OrderDone.Portdis = portdis
+            OrderDone.Portload = portload
+            OrderDone.ShipperName = shipper
+            OrderDone.OceanVessel = ocean
+            OrderDone.NotifyName = notifobject
+            OrderDone.TranshTo = transhto
+            OrderDone.FinalDest = finaldest
+            OrderDone.Voyage = voyage
 
-                if prepcol == 'collect':
-                    OrderDone.Collect = 'Yes'
-                else:
-                    OrderDone.Prepaid = 'Yes'
+            OrderDone.Charges = charges
+            OrderDone.RevTons = revtons
+            OrderDone.Rate = rate
+            OrderDone.PayAt = payat
 
-                OrderDone.Portdis = portdis
-                OrderDone.Portload = portload
-                OrderDone.ShipperName = shipper
-                OrderDone.OceanVessel = ocean
-                OrderDone.NotifyName = notifobject
-                OrderDone.TranshTo = transhto
-                OrderDone.FinalDest = finaldest
-                OrderDone.Voyage = voyage
+            
+            OrderDone.Finished = True
 
-                OrderDone.Charges = charges
-                OrderDone.RevTons = revtons
-                OrderDone.Rate = rate
-                OrderDone.PayAt = payat
-
-                
-                OrderDone.Finished = True
-
-                OrderDone.save()
-                return redirect('Products2')
-                
+            OrderDone.save()
+            return redirect('Products2')
+            
         else:
             return render(request, 'Inventory/finalize.html',{
                 'C' : condition,
