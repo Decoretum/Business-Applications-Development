@@ -1,5 +1,6 @@
 # Business-Applications-Development
-This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project.<br><br>
+This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project which is <b>CSGT Order Inventory Management System</b>. <br><br>
+It is used for managing steel inventory as well as managing orders concerning these inventory. <br><br>
 The real-world client of this project is China Global Steel Corporation. <br><br>
 To obtain the settings.py and Django Secret Key, message [Gael Estrera](https://github.com/Decoretum).<br><br>
 User Software Manual: [Link](https://docs.google.com/document/d/1R-M5G9tow4p4LqJNA_pmqqJ8MsjxN-FGH0pzDt9A3LM/edit?usp=sharing)
@@ -97,8 +98,12 @@ After activation, move out of the virtual environment directory, and run the com
 ```bash
 pip install -r requirements.txt 
 ```
+Within the <b>second</b> `SalesApp` directory, create a `password.txt` file containing the password of the MySQL Database that you created. Type the
+password in the first line of the `password.txt` file with <b>no spaces</b>.
+<br><br>
+
 Once Django is installed in the machine, go within the "SalesApp" directory and type: <br>
-python manage.py runserver OR python3 manage.py runserver <br>
+python3 manage.py runserver <br>
 
 
 
