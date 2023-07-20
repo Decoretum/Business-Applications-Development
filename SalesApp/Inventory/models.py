@@ -28,13 +28,13 @@ class Product(models.Model): #Steels, not food
     objects = models.Manager()
     Name = models.CharField(max_length=200, unique=True)
     Image = models.ImageField(default= "images/defproduct.jpg", blank=True, upload_to="images/") #not have image if we dont have one, uploaded to images folder automatically
-    Manufacturer = models.CharField(default=None, max_length=100)
-    ManuLoc = models.CharField(default=None,max_length=255)
+    Manufacturer = models.CharField(default=None, max_length=200)
+    ManuLoc = models.CharField(default=None,max_length=500)
     Status = models.BooleanField(default=True) #Records incase of removed
 
-    Measurement = models.CharField(default=None, max_length=100)
-    Description = models.CharField(default=None, max_length=1000)
-    GrossWeight = models.CharField(default=None, max_length=100)
+    Measurement = models.CharField(default=None, max_length=500)
+    Description = models.CharField(default=None, max_length=3000)
+    GrossWeight = models.CharField(default=None, max_length=300)
 
     Available = models.BooleanField(default=True)
 
@@ -43,7 +43,7 @@ class Product(models.Model): #Steels, not food
         self.Marks = str(self.Manufacturer) + ", " + str(self.ManuLoc)
         super(Product,self).save() 
     
-    Length = models.CharField(max_length=20)
+    Length = models.CharField(max_length=500)
     Cost = models.DecimalField(default=0, validators=[DecimalValidator(7,2)], decimal_places=2, max_digits=7) #declared value USD
     Stock = models.BigIntegerField(default=0)
     Contact = models.CharField(max_length=500)
@@ -132,7 +132,7 @@ class FinalOrder(models.Model):
 
 
 class OrderedProduct(models.Model):
-    remarks = models.CharField(max_length=500, default='', null=True, blank=True)
+    remarks = models.CharField(max_length=2000, default='', null=True, blank=True)
     quantity = models.IntegerField(default=0)
     totalcost = models.DecimalField(default=0, validators=[DecimalValidator(10,2)], decimal_places=2, max_digits=10)
 
