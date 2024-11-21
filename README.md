@@ -1,17 +1,18 @@
 # Business-Applications-Development
 This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project which is <b>CSGT Order Inventory Management System</b>. <br><br>
 It is used for managing steel inventory as well as managing orders concerning these inventory. <br><br>
-The real-world client of this project is China Global Steel Corporation. <br><br>
+The real-world client of this project was a manager from China Global Steel Corporation. <br><br>
 To obtain the settings.py and Django Secret Key, message [Gael Estrera](https://github.com/Decoretum).<br><br>
 User Software Manual: [Link](https://docs.google.com/document/d/1R-M5G9tow4p4LqJNA_pmqqJ8MsjxN-FGH0pzDt9A3LM/edit?usp=sharing)
 
-<br><br>
+<br>
+
 <h1> Systems Design and Development </h1> <br>
 
 
 The Software System was designed by [Chan Hyun](https://github.com/hchyun0105), [Gael Estrera](https://github.com/Decoretum), [Jem Flores](https://github.com/jemmmmmm), [Faustin Pua](https://github.com/faustinpua), and Alexis Miner. <br><br>
 
-This Software System was developed by [Gael Estrera](https://github.com/Decoretum).
+This Software System was developed by [Gael Estrera](https://github.com/Decoretum) by following the Model-View-Controller (MVC) architecture.
 
 <br><br>
 <h1> Tech Stack used </h1>
@@ -29,7 +30,7 @@ SQL is used for creating and managing queries for functional back-end algorithms
 
 <h1> Supported Platforms and Browsers </h1>
 The application can be used in Windows 10+ and MacOS 10.14.16 (Mojave) <br>
-Google Chrome and Safari <br>
+Supported browsers are Google Chrome and Safari <br>
 
 <h1> Database Architecture </h1>
 https://app.diagrams.net/#G1PZlwUNpmm8cHGGkcCigoE5KhDCgxFYLc
