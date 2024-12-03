@@ -22,6 +22,7 @@ class NotifyParty(models.Model):
 class Consignee(models.Model):
     BL = models.CharField(max_length=20, default='', unique=True)
     Name = models.CharField(max_length=100)
+    objects = models.Manager()
 
 
 class Product(models.Model): #Steels, not food 
