@@ -1,5 +1,5 @@
 # Business-Applications-Development
-This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project which is <b>CSGT Order Inventory Management System</b>. <br><br>
+This is a repository for the files in fulfillment of the <b> MSYS 42 </b> project which is <b>CGST Order Inventory Management System</b>. <br><br>
 It is used for managing steel inventory as well as managing orders concerning these inventory. <br><br>
 The real-world client of this project was a manager from China Global Steel Corporation. <br><br>
 To obtain the settings.py and Django Secret Key, message [Gael Estrera](https://github.com/Decoretum).<br><br>
