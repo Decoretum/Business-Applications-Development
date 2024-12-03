@@ -104,7 +104,10 @@ password in the first line of the `password.txt` file with <b>no spaces</b>.
 <br><br>
 
 Once Django is installed in the machine, go within the "SalesApp" directory and type: <br>
-python3 manage.py runserver <br>
+```
+python3 manage.py runserver
+```
+ <br>
 
 
 
