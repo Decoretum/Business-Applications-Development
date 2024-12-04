@@ -33,7 +33,10 @@ The application can be used in Windows 10+ and MacOS 10.14.16 (Mojave) <br>
 Supported browsers are Google Chrome and Safari <br>
 
 <h1> Database Architecture </h1>
-![CGSTerd](https://github.com/user-attachments/assets/a800bbad-45c8-47c7-ad87-24eb02484384)
+
+![cgsterd](https://github.com/user-attachments/assets/d5141ec2-6faa-4f21-a504-753f8eb1eab8)
+
+
 
 
 
