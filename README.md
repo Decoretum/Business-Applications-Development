@@ -33,7 +33,9 @@ The application can be used in Windows 10+ and MacOS 10.14.16 (Mojave) <br>
 Supported browsers are Google Chrome and Safari <br>
 
 <h1> Database Architecture </h1>
-https://app.diagrams.net/#G1PZlwUNpmm8cHGGkcCigoE5KhDCgxFYLc
+![CGSTerd](https://github.com/user-attachments/assets/a800bbad-45c8-47c7-ad87-24eb02484384)
+
+
 
 <br><br>
 <h1> Install MySQL </h1>
